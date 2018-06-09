@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lcommons -lbiblioteca-El-Rejunte
+LIBS := -lbiblioteca-El-Rejunte -lcommons -lparsi
 

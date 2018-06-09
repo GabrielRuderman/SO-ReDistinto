@@ -29,7 +29,7 @@ all: instancia
 instancia: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L/home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug -o "instancia" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/julian/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug" -o "instancia" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

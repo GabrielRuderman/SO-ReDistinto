@@ -26,13 +26,13 @@ endif
 all: coordinador
 
 dependents:
-	-cd /home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug && $(MAKE) all
+	-cd /home/julian/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug && $(MAKE) all
 
 # Tool invocations
-coordinador: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug/libbiblioteca-El-Rejunte.so
+coordinador: $(OBJS) $(USER_OBJS) /home/julian/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug/libbiblioteca-El-Rejunte.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug" -o "coordinador" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/julian/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug" -o "coordinador" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -42,6 +42,6 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
-/home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug/libbiblioteca-El-Rejunte.so:
+/home/julian/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug/libbiblioteca-El-Rejunte.so:
 
 -include ../makefile.targets
