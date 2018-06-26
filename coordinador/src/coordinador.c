@@ -71,6 +71,36 @@ t_instancia* algoritmoEL() {
 	return instancia;
 }
 
+int tieneEntradasDisponibles(){
+
+  t_instancia* instancia;
+
+  if(instancia->entradas_libres > 0){
+	  return 1;
+  } else {
+	  return 0;
+  }
+};
+
+t_instancia* algoritmoLSU(){
+
+	while(!(list_is_empty(tabla_instancias))){ //lista esta vacia
+
+		if(list_any_satisfy(tabla_instancias, (instancia->entradas_libres != 0))){
+
+			  t_instancia* instancia = list_remove_by_condition(tabla_instancias, tieneEntradasDisponibles());
+
+			  return instancia;
+							} else {
+
+									//compactar(tabla_instancias) y volver a buscar;
+
+								}
+	};
+
+	return 0;
+};
+
 t_instancia* algoritmoDeDistribucion() {
 	// implementar
 	// paso 1: hay que hacer un switch de la variable ya cargada: algoritmo_distribucion
@@ -85,7 +115,7 @@ t_instancia* algoritmoDeDistribucion() {
 
 	switch (protocolo_distribucion) {
 	case LSU: // LSU
-		//return algoritmoLSU();
+		return algoritmoLSU();
 
 	case KE: // KE
 		//return algoritmoKE();
