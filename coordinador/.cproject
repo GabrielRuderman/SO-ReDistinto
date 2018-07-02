@@ -58,7 +58,7 @@
 					</folderInfo>
 					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.43959179.408151556" name="coordinador.c" rcbsApplicability="disable" resourcePath="src/coordinador.c" toolsToInvoke="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1615571497.2065049337">
 						<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1615571497.2065049337" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1615571497">
-							<option id="gnu.c.compiler.option.warnings.extrawarn.1196858829" superClass="gnu.c.compiler.option.warnings.extrawarn" value="false" valueType="boolean"/>
+							<option id="gnu.c.compiler.option.warnings.extrawarn.1196858829" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" value="false" valueType="boolean"/>
 							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.2061293055" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 						</tool>
 						<tool announcement="Invoking: Resource Custom Build Step" command="" customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.309442616" name="Resource Custom Build Step">

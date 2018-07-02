@@ -14,3 +14,124 @@
 [ERROR] 17:38:29:406 Coordinador/(4979:4979): No se encuentra el archivo de configuracion.
 [ERROR] 17:41:57:822 Coordinador/(5137:5137): No se encuentra el archivo de configuracion.
 [ERROR] 17:43:12:278 Coordinador/(5010:5010): No se encuentra el archivo de configuracion.
+[INFO] 18:51:06:106 Coordinador/(1034:1034): Se crea la Tabla de Instancias
+[INFO] 18:51:06:108 Coordinador/(1034:1034): Servidor conectado.
+[INFO] 18:51:06:108 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 18:51:17:361 Coordinador/(1056:1056): Se crea la Tabla de Instancias
+[INFO] 18:51:17:372 Coordinador/(1056:1056): Servidor conectado.
+[INFO] 18:51:17:372 Coordinador/(1056:1056): Listo para escuchar a cualquier Cliente...
+[INFO] 18:51:54:317 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 18:51:54:317 Coordinador/(1034:1075): Cliente conectado
+[INFO] 18:51:54:330 Coordinador/(1034:1075): El cliente es una Instancia
+[INFO] 18:51:54:330 Coordinador/(1034:1075): Es la Instancia 1
+[INFO] 18:51:54:330 Coordinador/(1034:1075): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 18:51:54:330 Coordinador/(1034:1075): Envio a la Instancia su cantidad de entradas
+[INFO] 18:51:54:330 Coordinador/(1034:1075): Envio a la Instancia el tamaño de las entradas
+[INFO] 18:51:54:331 Coordinador/(1034:1075): Instancia agregada a la Tabla de Instancias
+[INFO] 18:52:43:371 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 18:52:43:375 Coordinador/(1034:1079): Cliente conectado
+[INFO] 18:52:43:379 Coordinador/(1034:1079): El cliente es una Instancia
+[INFO] 18:52:43:379 Coordinador/(1034:1079): Es la Instancia 1
+[INFO] 18:52:43:379 Coordinador/(1034:1079): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 18:52:43:379 Coordinador/(1034:1079): Envio a la Instancia su cantidad de entradas
+[INFO] 18:52:43:379 Coordinador/(1034:1079): Envio a la Instancia el tamaño de las entradas
+[INFO] 18:52:43:381 Coordinador/(1034:1079): Instancia agregada a la Tabla de Instancias
+[INFO] 19:05:01:625 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:05:01:625 Coordinador/(1034:1778): Cliente conectado
+[INFO] 19:05:01:645 Coordinador/(1034:1778): El cliente es una Instancia
+[INFO] 19:05:01:645 Coordinador/(1034:1778): Es la Instancia 1
+[INFO] 19:05:01:645 Coordinador/(1034:1778): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:05:01:645 Coordinador/(1034:1778): Envio a la Instancia su cantidad de entradas
+[INFO] 19:05:01:645 Coordinador/(1034:1778): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:05:01:645 Coordinador/(1034:1778): Instancia agregada a la Tabla de Instancias
+[INFO] 19:05:24:631 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:05:24:631 Coordinador/(1034:1780): Cliente conectado
+[INFO] 19:05:24:631 Coordinador/(1034:1780): El cliente es una Instancia
+[INFO] 19:05:24:631 Coordinador/(1034:1780): Es la Instancia 1
+[INFO] 19:05:24:631 Coordinador/(1034:1780): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:05:24:631 Coordinador/(1034:1780): Envio a la Instancia su cantidad de entradas
+[INFO] 19:05:24:631 Coordinador/(1034:1780): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:05:24:632 Coordinador/(1034:1780): Instancia agregada a la Tabla de Instancias
+[INFO] 19:19:10:982 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:19:10:983 Coordinador/(1034:1985): Cliente conectado
+[INFO] 19:19:11:5 Coordinador/(1034:1985): El cliente es una Instancia
+[INFO] 19:19:11:5 Coordinador/(1034:1985): Es la Instancia 1
+[INFO] 19:19:11:5 Coordinador/(1034:1985): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:19:11:5 Coordinador/(1034:1985): Envio a la Instancia su cantidad de entradas
+[INFO] 19:19:11:5 Coordinador/(1034:1985): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:19:11:5 Coordinador/(1034:1985): Instancia agregada a la Tabla de Instancias
+[INFO] 19:19:17:714 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:19:17:719 Coordinador/(1034:1990): Cliente conectado
+[INFO] 19:19:17:719 Coordinador/(1034:1990): El cliente es una Instancia
+[INFO] 19:19:17:719 Coordinador/(1034:1990): Es la Instancia 1
+[INFO] 19:19:17:720 Coordinador/(1034:1990): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:19:17:720 Coordinador/(1034:1990): Envio a la Instancia su cantidad de entradas
+[INFO] 19:19:17:720 Coordinador/(1034:1990): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:19:17:720 Coordinador/(1034:1990): Instancia agregada a la Tabla de Instancias
+[INFO] 19:19:21:514 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:19:21:519 Coordinador/(1034:1994): Cliente conectado
+[INFO] 19:19:21:519 Coordinador/(1034:1994): El cliente es una Instancia
+[INFO] 19:19:21:519 Coordinador/(1034:1994): Es la Instancia 1
+[INFO] 19:19:21:519 Coordinador/(1034:1994): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:19:21:519 Coordinador/(1034:1994): Envio a la Instancia su cantidad de entradas
+[INFO] 19:19:21:519 Coordinador/(1034:1994): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:19:21:521 Coordinador/(1034:1994): Instancia agregada a la Tabla de Instancias
+[INFO] 19:19:23:346 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:19:23:351 Coordinador/(1034:1998): Cliente conectado
+[INFO] 19:19:23:351 Coordinador/(1034:1998): El cliente es una Instancia
+[INFO] 19:19:23:351 Coordinador/(1034:1998): Es la Instancia 1
+[INFO] 19:19:23:351 Coordinador/(1034:1998): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:19:23:351 Coordinador/(1034:1998): Envio a la Instancia su cantidad de entradas
+[INFO] 19:19:23:351 Coordinador/(1034:1998): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:19:23:352 Coordinador/(1034:1998): Instancia agregada a la Tabla de Instancias
+[INFO] 19:19:24:930 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:19:24:935 Coordinador/(1034:2002): Cliente conectado
+[INFO] 19:19:24:935 Coordinador/(1034:2002): El cliente es una Instancia
+[INFO] 19:19:24:935 Coordinador/(1034:2002): Es la Instancia 1
+[INFO] 19:19:24:935 Coordinador/(1034:2002): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:19:24:935 Coordinador/(1034:2002): Envio a la Instancia su cantidad de entradas
+[INFO] 19:19:24:935 Coordinador/(1034:2002): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:19:24:936 Coordinador/(1034:2002): Instancia agregada a la Tabla de Instancias
+[INFO] 19:19:26:362 Coordinador/(1034:1034): Listo para escuchar a cualquier Cliente...
+[INFO] 19:19:26:367 Coordinador/(1034:2006): Cliente conectado
+[INFO] 19:19:26:367 Coordinador/(1034:2006): El cliente es una Instancia
+[INFO] 19:19:26:367 Coordinador/(1034:2006): Es la Instancia 1
+[INFO] 19:19:26:367 Coordinador/(1034:2006): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 19:19:26:367 Coordinador/(1034:2006): Envio a la Instancia su cantidad de entradas
+[INFO] 19:19:26:367 Coordinador/(1034:2006): Envio a la Instancia el tamaño de las entradas
+[INFO] 19:19:26:368 Coordinador/(1034:2006): Instancia agregada a la Tabla de Instancias
+[INFO] 16:37:30:620 Coordinador/(16610:16610): Se crea la Tabla de Instancias
+[INFO] 16:37:30:771 Coordinador/(16610:16610): Servidor conectado.
+[INFO] 16:37:30:771 Coordinador/(16610:16610): Listo para escuchar a cualquier Cliente...
+[INFO] 16:37:44:443 Coordinador/(16610:16610): Listo para escuchar a cualquier Cliente...
+[INFO] 16:37:44:444 Coordinador/(16610:16640): Cliente conectado
+[INFO] 16:37:44:452 Coordinador/(16610:16640): El cliente es una Instancia
+[INFO] 16:37:44:452 Coordinador/(16610:16640): Es la Instancia 1
+[INFO] 16:37:44:452 Coordinador/(16610:16640): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 16:37:44:452 Coordinador/(16610:16640): Envio a la Instancia su cantidad de entradas
+[INFO] 16:37:44:452 Coordinador/(16610:16640): Envio a la Instancia el tamaño de las entradas
+[INFO] 16:37:44:452 Coordinador/(16610:16640): Instancia agregada a la Tabla de Instancias
+[INFO] 16:41:44:716 Coordinador/(16610:16610): Listo para escuchar a cualquier Cliente...
+[INFO] 16:41:44:717 Coordinador/(16610:16761): Cliente conectado
+[INFO] 16:41:44:723 Coordinador/(16610:16761): El cliente es una Instancia
+[INFO] 16:41:44:723 Coordinador/(16610:16761): Es la Instancia 1
+[INFO] 16:41:44:723 Coordinador/(16610:16761): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 16:41:44:723 Coordinador/(16610:16761): Envio a la Instancia su cantidad de entradas
+[INFO] 16:41:44:723 Coordinador/(16610:16761): Envio a la Instancia el tamaño de las entradas
+[INFO] 16:41:44:723 Coordinador/(16610:16761): Instancia agregada a la Tabla de Instancias
+[INFO] 16:42:25:998 Coordinador/(16610:16610): Listo para escuchar a cualquier Cliente...
+[INFO] 16:42:25:3 Coordinador/(16610:16770): Cliente conectado
+[INFO] 16:42:25:3 Coordinador/(16610:16770): El cliente es una Instancia
+[INFO] 16:42:25:4 Coordinador/(16610:16770): Es la Instancia 1
+[INFO] 16:42:25:4 Coordinador/(16610:16770): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 16:42:25:4 Coordinador/(16610:16770): Envio a la Instancia su cantidad de entradas
+[INFO] 16:42:25:4 Coordinador/(16610:16770): Envio a la Instancia el tamaño de las entradas
+[INFO] 16:42:26:5 Coordinador/(16610:16770): Instancia agregada a la Tabla de Instancias
+[INFO] 16:42:41:700 Coordinador/(16610:16610): Listo para escuchar a cualquier Cliente...
+[INFO] 16:42:41:706 Coordinador/(16610:16798): Cliente conectado
+[INFO] 16:42:41:707 Coordinador/(16610:16798): El cliente es una Instancia
+[INFO] 16:42:41:707 Coordinador/(16610:16798): Es la Instancia 1
+[INFO] 16:42:41:713 Coordinador/(16610:16798): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 16:42:41:713 Coordinador/(16610:16798): Envio a la Instancia su cantidad de entradas
+[INFO] 16:42:41:713 Coordinador/(16610:16798): Envio a la Instancia el tamaño de las entradas
+[INFO] 16:42:41:714 Coordinador/(16610:16798): Instancia agregada a la Tabla de Instancias

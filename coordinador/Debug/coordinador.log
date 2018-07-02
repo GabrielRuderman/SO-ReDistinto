@@ -3796,3 +3796,22 @@
 [INFO] 00:52:01:440 Coordinador/(7462:7482): El cliente es ESI
 [INFO] 00:52:01:459 Coordinador/(7462:7482): Espero un paquete del ESI
 [WARNING] 01:01:59:344 Coordinador/(7462:7482): El ESI se ha desconectado
+[INFO] 17:09:56:465 Coordinador/(16629:16629): Se crea la Tabla de Instancias
+[INFO] 17:09:56:465 Coordinador/(16629:16629): Servidor conectado.
+[INFO] 17:09:56:465 Coordinador/(16629:16629): Listo para escuchar a cualquier Cliente...
+[INFO] 17:10:40:353 Coordinador/(16629:16629): Listo para escuchar a cualquier Cliente...
+[INFO] 17:10:40:353 Coordinador/(16629:16677): Cliente conectado
+[INFO] 17:10:40:353 Coordinador/(16629:16677): El cliente es una Instancia
+[INFO] 17:10:40:353 Coordinador/(16629:16677): Es la Instancia 1
+[INFO] 17:10:40:354 Coordinador/(16629:16677): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 17:10:40:354 Coordinador/(16629:16677): Envio a la Instancia su cantidad de entradas
+[INFO] 17:10:40:354 Coordinador/(16629:16677): Envio a la Instancia el tamaño de las entradas
+[INFO] 17:10:40:354 Coordinador/(16629:16677): Instancia agregada a la Tabla de Instancias
+[INFO] 17:17:24:833 Coordinador/(16629:16629): Listo para escuchar a cualquier Cliente...
+[INFO] 17:17:24:833 Coordinador/(16629:16884): Cliente conectado
+[INFO] 17:17:24:833 Coordinador/(16629:16884): El cliente es una Instancia
+[INFO] 17:17:24:833 Coordinador/(16629:16884): Es la Instancia 1
+[INFO] 17:17:24:833 Coordinador/(16629:16884): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 17:17:24:833 Coordinador/(16629:16884): Envio a la Instancia su cantidad de entradas
+[INFO] 17:17:24:833 Coordinador/(16629:16884): Envio a la Instancia el tamaño de las entradas
+[INFO] 17:17:24:834 Coordinador/(16629:16884): Instancia agregada a la Tabla de Instancias

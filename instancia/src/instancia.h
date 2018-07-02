@@ -32,6 +32,7 @@ typedef struct {
 	char* clave;
 	int entrada_asociada;
 	int size_valor_almacenado;
+	int cantOperaciones; // cantidad de operaciones que se llevan en una entrada necesario para el algoritmo LRU
 } __attribute__((packed)) t_entrada;
 
 t_control_configuracion cargarConfiguracion();

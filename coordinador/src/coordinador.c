@@ -71,37 +71,25 @@ t_instancia* algoritmoEL() {
 	return instancia;
 }
 
-int tieneEntradasDisponibles(){
+bool tieneAlgunaEntradaDisponible(t_instancia* instancia){
 
-  t_instancia* instancia;
-
-  if(instancia->entradas_libres > 0){
-	  return 1;
+  if((instancia->entradas_libres > 0 )&& (instancia->estado == 1) > 0){
+	  return true;
   } else {
-	  return 0;
+	  return false;
   }
 };
 
 t_instancia* algoritmoLSU(){
-
+	t_instancia* instancia;
 	while(!(list_is_empty(tabla_instancias))){ //lista esta vacia
-
-		if(list_any_satisfy(tabla_instancias, (instancia->entradas_libres != 0))){
-
-			  t_instancia* instancia = list_remove_by_condition(tabla_instancias, tieneEntradasDisponibles());
-
-			  return instancia;
-							} else {
-
-									//compactar(tabla_instancias) y volver a buscar;
-
-								}
+		return instancia = list_remove_by_condition(tabla_instancias, (void*)tieneAlgunaEntradaDisponible); // devuelvo la instancia con mas entradas libres
 	};
-
-	return 0;
+	return instancia = NULL; // si no hay instancia en tabla_instancias devuelvo una lista para llenar.
 };
 
-t_instancia* algoritmoDeDistribucion() {
+
+t_instancia* algoritmoDeDistribucion(char* c) {
 	// implementar
 	// paso 1: hay que hacer un switch de la variable ya cargada: algoritmo_distribucion
 	// paso 2: implementar si es EL (Equitative Load) que TCB devuelve de la tabla_instancias
@@ -176,6 +164,8 @@ int procesarPaquete(char* paquete) {
 		return -1;
 	}
 
+	int opGET = 1;
+
 	if (instruccion->operacion == opGET) {
 
 		// existe => no hago nada
@@ -184,7 +174,7 @@ int procesarPaquete(char* paquete) {
 		if (!instancia) {
 			log_info(logger, "La clave %s no existe en ninguna Instancia", instruccion->clave);
 			log_info(logger, "Escojo una Instancia segun el algoritmo %s", algoritmo_distribucion);
-			t_instancia* instancia = algoritmoDeDistribucion();
+			t_instancia* instancia = algoritmoDeDistribucion(instruccion->clave);
 			log_info(logger, "La Instancia sera la %d", instancia->id);
 			list_add(instancia->claves_asignadas, instruccion->clave);
 			log_info(logger, "La clave %s fue asignada a la Instancia %d", instruccion->clave, instancia->id);

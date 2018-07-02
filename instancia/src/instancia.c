@@ -24,10 +24,85 @@ char* port_coordinador;
 uint32_t id_instancia;
 int socketCoordinador, intervalo_dump;
 uint32_t cant_entradas, tam_entradas;
+
 t_list* tabla_entradas;
 char* mapa_archivo;
-
+int algoritmo_reemplazo;
 const uint32_t PAQUETE_OK = 1;
+
+
+void algoritmoDeReemplazo(int valor, t_entrada* nva_entrada){
+
+	switch(valor){
+	case 1: return algoritmoCircular(nva_entrada);
+	break;
+	case 2: return algoritmoLRU(nva_entrada);
+	break;
+	//case 3: return algortimoBSU(nva_entrada);
+	//break;
+	}
+}
+
+/**
+	* @NAME: algortimoCircular
+	* @DESC: Va iterando entre las entradas secuencialmente hasta el final de la tabla.
+	*/
+
+void algoritmoCircular(t_entrada* nva_entrada){
+
+	for(int cont=0; cant_entradas >= cont ; cont++){
+
+		list_add_in_index(tabla_entradas, cont, nva_entrada);
+
+		while(cont == cant_entradas){ // vuelve el contador al principio de la tabla de entradas
+			cont = 0;
+		}
+		break;
+	}
+}
+
+/**
+	* @NAME: algortimoLSU (Least Recently Used)
+	* @DESC: selecciona la entrada que fue referenciada hace más tiempo y la reemplaza. (para ello cada entrada guarda
+	* la variable cantOperaciones).
+	*/
+
+bool compararOperaciones(void* nodo1, void* nodo2){
+
+	t_entrada* entrada1 = (t_entrada*) nodo1;
+	t_entrada* entrada2 = (t_entrada*) nodo2;
+
+	if(entrada1->cantOperaciones > entrada2->cantOperaciones){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void algoritmoLRU(t_entrada* nueva_entrada){
+
+	if(!(list_is_empty(tabla_entradas))){
+
+	list_sort(tabla_entradas, compararOperaciones);
+
+	list_remove(tabla_entradas, 0);
+
+	list_add_in_index(tabla_entradas, 0, nueva_entrada);
+
+	} else {
+		list_add_in_index(tabla_entradas, 0, nueva_entrada);
+	}
+}
+
+/**
+	* @NAME: algortimoBSU (Biggest Space Used)
+	* @DESC: lleva registro del tamaño dentro de la entrada atomica que está siendo ocupada y selecciona la que tiene
+	* mayor espacio libre.
+	*/
+
+//void algoritmoBSU(){ //Biggest Space Used
+
+//}
 
 void imprimirTablaDeEntradas() {
 	printf("\n_______TABLA DE ENTRADAS_______\n");
@@ -133,6 +208,9 @@ void imprimirArgumentosInstruccion(t_instruccion* instruccion) {
 	}
 }
 
+
+
+
 void abrirArchivoInstancia(int* fileDescriptor) {
 	/*
 	 * La syscall open() nos permite abrir un archivo para escritura/lectura
@@ -237,7 +315,11 @@ void procesar(t_instruccion* instruccion) {
 			nueva_entrada->clave = instruccion->clave;
 			nueva_entrada->entrada_asociada = tabla_entradas->elements_count;
 			nueva_entrada->size_valor_almacenado = strlen(instruccion->clave);
-			list_add(tabla_entradas, nueva_entrada);
+			nueva_entrada->cantOperaciones = 1;
+			//acá se aplica alguno de los tres algoritmos de reemplazo
+			algoritmoDeReemplazo(algoritmo_reemplazo, nueva_entrada);
+
+			//list_add(tabla_entradas, nueva_entrada);
 		} else if (instruccion->operacion == 2) {
 			log_info(logger, "No hay que hacer nada");
 			// es SET: no hacer nada
