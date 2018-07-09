@@ -60,6 +60,7 @@ typedef enum {
 
 t_log* logger;
 t_log* logger_operaciones;
+t_config* config;
 bool error_config;
 char* ip;
 char* port;
@@ -84,8 +85,12 @@ void atenderESI(int socketESI) {
 	//send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 
 	uint32_t avanzar = 1;
-
+	int iteracion = 1;
 	while(1) {
+		log_warning(logger, "ITERACION: %i", iteracion);
+		iteracion++;
+
+		log_info(logger, "Me hago pasar por el Planificador y le pido al ESI que avance");
 		send(socketESI, &avanzar, sizeof(uint32_t), 0);
 		uint32_t tam_paquete;
 
@@ -135,6 +140,10 @@ void* establecerConexion(void* socketCliente) {
 	return NULL;
 }
 
+void finalizar() {
+	finalizarConexionArchivo(config);
+}
+
 t_control_configuracion cargarConfiguracion() {
 	error_config = false;
 
@@ -145,7 +154,7 @@ t_control_configuracion cargarConfiguracion() {
 	 */
 
 	// Importo los datos del archivo de configuracion
-	t_config* config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/coordinador/config_coordinador.cfg", &error_config);
+	config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/coordinador/config_coordinador.cfg", &error_config);
 
 	ip = obtenerCampoString(logger, config, "IP", &error_config);
 	port = obtenerCampoString(logger, config, "PORT", &error_config);
@@ -155,8 +164,6 @@ t_control_configuracion cargarConfiguracion() {
 	retardo = obtenerCampoInt(logger, config, "RETARDO", &error_config);
 
 	//establecerProtocoloDistribucion();
-
-	finalizarConexionArchivo(config);
 
 	// Valido si hubo errores
 	if (error_config) {
@@ -177,10 +184,13 @@ int main(void) {
 		return EXIT_FAILURE;
 	}
 
-	log_info(logger, "IP: %s", ip);
-	log_info(logger, "PORT: %s", port);
+	socketDeEscucha = conectarComoServidor(logger, ip, port);
 
-	//socketDeEscucha = conectarComoServidor(logger, ip, port);
+	while (1) { // Infinitamente escucha a la espera de que se conecte alguien
+		int socketCliente = escucharCliente(logger, socketDeEscucha);
+		pthread_t unHilo; // Cada conexion la delega en un hilo
+		pthread_create(&unHilo, NULL, establecerConexion, (void*) &socketCliente);
+	}
 
 	return EXIT_SUCCESS;
 }
