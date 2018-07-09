@@ -81,7 +81,7 @@ void atenderESI(int socketESI) {
 
 	uint32_t esi_ID = 10; // le asigno ID
 	send(socketESI, &esi_ID, sizeof(uint32_t), 0);
-	log_info(logger, "Se ha conectado un ESI con ID: %d", esi_ID);
+	log_info(logger, "COORDINADOR: se ha conectado un ESI con ID: %d", esi_ID);
 	//send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 
 	uint32_t avanzar = 1;
@@ -90,30 +90,45 @@ void atenderESI(int socketESI) {
 		log_warning(logger, "ITERACION: %i", iteracion);
 		iteracion++;
 
-		log_info(logger, "Me hago pasar por el Planificador y le pido al ESI que avance");
+		log_info(logger, "PLANIFICADOR: le pido al ESI que avance");
 		send(socketESI, &avanzar, sizeof(uint32_t), 0);
 		uint32_t tam_paquete;
 
 		recv(socketESI, &tam_paquete, sizeof(uint32_t), 0); // Recibo el header
 		char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
 		recv(socketESI, paquete, tam_paquete, 0);
-		log_info(logger, "El ESI %d me envia un paquete", esi_ID);
+		log_info(logger, "COORDINADOR: el ESI %d me envia un paquete", esi_ID);
 
 		sleep(retardo * 0.001); // Retardo ficticio
 
-		log_info(logger, "Le informo al ESI %d que el paquete llego correctamente", esi_ID);
+		log_info(logger, "COORDINADOR: le informo al ESI %d que el paquete llego correctamente", esi_ID);
 		send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0); // Envio respuesta al ESI
 
 		// ---------- COORDINADOR - PLANIFICADOR ----------
 		// Aca el Coordinador le va a mandar el paquete al Planificador
 		// Esto es para consultar si puede utilizar los recursos que pide
 
-		log_info(logger, "Le consulto al Planificador si ESI %d puede hacer uso del recurso", esi_ID);
+		log_info(logger, "COORDINADOR: le consulto al Planificador si ESI %d puede hacer uso del recurso", esi_ID);
 
-		log_info(logger, "Le aviso al ESI %d que la instruccion se ejecuto satisfactoriamente", esi_ID);
+		log_info(logger, "COORDINADOR: le aviso al ESI %d que la instruccion se ejecuto satisfactoriamente", esi_ID);
 		send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 
-		destruirPaquete(paquete);
+		log_info(logger, "PLANIFICADOR: recibo respuesta del ESI");
+
+		uint32_t respuesta;
+		recv(socketESI, &respuesta, sizeof(uint32_t), 0);
+
+		if (respuesta == -1) {
+			log_error(logger, "PLANIFICADOR: se ABORTA el ESI");
+			destruirPaquete(paquete);
+			break;
+		} else if (respuesta == 0) {
+			log_warning(logger, "PLANIFICADOR: el ESI ha FINALIZADO");
+			destruirPaquete(paquete);
+			break;
+		} else {
+			log_info(logger, "PLANIFICADOR: el ESI informa que se ejecuto correctamente");
+		}
 	}
 }
 
