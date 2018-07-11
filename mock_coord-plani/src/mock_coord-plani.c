@@ -185,6 +185,8 @@ void loguearOperacion(uint32_t esi_ID, char* paquete) {
 
 bool claveEsLaActual(void* nodo) {
 	char* clave = (char*) nodo;
+	printf("clave nodo: %s\n", clave);
+	printf("clave actual: %s\n", clave_actual);
 	return strcmp(clave, clave_actual) == 0;
 }
 
@@ -201,6 +203,7 @@ int procesarPaquete(char* paquete) {
 		return -1;
 	}
 
+	clave_actual = instruccion->clave;
 	log_info(logger, "El Coordinador esta chequeando si la clave ya existe...");
 	t_instancia* instancia = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave);
 
@@ -224,7 +227,6 @@ int procesarPaquete(char* paquete) {
 			log_info(logger, "La clave %s no existe en ninguna Instancia", instruccion->clave);
 			log_info(logger, "Escojo una Instancia segun el algoritmo %s", algoritmo_distribucion);
 			instancia = algoritmoDeDistribucion();
-			log_info(logger, "La Instancia sera la %d", instancia->id);
 			list_add(instancia->claves_asignadas, instruccion->clave);
 			log_info(logger, "La clave %s fue asignada a la Instancia %d", instruccion->clave, instancia->id);
 		} else {
