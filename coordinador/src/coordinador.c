@@ -11,8 +11,8 @@
 #include "coordinador.h"
 
 enum estado_instancia {
-	ACTIVA,
-	INACTIVA
+	ACTIVA = 1,
+	INACTIVA = 0
 };
 
 typedef enum {
@@ -23,6 +23,7 @@ typedef enum {
 
 t_log* logger;
 t_log* logger_operaciones;
+t_config* config;
 bool error_config;
 char* ip;
 char* port;
@@ -38,45 +39,74 @@ char* clave_actual;
 const uint32_t PAQUETE_OK = 1;
 const int TAM_MAXIMO_CLAVE = 40;
 
-/*
-t_instancia* algoritmoLSU(cola_istancias, instancia, clave) {
-	analizar tamaño de entradas();
-	analizar tamanño de instancias(); //tamaño = cantidad de entradas libres
-	if(hay entradas libres){
-		if (tamEntLibre == tamLoQQuieroGuardar) // si lo quiero guardar es atómico
-			asignar clave en ésta entrada();
-		else if (tamEntLibre < tamLoQQuieroGuardar) // si lo que quiero guardar ocupa más de una entrada
-			buscar espacio continuo() //dos entradas libres contiguas
-			si hay
-				asignar clave en estas entradas()
-		   	si no hay
-				compactar o posiblemente seguir buscando
-	}
+bool comparadorEntradasLibres(void* nodo1, void* nodo2) {
+	t_instancia* instancia1 = (t_instancia*) nodo1;
+	t_instancia* instancia2 = (t_instancia*) nodo2;
+	return (instancia1->entradas_libres > instancia2->entradas_libres);
 }
-t_instancia* algoritmoKE(cola_instancias, instancia, char clave) {
-	inicial = getChar("clave"); // tomar primer caracter clave EN MINUSCULA, ésto
-	inicialEnMinuscula = tolower(inicial) // convierte un tipo de dato caracter a minuscula (A-Z a a-z).
-	verificar donde guardar(inicialEnMinuscula == inicialInstancia) // inicial debera ser un numero, ejemplo "a" es 97
-	if (está la instancia con la misma inicial) {
-		guardar en esa instancia
-	} else {
-		ACA NO SE SABE QUE HACE
-	}
+
+t_instancia* algoritmoLSU() {
+	list_sort(tabla_instancias, comparadorEntradasLibres);
+	/*
+	 * Lo que hace ahora es similar a la implementacion de EL pero el list_add lo hace en cualquier lado
+	 * Esto es mejor asi, porque en promedio al disminuir la entradas_libres posteriormente si esta en
+	 * la mitad de la lista entonces el ordenamiento es mas optimo
+	 */
+	t_instancia* instancia;
+	do {
+		instancia = list_remove(tabla_instancias, 0);
+		list_add(tabla_instancias, instancia);
+	} while (instancia->estado == INACTIVA);
+	return instancia;
 }
-*/
+
+bool buscadorDeRango(void* nodo) {
+	t_instancia* instancia = (t_instancia*) nodo;
+
+	char caracter_inicial = tolower(clave_actual[0]);
+	int valor_caracter_inicial = 0; // ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿como???????????????
+
+	if ((instancia->estado == ACTIVA) && (instancia->rango_inicio <= valor_caracter_inicial) && (instancia->rango_inicio >= valor_caracter_inicial)) return true;
+	return false;
+}
+
+t_instancia* algoritmoKE() {
+	// Distribucion de rangos en las Instancias
+	int letra_inicio = 97; // a
+	int letra_fin = 122; // z
+
+	int rango_letras = letra_fin - letra_inicio; // a-z
+	int cant_instancias = list_size(tabla_instancias);
+	int asignacion = rango_letras / cant_instancias;
+
+	int i;
+	t_instancia* instancia;
+	int letra_actual = letra_inicio;
+	for (i = 0; i < cant_instancias - 1; i++) {
+		instancia = list_get(tabla_instancias, i);
+		instancia->rango_inicio = letra_actual;
+		instancia->rango_fin = letra_actual + asignacion;
+		letra_actual = instancia->rango_fin + 1;
+	}
+	instancia = list_get(tabla_instancias, i);
+	instancia->rango_inicio = letra_actual;
+	instancia->rango_fin = letra_fin;
+
+	// Busco la instancia correspondiente
+	return list_find(tabla_instancias, buscadorDeRango);
+}
+
 
 t_instancia* algoritmoEL() {
-	t_instancia* instancia = list_remove(tabla_instancias, 0);
-	list_add_in_index(tabla_instancias, list_size(tabla_instancias), instancia);
+	t_instancia* instancia;
+	do {
+		instancia = list_remove(tabla_instancias, 0);
+		list_add_in_index(tabla_instancias, list_size(tabla_instancias), instancia);
+	} while (instancia->estado == INACTIVA);
 	return instancia;
 }
 
 t_instancia* algoritmoDeDistribucion() {
-	// implementar
-	// paso 1: hay que hacer un switch de la variable ya cargada: algoritmo_distribucion
-	// paso 2: implementar si es EL (Equitative Load) que TCB devuelve de la tabla_instancias
-	// obs: hacer el case de los demas casos pero sin implementacion
-
 	log_info(logger, "Aguarde mientras se busca una Instancia");
 	while (list_is_empty(tabla_instancias)) {
 		sleep(4); // Lo pongo para que la espera activa no sea tan densa
@@ -85,10 +115,10 @@ t_instancia* algoritmoDeDistribucion() {
 
 	switch (protocolo_distribucion) {
 	case LSU: // LSU
-		//return algoritmoLSU();
+		return algoritmoLSU();
 
 	case KE: // KE
-		//return algoritmoKE();
+		return algoritmoKE();
 
 	default: // Equitative Load
 		return algoritmoEL();
@@ -183,7 +213,6 @@ int procesarPaquete(char* paquete) {
 			return -1;
 		}
 	}
-
 	return 1;
 }
 
@@ -295,7 +324,6 @@ void* establecerConexion(void* socketCliente) {
 	} else {
 		log_error(logger, "No se pudo reconocer al cliente");
 	}
-
 	return NULL;
 }
 
@@ -331,8 +359,6 @@ t_control_configuracion cargarConfiguracion() {
 
 	establecerProtocoloDistribucion();
 
-	finalizarConexionArchivo(config);
-
 	// Valido si hubo errores
 	if (error_config) {
 		log_error(logger, "No se pudieron obtener todos los datos correspondientes");
@@ -345,6 +371,7 @@ void finalizar() {
 	finalizarSocket(socketDeEscucha);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
+	finalizarConexionArchivo(config);
 }
 
 int main() { // ip y puerto son char* porque en la biblioteca se los necesita de ese tipo

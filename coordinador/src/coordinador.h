@@ -43,6 +43,8 @@ typedef struct {
 	int id;
 	int socket;
 	int entradas_libres; // se actualizan a medida que la Instancia procesa
+	int rango_inicio;
+	int rango_fin;
 	int estado; // 1 = activa, 0 = inactiva
 	t_list* claves_asignadas;
 } __attribute__((packed)) t_instancia;
@@ -58,6 +60,10 @@ bool claveEsLaActual(void* nodo);
 void loguearOperacion(uint32_t esi_ID, char* paquete);
 t_instancia* algoritmoDeDistribucion();
 t_instancia* algoritmoEL();
+t_instancia* algoritmoLSU();
+bool comparadorEntradasLibres(void* nodo1, void* nodo2);
+t_instancia* algoritmoKE();
+bool buscadorDeRango(void* nodo);
 void finalizar();
 
 #endif /* COORDINADOR_H_ */

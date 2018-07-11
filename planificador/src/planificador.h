@@ -11,6 +11,8 @@
 #include <commons/collections/queue.h>
 #include "../../biblioteca-El-Rejunte/src/misSockets.h"
 #include <readline/readline.h>
+#include <pthread.h>
+
 
 
 
@@ -84,7 +86,7 @@ t_list * deadlockeados;
 int claveParaBloquearESI;
 char * claveParaBloquearRecurso;
 int socketCoordinador;
-
+extern pthread_mutex_t mutexColaListos;
 
 // ESTRUCTURAS DE PROCESOS
 
@@ -100,7 +102,7 @@ typedef struct{
 	t_list * recursosAsignado; // clave
 	char * recursoPedido; // clave
 	int proximaOperacion; //todo inicializar char **
-
+	bool recienLlegado;
 }ESI;
 
 typedef struct{ // en la lista de subrecursos: futbol, basquet..
@@ -135,7 +137,6 @@ void liberarGlobales ();
 void estimarRafagaSiguiente(int tiempoAnterior);
 ESI * crearESI(uint32_t clave);
 void ESI_destroy(ESI * estructura);
-void escucharPedidos();
 void liberarRecursos(ESI * esi);
 void estimarProximaRafaga(ESI* proceso );
 bool compararClaves (ESI * esi);
@@ -151,7 +152,18 @@ extern void bloquearRecurso(char * claveRecurso);
 extern void desbloquearRecurso(char * claveRecurso);
 extern bool validarPedido (char * recurso, ESI * esi);
 extern bool recursoEnLista(char * r, t_list * lista);
+extern void limpiarRecienLlegados();
 
 
+extern void planificacionSJF(bool desalojo);
+extern void estimarTiempos();
+extern void armarColaListos();
+
+
+extern void planificacionHRRN(bool desalojo);
+extern void estimarYCalcularTiempos();
+extern float calcularTiempoEspera (float espera, int estimacionSiguiente);
+extern void armarCola ();
+extern void sumarTiemposEspera ();
 
 #endif /* PLANIFICADOR_H_ */

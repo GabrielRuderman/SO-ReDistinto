@@ -53,6 +53,14 @@ int conectarComoServidor(t_log* logger, const char* ip, const char* puerto) {
 	int listenningSocket;
 	listenningSocket = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
 
+	// Si habia quedado algun bit de conexion lo limpio
+	int yes = 1;
+	// lose the pesky "Address already in use" error message
+	if (setsockopt(listenningSocket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
+	    perror("Error");
+	    exit(1);
+	}
+
 	/*
 	 * 	Perfecto, ya tengo un archivo que puedo utilizar para analizar las conexiones entrantes. Pero... ¿Por donde?
 	 *
@@ -61,13 +69,13 @@ int conectarComoServidor(t_log* logger, const char* ip, const char* puerto) {
 	 * 				OJO! Todavia no estoy escuchando las conexiones entrantes!
 	 *
 	 */
-	bind(listenningSocket, serverInfo->ai_addr, serverInfo->ai_addrlen);
+	if (bind(listenningSocket, serverInfo->ai_addr, serverInfo->ai_addrlen) < 0) perror("Error");
 	freeaddrinfo(serverInfo); // Ya no lo vamos a necesitar
 
 	/*
 	 * 	Ya tengo un medio de comunicacion (el socket) y le dije por que "telefono" tiene que esperar las llamadas.
 	 */
-	log_info(logger, "Servidor conectado.");
+	log_info(logger, "Servidor conectado");
 	return listenningSocket;
 }
 
@@ -141,10 +149,11 @@ int conectarComoCliente(t_log* logger, const char* ip, const char* puerto) {
 	 *
 	 */
 	int res = connect(serverSocket, serverInfo->ai_addr, serverInfo->ai_addrlen);
-	freeaddrinfo(serverInfo);	// No lo necesitamos mas
+	freeaddrinfo(serverInfo);	// Libera porque no lo necesitamos mas
 
 	if (res < 0) {
 		log_error(logger, "No me pude conectar al servidor %s", ip);
+		perror("Error");
 	} else {
 		/*
 		 *	Estoy conectado!

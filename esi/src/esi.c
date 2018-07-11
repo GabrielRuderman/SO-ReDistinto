@@ -17,6 +17,7 @@
 #include "esi.h"
 
 t_log* logger;
+t_config* config;
 uint32_t miID;
 bool error_config = false;
 char* ip_coordinador;
@@ -27,6 +28,8 @@ int socketCoordinador, socketPlanificador;
 FILE *fp;
 uint32_t respuesta;
 
+const int ABORTA_ESI = -1;
+const int TERMINA_ESI = 0;
 const int PAQUETE_OK = 1;
 
 t_esi_operacion parsearLineaScript(FILE* fp) {
@@ -46,15 +49,13 @@ t_control_configuracion cargarConfiguracion() {
 	error_config = false;
 
 	// Se crea una estructura de datos que contendra todos lo datos de mi CFG que lea la funcion config_create
-	t_config* config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/esi/config_esi.cfg", &error_config);
+	config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/esi/config_esi.cfg", &error_config);
 
 	// Obtiene los datos para conectarse al coordinador y al planificador
 	ip_coordinador = obtenerCampoString(logger, config, "IP_COORDINADOR", &error_config);
 	ip_planificador = obtenerCampoString(logger, config, "IP_PLANIFICADOR", &error_config);
 	port_coordinador = obtenerCampoString(logger, config, "PORT_COORDINADOR", &error_config);
 	port_planificador = obtenerCampoString(logger, config, "PORT_PLANIFICADOR",	&error_config);
-
-	finalizarConexionArchivo(config);
 
 	// Valido posibles errores
 	if (error_config) {
@@ -69,6 +70,7 @@ void finalizar() {
 	if (socketCoordinador > 0) finalizarSocket(socketCoordinador);
 	if (socketPlanificador > 0) finalizarSocket(socketPlanificador);
 	log_destroy(logger);
+	finalizarConexionArchivo(config);
 }
 
 int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda en arv[1]
@@ -102,6 +104,9 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 	log_info(logger, "Le aviso al Coordinador que soy el ESI %d", miID);
 	send(socketCoordinador, &miID, sizeof(uint32_t), 0);
 
+	recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+	if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que me detecto correctamente");
+
 	uint32_t orden;
 
 	while(!feof(fp)) {
@@ -117,18 +122,24 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			// Se empaqueta la instruccion
 			char* paquete = empaquetarInstruccion(instruccion, logger);
 
-			recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
-			if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que me detecto correctamente");
-
 			log_info(logger, "Envio la instruccion al Cooordinador");
 			uint32_t tam_paquete = strlen(paquete);
 			send(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0); // Envio el header
 			send(socketCoordinador, paquete, tam_paquete, 0); // Envio el paquete
+			destruirPaquete(paquete);
 
 			recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
 			if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que el paquete llego correctamente");
 
 			recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+
+			if (feof(fp)) {
+				log_info(logger, "El Coordinador informa el resultado de la instruccion");
+				log_warning(logger, "Le aviso al Planificador que no tengo mas instrucciones para ejecutar");
+				send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), 0);
+				break;
+			}
+
 			if (respuesta == PAQUETE_OK) {
 				log_info(logger, "El Coordinador informa que la instruccion se proceso satisfactoriamente");
 				log_info(logger, "Le aviso al Planificador que la instruccion pudo ser procesada");
@@ -136,7 +147,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			} else {
 				log_error(logger, "El Coordinador informa que la instruccion no se pudo procesar");
 				log_error(logger, "SE ABORTA EL ESI");
-				//send(socketPlanificador, &ABORTAR_ESI, sizeof(uint32_t), 0);
+				send(socketPlanificador, &ABORTA_ESI, sizeof(uint32_t), 0);
 				finalizar();
 				return EXIT_FAILURE;
 			}

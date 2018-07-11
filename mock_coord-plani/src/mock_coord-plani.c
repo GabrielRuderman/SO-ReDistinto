@@ -39,14 +39,6 @@ enum chequeo_planificador {
 	SE_BLOQUEA_ESI = 0
 };
 
-typedef struct {
-	int id;
-	int socket;
-	int entradas_libres; // se actualizan a medida que la Instancia procesa
-	int estado; // 1 = activa, 0 = inactiva
-	t_list* claves_asignadas;
-} __attribute__((packed)) t_instancia;
-
 enum estado_instancia {
 	ACTIVA,
 	INACTIVA
@@ -73,8 +65,195 @@ int socketDeEscucha;
 int socketPlanificador;
 char* clave_actual;
 
+typedef struct {
+	int id;
+	int socket;
+	int entradas_libres; // se actualizan a medida que la Instancia procesa
+	int rango_inicio;
+	int rango_fin;
+	int estado; // 1 = activa, 0 = inactiva
+	t_list* claves_asignadas;
+} __attribute__((packed)) t_instancia;
+
 const uint32_t PAQUETE_OK = 1;
 const int TAM_MAXIMO_CLAVE = 40;
+
+bool comparadorEntradasLibres(void* nodo1, void* nodo2) {
+	t_instancia* instancia1 = (t_instancia*) nodo1;
+	t_instancia* instancia2 = (t_instancia*) nodo2;
+	return (instancia1->entradas_libres > instancia2->entradas_libres);
+}
+
+t_instancia* algoritmoLSU() {
+	list_sort(tabla_instancias, comparadorEntradasLibres);
+	/*
+	 * Lo que hace ahora es similar a la implementacion de EL pero el list_add lo hace en cualquier lado
+	 * Esto es mejor asi, porque en promedio al disminuir la entradas_libres posteriormente si esta en
+	 * la mitad de la lista entonces el ordenamiento es mas optimo
+	 */
+	t_instancia* instancia;
+	do {
+		instancia = list_remove(tabla_instancias, 0);
+		list_add(tabla_instancias, instancia);
+	} while (instancia->estado == INACTIVA);
+	return instancia;
+}
+
+bool buscadorDeRango(void* nodo) {
+	t_instancia* instancia = (t_instancia*) nodo;
+
+	char caracter_inicial = tolower(clave_actual[0]);
+	int valor_caracter_inicial = 0; // ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿como???????????????
+
+	if ((instancia->estado == ACTIVA) && (instancia->rango_inicio <= valor_caracter_inicial) && (instancia->rango_inicio >= valor_caracter_inicial)) return true;
+	return false;
+}
+
+t_instancia* algoritmoKE() {
+	// Distribucion de rangos en las Instancias
+	int letra_inicio = 97; // a
+	int letra_fin = 122; // z
+
+	int rango_letras = letra_fin - letra_inicio; // a-z
+	int cant_instancias = list_size(tabla_instancias);
+	int asignacion = rango_letras / cant_instancias;
+
+	int i;
+	t_instancia* instancia;
+	int letra_actual = letra_inicio;
+	for (i = 0; i < cant_instancias - 1; i++) {
+		instancia = list_get(tabla_instancias, i);
+		instancia->rango_inicio = letra_actual;
+		instancia->rango_fin = letra_actual + asignacion;
+		letra_actual = instancia->rango_fin + 1;
+	}
+	instancia = list_get(tabla_instancias, i);
+	instancia->rango_inicio = letra_actual;
+	instancia->rango_fin = letra_fin;
+
+	// Busco la instancia correspondiente
+	return list_find(tabla_instancias, buscadorDeRango);
+}
+
+
+t_instancia* algoritmoEL() {
+	t_instancia* instancia;
+	do {
+		instancia = list_remove(tabla_instancias, 0);
+		list_add_in_index(tabla_instancias, list_size(tabla_instancias), instancia);
+	} while (instancia->estado == INACTIVA);
+	return instancia;
+}
+
+t_instancia* algoritmoDeDistribucion() {
+	log_info(logger, "Aguarde mientras se busca una Instancia");
+	while (list_is_empty(tabla_instancias)) {
+		sleep(4); // Lo pongo para que la espera activa no sea tan densa
+		log_warning(logger, "No hay instancias disponibles. Reintentando...");
+	}
+
+	switch (protocolo_distribucion) {
+	case LSU: // LSU
+		return algoritmoLSU();
+
+	case KE: // KE
+		return algoritmoKE();
+
+	default: // Equitative Load
+		return algoritmoEL();
+	}
+}
+
+void loguearOperacion(uint32_t esi_ID, char* paquete) {
+	log_info(logger, "Logueo la operacion en el Log de Operaciones");
+
+	/*
+	 * Log de Operaciones (Ejemplo)
+	 * ESI 		Operación
+	 * ESI 1 	SET materias:K3001 Fisica 2
+	 * ESI 1 	STORE materias:K3001
+	 * ESI 2 	SET materias:K3002 Economia
+	 */
+
+	char* cadena_log_operaciones = string_new();
+	string_append(&cadena_log_operaciones, "ESI ");
+	string_append_with_format(&cadena_log_operaciones, "%d", esi_ID);
+	string_append(&cadena_log_operaciones, "	");
+	string_append(&cadena_log_operaciones, paquete);
+	log_info(logger_operaciones, cadena_log_operaciones);
+}
+
+bool claveEsLaActual(void* nodo) {
+	char* clave = (char*) nodo;
+	return strcmp(clave, clave_actual) == 0;
+}
+
+bool instanciaTieneLaClave(void* nodo) {
+	t_instancia* instancia = (t_instancia*) nodo;
+	return list_any_satisfy(instancia->claves_asignadas, claveEsLaActual);
+}
+
+int procesarPaquete(char* paquete) {
+	t_instruccion* instruccion = desempaquetarInstruccion(paquete, logger);
+
+	if (strlen(instruccion->clave) > TAM_MAXIMO_CLAVE) {
+		log_error(logger, "Error de Tamano de Clave");
+		return -1;
+	}
+
+	log_info(logger, "El Coordinador esta chequeando si la clave ya existe...");
+	t_instancia* instancia = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave);
+
+	if (!instancia) {
+		log_info(logger, "La clave %s no esta en ninguna Instancia", instruccion->clave);
+	} else {
+		log_info(logger, "La clave %s esta asignada a Instancia %d", instancia->id);
+
+		if (instancia->estado == INACTIVA) {
+			log_error(logger, "Error de Clave Inaccesible");
+			return -1;
+		}
+	}
+
+	if (instruccion->operacion == opGET) {
+
+		// existe => no hago nada
+		// no existe => la creo
+
+		if (!instancia) {
+			log_info(logger, "La clave %s no existe en ninguna Instancia", instruccion->clave);
+			log_info(logger, "Escojo una Instancia segun el algoritmo %s", algoritmo_distribucion);
+			instancia = algoritmoDeDistribucion();
+			log_info(logger, "La Instancia sera la %d", instancia->id);
+			list_add(instancia->claves_asignadas, instruccion->clave);
+			log_info(logger, "La clave %s fue asignada a la Instancia %d", instruccion->clave, instancia->id);
+		} else {
+			log_info(logger, "Como la clave ya esta asignada no hago nada");
+			return 1;
+		}
+	} else { // SET o STORE
+
+		// existe => la envio a Instancia
+		// no existe => Error de Clave no Identificada
+
+		if (instancia) {
+			log_info(logger, "Le envio a Instancia %d el paquete", instancia->id);
+			uint32_t tam_paquete = strlen(paquete);
+			send(instancia->socket, &tam_paquete, sizeof(uint32_t), 0);
+			send(instancia->socket, &paquete, tam_paquete, 0);
+
+			// La Instancia me devuelve la cantidad de entradas libres que tiene
+			uint32_t respuesta;
+			recv(instancia->socket, &respuesta, sizeof(uint32_t), 0);
+			instancia->entradas_libres = respuesta;
+			log_info(logger, "La Instancia %d me informa que le quedan %d entradas libres", instancia->id, respuesta);
+		} else {
+			log_error(logger, "Error de Clave no Identificada");
+			return -1;
+		}
+	}
+	return 1;
+}
 
 void atenderESI(int socketESI) {
 	// ---------- COORDINADOR - ESI ----------
@@ -110,6 +289,10 @@ void atenderESI(int socketESI) {
 
 		log_info(logger, "COORDINADOR: le consulto al Planificador si ESI %d puede hacer uso del recurso", esi_ID);
 
+		log_info(logger, "COORDINADOR: el Planificador me informa que el ESI %d puede utilizar el recurso", esi_ID);
+		procesarPaquete(paquete);
+		loguearOperacion(esi_ID, paquete);
+
 		log_info(logger, "COORDINADOR: le aviso al ESI %d que la instruccion se ejecuto satisfactoriamente", esi_ID);
 		send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 
@@ -132,6 +315,41 @@ void atenderESI(int socketESI) {
 	}
 }
 
+void atenderInstancia(int socketInstancia) {
+	// Recibo la ID
+	uint32_t instancia_ID;
+	recv(socketInstancia, &instancia_ID, sizeof(uint32_t), 0);
+	log_info(logger, "Es la Instancia %d", instancia_ID);
+
+	log_info(logger, "Busco si ya fue creada en la Tabla de Instancias");
+	//t_instancia* instancia = list_find(tabla_instancias, existeID);
+	t_instancia* instancia = NULL; // no va
+	if (instancia) {
+		log_info(logger, "La Instancia %d ya existia, la pongo ACTIVA", instancia_ID);
+		instancia->estado = ACTIVA;
+		return;
+	}
+
+	// Guarda el struct de la Instancia en mi lista
+	t_instancia* unaInstancia = (t_instancia*) malloc(sizeof(t_instancia));
+	unaInstancia->id = instancia_ID;
+	unaInstancia->socket = socketInstancia;
+	unaInstancia->entradas_libres = cant_entradas;
+	unaInstancia->estado = ACTIVA;
+	unaInstancia->claves_asignadas = list_create();
+
+	log_info(logger, "Envio a la Instancia su cantidad de entradas");
+	send(socketInstancia, &cant_entradas, sizeof(uint32_t), 0);
+
+	log_info(logger, "Envio a la Instancia el tamaño de las entradas");
+	send(socketInstancia, &tam_entradas, sizeof(uint32_t), 0);
+
+	list_add(tabla_instancias, unaInstancia);
+	log_info(logger, "Instancia agregada a la Tabla de Instancias");
+
+	printf("La cantidad de instancias actual es %d\n", list_size(tabla_instancias));
+}
+
 void* establecerConexion(void* socketCliente) {
 	log_info(logger, "Cliente conectado");
 
@@ -148,15 +366,24 @@ void* establecerConexion(void* socketCliente) {
 	if (handshake == ESI) {
 		log_info(logger, "El cliente es ESI");
 		atenderESI(*(int*) socketCliente);
+	} else if (handshake == INSTANCIA) {
+		log_info(logger, "El cliente es una Instancia");
+		atenderInstancia(*(int*) socketCliente);
 	} else {
 		log_error(logger, "No se pudo reconocer al cliente");
 	}
-
 	return NULL;
 }
 
-void finalizar() {
-	finalizarConexionArchivo(config);
+// Protocolo numerico de ALGORITMO_DISTRIBUCION
+void establecerProtocoloDistribucion() {
+	if (strcmp(algoritmo_distribucion, "LSU")) {
+		protocolo_distribucion = LSU;
+	} else if (strcmp(algoritmo_distribucion, "KE")) {
+		protocolo_distribucion = KE;
+	} else {
+		protocolo_distribucion = EL; // Equitative Load
+	}
 }
 
 t_control_configuracion cargarConfiguracion() {
@@ -178,7 +405,7 @@ t_control_configuracion cargarConfiguracion() {
 	tam_entradas = obtenerCampoInt(logger, config, "TAM_ENTRADAS", &error_config);
 	retardo = obtenerCampoInt(logger, config, "RETARDO", &error_config);
 
-	//establecerProtocoloDistribucion();
+	establecerProtocoloDistribucion();
 
 	// Valido si hubo errores
 	if (error_config) {
@@ -186,6 +413,13 @@ t_control_configuracion cargarConfiguracion() {
 		return CONFIGURACION_ERROR;
 	}
 	return CONFIGURACION_OK;
+}
+
+void finalizar() {
+	finalizarSocket(socketDeEscucha);
+	log_destroy(logger_operaciones);
+	log_destroy(logger);
+	finalizarConexionArchivo(config);
 }
 
 int main(void) {
@@ -196,8 +430,12 @@ int main(void) {
 
 	if (cargarConfiguracion() == CONFIGURACION_ERROR) {
 		log_error(logger, "No se pudo cargar la configuracion");
+		finalizar();
 		return EXIT_FAILURE;
 	}
+
+	log_info(logger, "COORDINADOR: Se crea la Tabla de Instancias");
+	tabla_instancias = list_create();
 
 	socketDeEscucha = conectarComoServidor(logger, ip, port);
 

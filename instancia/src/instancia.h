@@ -42,6 +42,8 @@ void generarTablaDeEntradas();
 void agregarAlDiccionario(char* key, char* val);
 void almacenarValorYGenerarTabla(char* val, char* clave);
 void abrirArchivoInstancia(int* fileDescriptor);
+void actualizarMapaMemoria();
+void dumpMemoria();
 void imprimirTablaDeEntradas();
 t_instruccion* recibirInstruccion(int socketCoorinador);
 void imprimirArgumentosInstruccion(t_instruccion* instruccion); // Creo que despues se borra esta funcion

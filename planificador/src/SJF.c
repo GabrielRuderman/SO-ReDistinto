@@ -1,6 +1,7 @@
-#include "SJF.h"
+#include "planificador.h"
 
 int socketDeEscucha;
+bool planificacionSJFTerminada;
 
 void planificacionSJF(bool desalojo){
 
@@ -19,15 +20,9 @@ void planificacionSJF(bool desalojo){
 
 	log_info(logPlanificador, "Comienza planificacion SJF");
 
-	log_info(logPlanificador, "Conectando servidor");
-
-	log_info(logPlanificador,"Arraca SJF");
-
-	estimarTiempos();
-
-	log_info(logPlanificador, "Tiempos de los ESI listos estimados");
-
+	pthread_mutex_lock(&mutexColaListos);
 	armarColaListos();
+	pthread_mutex_unlock(&mutexColaListos);
 
 	log_info(logPlanificador, "Cola de ESI armada");
 
@@ -40,6 +35,8 @@ void planificacionSJF(bool desalojo){
 
 		bool permiso = true;
 
+		bool desalojar = false;
+
 		ESI * nuevo = queue_pop(colaListos);
 
 		uint32_t operacion;
@@ -47,7 +44,8 @@ void planificacionSJF(bool desalojo){
 		char * recursoPedido;
 
 
-		while(!finalizar && !bloquear && permiso){
+		while(!finalizar && !bloquear && permiso && !desalojar){
+
 
 				send(nuevo->id,&CONTINUAR,sizeof(uint32_t),0);
 				int respuesta1 = recv(socketCoordinador, &operacion, sizeof(operacion), 0);
@@ -79,6 +77,8 @@ void planificacionSJF(bool desalojo){
 
 					bloquearRecurso(recursoAUsar);
 
+					nuevo->recienLlegado = false;
+
 					log_info(logPlanificador, " ESI de clave %s entra al planificador", nuevo->id );
 
 					send(socketCoordinador, &CONTINUAR, sizeof(uint32_t),0);
@@ -96,16 +96,38 @@ void planificacionSJF(bool desalojo){
 					if (respuesta != CONTINUAR)
 					{
 						finalizar = true;
-					} else if (nuevo->id == claveParaBloquearESI)
+
+					} else if(desalojo) // si hay desalojo activo
 					{
-						bloquear = true;
+						pthread_mutex_lock(&mutexColaListos); // por las dudas que entre otro ESI justo en este momento (no lo tengo en cuenta)
+
+						ESI* auxiliar = queue_peek(colaListos);
+
+						if(auxiliar->recienLlegado) //chequeo si el proximo en cola es un recien llegado
+						{
+							if(auxiliar->estimacionSiguiente < (nuevo->estimacionSiguiente - nuevo->rafagasRealizadas)) // y si su estimacion siguiente es menor que la del que esta en ejecucion menos lo que ya hizo
+							{
+								desalojar = true; //se va a desalojar
+							} else
+							{
+								limpiarRecienLlegados(); // Si no es menor la estimacion, los recien llegados ya no tendrian validez, los actualizo
+							}
+						}
+						ESI_destroy(auxiliar);
+						pthread_mutex_unlock(&mutexColaListos);
 
 					}
+
+					if (nuevo->id == claveParaBloquearESI)
+					{
+						bloquear = true;
+					}
+
+
 
 				} else {
 
 					bloquearESI(nuevo->recursoPedido, nuevo);
-
 
 				}
 
@@ -116,16 +138,21 @@ void planificacionSJF(bool desalojo){
 		if( finalizar ){ //aca con el mensaje del ESI, determino si se bloquea o se finaliza
 
 			list_add ( listaFinalizados, nuevo);
-			log_info(logPlanificador, " ESI de clave %s en finalizados!", nuevo->id);
+			log_info(logPlanificador, " ESI de clave %d en finalizados!", nuevo->id);
 			liberarRecursos(nuevo);
-			armarColaListos();
 
 		} else if( bloquear ){ // este caso sería para bloqueados por usuario. No se libera clave acá
 
 			nuevo->bloqueadoPorUsuario = true;
 			bloquearRecurso(claveParaBloquearRecurso);
 			bloquearESI(claveParaBloquearRecurso,nuevo);
-			log_info(logPlanificador, " ESI de clave %s en bloqueados para recurso %s", nuevo->id, claveParaBloquearESI);
+			log_info(logPlanificador, " ESI de clave %d en bloqueados para recurso %s", nuevo->id, claveParaBloquearESI);
+
+		} else if (desalojar){
+
+			list_add(listaListos,nuevo); //aca no meto mutex porque si llega otro ESI que esté primero que el que genero el desalojo, lo desalojaria igual.
+			log_info(logPlanificador," ESI de clave %d desalojado", nuevo->id);
+			armarColaListos();
 
 		}
 
@@ -144,13 +171,17 @@ void estimarTiempos(){
 
 	listaListos = list_map(listaListos, (void *)estimarProximaRafaga);
 
-	log_info(logPlanificador,"terminada la estimacion \n");
+	log_info(logPlanificador,"terminada la estimacion");
 
 }
 
 
 
 void armarColaListos(){
+
+	estimarTiempos();
+
+	log_info(logPlanificador, "Tiempos de los ESI listos estimados");
 
 	log_info(logPlanificador,"armando cola de listos \n");
 
@@ -161,64 +192,35 @@ void armarColaListos(){
 		int i = 1;
 		ESIMasRapido = list_get(listaListos, 0);
 
-		while (i < list_size(listaListos)){
+		while (i < list_size(listaListos) && list_size(listaListos) > 0){
 
 			ESI * ESIAuxiliar = list_get(listaListos, i);
 			if (ESIMasRapido->estimacionSiguiente > ESIAuxiliar->estimacionSiguiente){
 
 				ESIMasRapido = ESIAuxiliar;
 
-			}
+			} else if (ESIMasRapido->estimacionSiguiente == ESIAuxiliar->estimacionSiguiente) //Ante empate de estimaciones
 
+			{
+				if(list_size(ESIAuxiliar->recursosAsignado)> 0 && list_size(ESIMasRapido->recursosAsignado) == 0){ //si tiene recursos asignados el nuevo, quiere decir que estaba ejecutando y tiene prioridad
+
+					ESIMasRapido = ESIAuxiliar;
+
+				} // en cualquier otro caso que no pase eso, seguiria el ESIMasRapido como el seleccionado
+
+			}
 			i++;
 		}
 
 		log_info(logPlanificador,"ESI numero %d es de estimacion: %d \n", i-1, ESIMasRapido->estimacionSiguiente);
 
 		claveActual = ESIMasRapido->id;
-		list_remove_by_condition(listaListos, (void *) compararClaves);
+		ESIMasRapido->bloqueadoPorUsuario = false;
 		queue_push(colaListos,ESIMasRapido);
+		list_remove_and_destroy_by_condition(listaListos, (void *) compararClaves,(void *)ESI_destroy);
 	}
 
 	log_info(logPlanificador,"cola armada \n");
 
-
-}
-
-
-void escucharPedidos(int conexion){
-
-
-	uint32_t a = 1234;
-	send(conexion, &a, sizeof(uint32_t),  0); // Envio al ESI lo que se eligio en consola
-	uint32_t respuesta;
-	recv(conexion, &respuesta , sizeof (uint32_t), 0);
-	printf("Me respondio: %d\n", respuesta);
-
-
-
-
-}
-
-
-
-void liberarBloqueados(){
-/*
-	int i = 0;
-	while(i < list_size(listaBloqueados)){
-
-		if(!recursoGenericoEnUso){ //deberia meter a todos en listos porque el recurso esta libre siempre basicamente
-
-			list_remove(listaBloqueados, i);
-			list_add(listaListos, list_remove(listaBloqueados, i));
-			log_info(logPlanificador, " se libero un ESI bloqueado por recurso");
-
-		}
-
-		i++;
-	}
-
-	armarColaListos(); //rearmo la cola de listos cuando entra el nuevo ESI.
-*/
 
 }

@@ -1,12 +1,9 @@
 #include "planificador.h"
 
-#include "SJF.h"
-#include "HRRN.h"
 
 // \n
 // todo free de los char*
 /*
- * todo meter los sockets.
  *
  *
  *

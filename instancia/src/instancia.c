@@ -138,6 +138,12 @@ void abrirArchivoInstancia(int* fileDescriptor) {
 	}
 }
 
+void actualizarMapaMemoria(){
+	//Reescribe el mapa de memoria con los últimos valores y claves en memoria.
+
+
+}
+
 void agregarAlDiccionario(char* key, char* val){
 	dictionary_put(dic_entradas, key, val);
 }
@@ -169,6 +175,24 @@ void almacenarValorYGenerarTabla(char* val, char* clave){
 		}
 	}
 
+}
+
+void dumpMemoria(){
+	int _fd;
+	char* _nombreArchivo;
+	// Funcion magica para comparar si esta la clave que quiero en la tabla de entradas
+	void obtenerClaves(char* key, char* val) {
+		_nombreArchivo = key;
+		_fd = open(_nombreArchivo, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+		if(fd < 0){
+			//ERROR AL ABRIR ARCHIVO
+		} else {
+			write(_fd, val, strlen(val));
+			close(_fd);
+		}
+	}
+	// Busco la clave en la tabla usando la funcion magica
+	dictionary_iterator(dic_entradas, obtenerClaves);
 }
 
 void generarTablaDeEntradas() {
@@ -247,6 +271,7 @@ void generarTablaDeEntradas() {
 uint32_t obtenerCantidadEntradasLibres(){
 	int cont = 0;
 
+	// Recorre el almacenamiento por cada entrada, preguntando si el primer valor en c/u es nulo.
 	for (int i = 0; i < tam_entradas * cant_entradas; i = i + tam_entradas){
 		if(bloque_instancia[i] == '0'){
 			cont++;
@@ -270,10 +295,20 @@ int procesar(t_instruccion* instruccion) {
 	// Busco la clave en la tabla usando la funcion magica
 	t_entrada* entrada = (t_entrada*) list_find(tabla_entradas, comparadorDeClaves);
 
-
-	/// Evaluo como procesar segun las condiciones
+	// Evaluo como procesar segun las condiciones
 	if (!entrada) { // la entrada no estaba
 		log_warning(logger, "LA CLAVE NO EXISTE EN LA TABLA");
+
+		switch (instruccion->operacion){
+		case 2: //SET de clave ausente
+			//Se agrega la tabla
+			break;
+		case 3: //STORE de clave ausente
+			log_error(logger, "Intento de STORE para una clave inexistente");
+			bandera = 1;
+			break;
+		}
+		/*
 		if (instruccion->operacion == 1) {
 			// es GET: crearla
 			log_info(logger, "Creo la clave en la tabla");
@@ -288,18 +323,27 @@ int procesar(t_instruccion* instruccion) {
 		} else {
 			log_error(logger, "Intento de STORE para una clave inexistente");
 			bandera = 1;
-		}
+		}*/
 	} else { // la entrada si estaba
 		log_warning(logger, "LA CLAVE EXISTE EN LA TABLA");
-		if (instruccion->operacion == 1) {
+		switch (instruccion->operacion){
+		case 2: //SET de clave presente.
+			setClaveValor(entrada, instruccion->valor);
+			break;
+		case 3: //STORE de clave presente.
+			operacionStore(instruccion->clave);
+			break;
+		}
+		/*if (instruccion->operacion == 1) {
 			// es GET: bloquearla
 			log_info(logger, "Bloqueo la clave");
 		} else if (instruccion->operacion == 2) {
 			// es SET: insertar valor
 			setClaveValor(entrada, instruccion->valor);
 		} else {
+			// es STORE: insertar valor
 			operacionStore(instruccion->clave);
-		}
+		}*/
 	}
 	imprimirTablaDeEntradas();
 
@@ -392,7 +436,7 @@ int main() {
 	imprimirTablaDeEntradas();
 	printf("Entradas libres: %i\n", obtenerCantidadEntradasLibres());
 
-	operacionStore("futbol:messi");
+	//operacionStore("futbol:messi");
 
 	while (1) {
 		t_instruccion* instruccion = recibirInstruccion(socketCoordinador);
