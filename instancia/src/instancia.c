@@ -192,7 +192,7 @@ void dumpMemoria(){
 		}
 	}
 	// Busco la clave en la tabla usando la funcion magica
-	dictionary_iterator(dic_entradas, obtenerClaves);
+	dictionary_iterator(dic_entradas, obtenerClaves); // TODO: el parametro val deberia ser un void*
 }
 
 void generarTablaDeEntradas() {
@@ -359,15 +359,8 @@ int procesar(t_instruccion* instruccion) {
 
 t_instruccion* recibirInstruccion(int socketCoordinador) {
 	// Recibo linea de script parseada
-	uint32_t tam_paquete;
-	recv(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0); // Recibo el header
-
-	char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
-	recv(socketCoordinador, paquete, tam_paquete, 0); // MSG_WAITALL
+	t_instruccion* instruccion = desempaquetarInstruccion(recibirPaquete(socketCoordinador), logger);
 	log_info(logger, "Recibi un paquete que me envia el Coordinador");
-
-	t_instruccion* instruccion = desempaquetarInstruccion(paquete, logger);
-	destruirPaquete(paquete);
 
 	imprimirArgumentosInstruccion(instruccion);
 

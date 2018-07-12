@@ -9,15 +9,15 @@
 
 // Analizar la opcion de enviar un paquete del estilo char* = "1 clave valor" y la funcion strtok
 
-char* empaquetarInstruccion(t_esi_operacion instruccion, t_log* logger) {
-	log_info(logger, "Empaqueto la instruccion");
+char* empaquetarInstruccion(t_instruccion* instruccion, t_log* logger) {
 	//char* buffer = string_new();
 	char* buffer = string_new();
 
-	switch (instruccion.keyword) {
-	case GET:
+	switch (instruccion->operacion) {
+	case opGET:
 		string_append(&buffer, "1-");
-		string_append(&buffer, instruccion.argumentos.GET.clave);
+		string_append(&buffer, instruccion->clave);
+		string_append(&buffer, "\0");
 		/*
 		buffer = (char*) malloc(strlen("1-") + strlen(instruccion.argumentos.GET.clave) + 1);
 		strcpy(buffer, "1-");
@@ -25,11 +25,12 @@ char* empaquetarInstruccion(t_esi_operacion instruccion, t_log* logger) {
 		*/
 
 		break;
-	case SET:
+	case opSET:
 		string_append(&buffer, "2-");
-		string_append(&buffer, instruccion.argumentos.SET.clave);
+		string_append(&buffer, instruccion->clave);
 		string_append(&buffer, "-");
-		string_append(&buffer, instruccion.argumentos.SET.valor);
+		string_append(&buffer, instruccion->valor);
+		string_append(&buffer, "\0");
 		/*
 		buffer = (char*) malloc(strlen("2-") + strlen(instruccion.argumentos.SET.clave) + strlen("-") + strlen(instruccion.argumentos.SET.valor) + 1);
 		strcpy(buffer, "2-");
@@ -39,9 +40,10 @@ char* empaquetarInstruccion(t_esi_operacion instruccion, t_log* logger) {
 		*/
 
 		break;
-	case STORE:
+	case opSTORE:
 		string_append(&buffer, "3-");
-		string_append(&buffer, instruccion.argumentos.STORE.clave);
+		string_append(&buffer, instruccion->clave);
+		string_append(&buffer, "\0");
 		/*
 		buffer = (char*) malloc(strlen("3-") + strlen(instruccion.argumentos.STORE.clave) + 1);
 		strcpy(buffer, "3-");
@@ -58,7 +60,7 @@ char* empaquetarInstruccion(t_esi_operacion instruccion, t_log* logger) {
 	log_info(logger, "La instruccion fue empaquetada");
 	printf("El paquete a enviar es: %s\n", buffer);
 
-	destruir_operacion(instruccion);
+	//destruir_operacion(instruccion);
 	return buffer;
 }
 
@@ -81,7 +83,9 @@ t_instruccion* desempaquetarInstruccion(char* buffer, t_log* logger) {
 	*/
 
 	instruccionMutada->operacion = atoi(vector_componentes_buffer[0]);
-	instruccionMutada->clave = vector_componentes_buffer[1];
+	instruccionMutada->clave = string_new();
+	string_append(&(instruccionMutada->clave), vector_componentes_buffer[1]);
+	//string_append(&(instruccionMutada->clave), "\0");
 
 	/*
 	 * instruccionMutada->operacion == 1, GET
@@ -90,10 +94,12 @@ t_instruccion* desempaquetarInstruccion(char* buffer, t_log* logger) {
 	 */
 
 	if (instruccionMutada->operacion == opSET) {
-		instruccionMutada->valor = vector_componentes_buffer[2];
+		instruccionMutada->valor = string_new();
+		string_append(&(instruccionMutada->valor), vector_componentes_buffer[2]);
+		//string_append(&(instruccionMutada->valor), "\0");
 	}
 
-	destruirVectorComponentesBuffer(vector_componentes_buffer);
+	//destruirVectorComponentesBuffer(vector_componentes_buffer);
 
 	return instruccionMutada;
 }

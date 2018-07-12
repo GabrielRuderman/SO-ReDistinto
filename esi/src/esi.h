@@ -25,7 +25,7 @@
 #include "../../coordinador/src/coordinador.h"
 
 t_control_configuracion cargarConfiguracion();
-t_esi_operacion parsearLineaScript(FILE* fp);
+t_instruccion* parsearLineaScript(FILE* fp);
 void finalizar();
 
 #endif /* ESI_H_ */

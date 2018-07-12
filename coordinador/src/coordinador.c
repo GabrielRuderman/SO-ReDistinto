@@ -15,6 +15,11 @@ enum estado_instancia {
 	INACTIVA = 0
 };
 
+enum chequeo_planificador {
+	SE_EJECUTA_ESI = 1,
+	SE_BLOQUEA_ESI = 0
+};
+
 typedef enum {
 	EL = 0,
 	LSU = 1,
@@ -140,7 +145,7 @@ void loguearOperacion(uint32_t esi_ID, t_instruccion* instruccion) {
 	char* cadena_log_operaciones = string_new();
 	string_append(&cadena_log_operaciones, "ESI ");
 	string_append_with_format(&cadena_log_operaciones, "%d", esi_ID);
-	string_append(&cadena_log_operaciones, "	");
+	string_append(&cadena_log_operaciones, "		");
 	switch (instruccion->operacion) {
 	case opGET:
 		string_append(&cadena_log_operaciones, "GET ");
@@ -170,9 +175,7 @@ bool instanciaTieneLaClave(void* nodo) {
 	return list_any_satisfy(instancia->claves_asignadas, claveEsLaActual);
 }
 
-int procesarPaquete(char* paquete, uint32_t esi_ID) {
-	t_instruccion* instruccion = desempaquetarInstruccion(paquete, logger);
-
+int procesarInstruccion(t_instruccion* instruccion) {
 	if (strlen(instruccion->clave) > TAM_MAXIMO_CLAVE) {
 		log_error(logger, "Error de Tamano de Clave");
 		return -1;
@@ -215,9 +218,7 @@ int procesarPaquete(char* paquete, uint32_t esi_ID) {
 
 		if (instancia) {
 			log_info(logger, "Le envio a Instancia %d el paquete", instancia->id);
-			uint32_t tam_paquete = strlen(paquete);
-			send(instancia->socket, &tam_paquete, sizeof(uint32_t), 0);
-			send(instancia->socket, &paquete, tam_paquete, 0);
+			enviarPaquete(instancia->socket, empaquetarInstruccion(instruccion, logger));
 
 			// La Instancia me devuelve la cantidad de entradas libres que tiene
 			uint32_t respuesta;
@@ -229,7 +230,6 @@ int procesarPaquete(char* paquete, uint32_t esi_ID) {
 			return -1;
 		}
 	}
-	loguearOperacion(esi_ID, instruccion);
 	return 1;
 }
 
@@ -243,11 +243,8 @@ void atenderESI(int socketESI) {
 	send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 
 	while(1) {
-		uint32_t tam_paquete;
-		recv(socketESI, &tam_paquete, sizeof(uint32_t), 0); // Recibo el header
-		char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
-		recv(socketESI, paquete, tam_paquete, 0);
 		log_info(logger, "El ESI %d me envia un paquete", esi_ID);
+		t_instruccion* instruccion = desempaquetarInstruccion(recibirPaquete(socketESI), logger);
 
 		sleep(retardo * 0.001); // Retardo ficticio
 
@@ -259,24 +256,25 @@ void atenderESI(int socketESI) {
 		// Esto es para consultar si puede utilizar los recursos que pide
 
 		log_info(logger, "Le consulto al Planificador si ESI %d puede hacer uso del recurso", esi_ID);
-		send(socketPlanificador, &tam_paquete, sizeof(uint32_t), 0);
-		send(socketPlanificador, &paquete, tam_paquete, 0);
+
+		enviarPaquete(socketPlanificador, empaquetarInstruccion(instruccion, logger));
 
 		uint32_t respuesta;
 		recv(socketPlanificador, &respuesta, sizeof(uint32_t), 0);
 
 		if (respuesta == SE_EJECUTA_ESI) {
 			log_info(logger, "El Planificador me informa que el ESI %d puede utilizar el recurso", esi_ID);
-			if (procesarPaquete(paquete, esi_ID) == -1) { // Hay que abortar el ESI
+			if (procesarInstruccion(instruccion) == -1) { // Hay que abortar el ESI
 				log_error(logger, "Se aborta el ESI %d", esi_ID);
 				send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
 				break;
 			}
 
+			loguearOperacion(esi_ID, instruccion);
+
 			log_info(logger, "Le aviso al ESI %d que la instruccion se ejecuto satisfactoriamente", esi_ID);
 			send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 		}
-		destruirPaquete(paquete);
 	}
 }
 
@@ -336,7 +334,8 @@ void* establecerConexion(void* socketCliente) {
 		atenderInstancia(*(int*) socketCliente);
 	} else if (handshake == PLANIFICADOR) {
 		log_info(logger, "El cliente es el Planificador");
-		send(*(int*) socketCliente, &PAQUETE_OK, sizeof(uint32_t), 0);
+		socketPlanificador = *(int*) socketCliente;
+		send(socketPlanificador, &PAQUETE_OK, sizeof(uint32_t), 0);
 	} else {
 		log_error(logger, "No se pudo reconocer al cliente");
 	}

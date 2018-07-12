@@ -28,11 +28,11 @@ int socketCoordinador, socketPlanificador;
 FILE *fp;
 uint32_t respuesta;
 
-const int ABORTA_ESI = -1;
-const int TERMINA_ESI = 0;
-const int PAQUETE_OK = 1;
+const uint32_t ABORTA_ESI = -1;
+const uint32_t TERMINA_ESI = 0;
+const uint32_t PAQUETE_OK = 1;
 
-t_esi_operacion parsearLineaScript(FILE* fp) {
+t_instruccion* parsearLineaScript(FILE* fp) {
 	char * line = NULL;
 	size_t len = 0;
 
@@ -40,9 +40,32 @@ t_esi_operacion parsearLineaScript(FILE* fp) {
 	printf("%s", line);
 	t_esi_operacion parsed = parse(line);
 
-	if (line) free(line);
+	if (!line) return NULL;
 
-	return parsed;
+	t_instruccion* instruccion = malloc(sizeof(t_instruccion));
+	switch (parsed.keyword) {
+	case GET:
+		instruccion->operacion = opGET;
+		instruccion->clave = malloc(strlen(parsed.argumentos.GET.clave) + 1);
+		strcpy(instruccion->clave, parsed.argumentos.GET.clave);
+		break;
+	case SET:
+		instruccion->operacion = opSET;
+		instruccion->clave = malloc(strlen(parsed.argumentos.SET.clave) + 1);
+		strcpy(instruccion->clave, parsed.argumentos.SET.clave);
+		instruccion->valor = malloc(strlen(parsed.argumentos.SET.valor) + 1);
+		strcpy(instruccion->valor, parsed.argumentos.SET.valor);
+		break;
+	case STORE:
+		instruccion->operacion = opSTORE;
+		instruccion->clave = malloc(strlen(parsed.argumentos.STORE.clave) + 1);
+		strcpy(instruccion->clave, parsed.argumentos.STORE.clave);
+		break;
+	}
+
+	free(line);
+
+	return instruccion;
 }
 
 t_control_configuracion cargarConfiguracion() {
@@ -83,7 +106,8 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 	}
 
 	// Abro el fichero del script
-	fp = fopen(argv[1], "r");
+	//fp = fopen(argv[1], "r");
+	fp = fopen("/home/utnso/workspace/tp-2018-1c-El-Rejunte/esi/script.esi", "r");
 	if (!fp) {
 		log_error(logger, "Error al abrir el archivo");
 		finalizar();
@@ -115,18 +139,13 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 
 		//if (orden == SIGUIENTE_INSTRUCCION) {
 		if (orden == 1) {
-			log_info(logger, "El planificador me pide que parsee la siguiente instruccion");
+			log_info(logger, "El Planificador me pide que parsee la siguiente instruccion");
 			// Se parsea la instruccion que se le enviara al coordinador
-			t_esi_operacion instruccion = parsearLineaScript(fp);
+			t_instruccion* instruccion = parsearLineaScript(fp);
 			log_info(logger, "La instruccion fue parseada");
-			// Se empaqueta la instruccion
-			char* paquete = empaquetarInstruccion(instruccion, logger);
-
+			// Se empaqueta la instruccion y se envia
 			log_info(logger, "Envio la instruccion al Cooordinador");
-			uint32_t tam_paquete = strlen(paquete);
-			send(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0); // Envio el header
-			send(socketCoordinador, paquete, tam_paquete, 0); // Envio el paquete
-			destruirPaquete(paquete);
+			enviarPaquete(socketCoordinador, empaquetarInstruccion(instruccion, logger));
 
 			recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
 			if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que el paquete llego correctamente");

@@ -5,6 +5,7 @@
  *      Author: utnso
  */
 
+#include <stdint.h>
 #include <string.h>
 #include <commons/log.h>
 #include <parsi/parser.h>
@@ -19,12 +20,12 @@ enum operacion {
 };
 
 typedef struct {
-	int32_t  operacion;
+	uint32_t  operacion;
 	char* clave;
 	char* valor;
 } t_instruccion;
 
-char* empaquetarInstruccion(t_esi_operacion instruccion, t_log* logger);
+char* empaquetarInstruccion(t_instruccion* instruccion, t_log* logger);
 t_instruccion* desempaquetarInstruccion(char* paqueteSerializado, t_log* logger);
 void destruirVectorComponentesBuffer(char** vector_componentes_buffer);
 void destruirPaquete(char* paquete);

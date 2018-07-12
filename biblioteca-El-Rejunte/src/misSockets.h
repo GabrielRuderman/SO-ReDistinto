@@ -35,7 +35,8 @@ void recibirMensajeConsola(t_log* logger, int socketCliente, int packagesize);
 
 int conectarComoCliente(t_log* logger, const char* ip, const char* puerto);
 void enviarMensajeConsola(t_log* logger, int socketServidor, int packagesize);
-void enviarPaqueteNumerico(int socketDestino, int paqueteNumerico);
+int enviarPaquete(int socketDestino, char* instruccionEmpaquetada);
+char* recibirPaquete(int socketOrigen);
 
 int finalizarSocket(int socket);
 

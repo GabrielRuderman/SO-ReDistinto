@@ -14,3 +14,92 @@
 [ERROR] 17:38:29:406 Coordinador/(4979:4979): No se encuentra el archivo de configuracion.
 [ERROR] 17:41:57:822 Coordinador/(5137:5137): No se encuentra el archivo de configuracion.
 [ERROR] 17:43:12:278 Coordinador/(5010:5010): No se encuentra el archivo de configuracion.
+[INFO] 05:48:53:937 Coordinador/(15483:15483): Se crea la Tabla de Instancias
+[INFO] 05:48:55:566 Coordinador/(15483:15483): Servidor conectado
+[INFO] 05:48:56:921 Coordinador/(15483:15483): Listo para escuchar a cualquier Cliente...
+[INFO] 05:49:08:140 Coordinador/(15483:15506): Cliente conectado
+[INFO] 05:49:08:148 Coordinador/(15483:15506): El cliente es el Planificador
+[INFO] 05:49:10:548 Coordinador/(15483:15483): Listo para escuchar a cualquier Cliente...
+[INFO] 05:49:27:637 Coordinador/(15483:15514): Cliente conectado
+[INFO] 05:49:27:638 Coordinador/(15483:15514): El cliente es una Instancia
+[INFO] 05:49:27:638 Coordinador/(15483:15514): Es la Instancia 1
+[INFO] 05:49:27:638 Coordinador/(15483:15514): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 05:49:27:638 Coordinador/(15483:15514): Envio a la Instancia su cantidad de entradas
+[INFO] 05:49:27:640 Coordinador/(15483:15514): Envio a la Instancia el tamaño de las entradas
+[INFO] 05:49:27:653 Coordinador/(15483:15514): Instancia agregada a la Tabla de Instancias
+[INFO] 05:49:30:617 Coordinador/(15483:15483): Listo para escuchar a cualquier Cliente...
+[INFO] 05:51:19:364 Coordinador/(15650:15650): Se crea la Tabla de Instancias
+[INFO] 05:51:19:408 Coordinador/(15650:15650): Servidor conectado
+[INFO] 05:51:19:409 Coordinador/(15650:15650): Listo para escuchar a cualquier Cliente...
+[INFO] 05:51:24:313 Coordinador/(15650:15650): Listo para escuchar a cualquier Cliente...
+[INFO] 05:51:24:316 Coordinador/(15650:15660): Cliente conectado
+[INFO] 05:51:24:332 Coordinador/(15650:15660): El cliente es el Planificador
+[INFO] 05:51:26:760 Coordinador/(15650:15650): Listo para escuchar a cualquier Cliente...
+[INFO] 05:51:26:767 Coordinador/(15650:15662): Cliente conectado
+[INFO] 05:51:26:787 Coordinador/(15650:15662): El cliente es una Instancia
+[INFO] 05:51:26:788 Coordinador/(15650:15662): Es la Instancia 1
+[INFO] 05:51:26:789 Coordinador/(15650:15662): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 05:51:26:790 Coordinador/(15650:15662): Envio a la Instancia su cantidad de entradas
+[INFO] 05:51:26:791 Coordinador/(15650:15662): Envio a la Instancia el tamaño de las entradas
+[INFO] 05:51:26:798 Coordinador/(15650:15662): Instancia agregada a la Tabla de Instancias
+[INFO] 05:51:30:67 Coordinador/(15650:15650): Listo para escuchar a cualquier Cliente...
+[INFO] 05:51:30:80 Coordinador/(15650:15664): Cliente conectado
+[INFO] 05:51:30:89 Coordinador/(15650:15664): El cliente es ESI
+[INFO] 05:51:30:102 Coordinador/(15650:15664): Se ha conectado un ESI con ID: 7
+[INFO] 05:51:30:156 Coordinador/(15650:15664): El ESI 7 me envia un paquete
+[INFO] 05:51:30:156 Coordinador/(15650:15664): Le informo al ESI 7 que el paquete llego correctamente
+[INFO] 05:51:30:157 Coordinador/(15650:15664): Desempaqueto la instruccion
+[INFO] 05:51:30:157 Coordinador/(15650:15664): Le consulto al Planificador si ESI 7 puede hacer uso del recurso
+[INFO] 05:51:30:166 Coordinador/(15650:15664): El Planificador me informa que el ESI 7 puede utilizar el recurso
+[INFO] 05:51:30:176 Coordinador/(15650:15664): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 05:51:30:177 Coordinador/(15650:15664): La clave deportes:futbol:ayalaonect9 no esta en ninguna Instancia
+[INFO] 05:51:30:178 Coordinador/(15650:15664): Escojo una Instancia segun el algoritmo EL
+[INFO] 05:51:30:179 Coordinador/(15650:15664): Aguarde mientras se busca una Instancia
+[INFO] 05:51:30:188 Coordinador/(15650:15664): La Instancia sera la 1
+[INFO] 05:51:30:189 Coordinador/(15650:15664): La clave deportes:futbol:ayalaonect9 fue asignada a la Instancia 1
+[INFO] 05:51:30:190 Coordinador/(15650:15664): Logueo la operacion en el Log de Operaciones
+[INFO] 05:51:30:197 Coordinador/(15650:15664): Le aviso al ESI 7 que la instruccion se ejecuto satisfactoriamente
+[INFO] 05:51:30:251 Coordinador/(15650:15664): El ESI 7 me envia un paquete
+[INFO] 05:51:30:252 Coordinador/(15650:15664): Le informo al ESI 7 que el paquete llego correctamente
+[INFO] 05:51:30:253 Coordinador/(15650:15664): Desempaqueto la instruccion
+[INFO] 05:51:30:253 Coordinador/(15650:15664): Le consulto al Planificador si ESI 7 puede hacer uso del recurso
+[INFO] 05:55:26:462 Coordinador/(15715:15715): Se crea la Tabla de Instancias
+[INFO] 05:55:26:470 Coordinador/(15715:15715): Servidor conectado
+[INFO] 05:55:26:479 Coordinador/(15715:15715): Listo para escuchar a cualquier Cliente...
+[INFO] 05:55:33:461 Coordinador/(15650:15664): El Planificador me informa que el ESI 7 puede utilizar el recurso
+[INFO] 05:55:33:464 Coordinador/(15650:15664): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 05:55:33:465 Coordinador/(15650:15664): La clave deportes:futbol:messi no esta en ninguna Instancia
+[ERROR] 05:55:33:466 Coordinador/(15650:15664): Error de Clave no Identificada
+[ERROR] 05:55:33:467 Coordinador/(15650:15664): Se aborta el ESI 7
+[INFO] 05:55:36:277 Coordinador/(15650:15650): Listo para escuchar a cualquier Cliente...
+[INFO] 05:55:36:284 Coordinador/(15650:15728): Cliente conectado
+[INFO] 05:55:36:285 Coordinador/(15650:15728): El cliente es el Planificador
+[INFO] 05:56:08:235 Coordinador/(15650:15650): Listo para escuchar a cualquier Cliente...
+[INFO] 05:56:08:241 Coordinador/(15650:15736): Cliente conectado
+[INFO] 05:56:08:242 Coordinador/(15650:15736): El cliente es una Instancia
+[INFO] 05:56:08:243 Coordinador/(15650:15736): Es la Instancia 1
+[INFO] 05:56:08:244 Coordinador/(15650:15736): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 05:56:08:245 Coordinador/(15650:15736): Envio a la Instancia su cantidad de entradas
+[INFO] 05:56:08:246 Coordinador/(15650:15736): Envio a la Instancia el tamaño de las entradas
+[INFO] 05:56:08:252 Coordinador/(15650:15736): Instancia agregada a la Tabla de Instancias
+[INFO] 05:56:32:911 Coordinador/(15650:15650): Listo para escuchar a cualquier Cliente...
+[INFO] 05:56:32:924 Coordinador/(15650:15741): Cliente conectado
+[INFO] 05:56:32:931 Coordinador/(15650:15741): El cliente es ESI
+[INFO] 05:56:32:952 Coordinador/(15650:15741): Se ha conectado un ESI con ID: 7
+[INFO] 05:56:33:16 Coordinador/(15650:15741): El ESI 7 me envia un paquete
+[INFO] 05:56:33:17 Coordinador/(15650:15741): Le informo al ESI 7 que el paquete llego correctamente
+[INFO] 05:56:33:18 Coordinador/(15650:15741): Desempaqueto la instruccion
+[INFO] 05:56:33:22 Coordinador/(15650:15741): Le consulto al Planificador si ESI 7 puede hacer uso del recurso
+[INFO] 05:56:33:27 Coordinador/(15650:15741): El Planificador me informa que el ESI 7 puede utilizar el recurso
+[INFO] 05:56:33:28 Coordinador/(15650:15741): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 05:56:33:30 Coordinador/(15650:15741): La clave deportes:futbol:ayalaonect) no esta en ninguna Instancia
+[INFO] 05:56:33:31 Coordinador/(15650:15741): Escojo una Instancia segun el algoritmo EL
+[INFO] 05:56:33:32 Coordinador/(15650:15741): Aguarde mientras se busca una Instancia
+[INFO] 05:56:33:37 Coordinador/(15650:15741): La Instancia sera la 1
+[INFO] 05:56:33:41 Coordinador/(15650:15741): La clave deportes:futbol:ayalaonect) fue asignada a la Instancia 1
+[INFO] 05:56:33:41 Coordinador/(15650:15741): Logueo la operacion en el Log de Operaciones
+[INFO] 05:56:33:48 Coordinador/(15650:15741): Le aviso al ESI 7 que la instruccion se ejecuto satisfactoriamente
+[INFO] 05:56:33:112 Coordinador/(15650:15741): El ESI 7 me envia un paquete
+[INFO] 05:56:33:113 Coordinador/(15650:15741): Le informo al ESI 7 que el paquete llego correctamente
+[INFO] 05:56:33:114 Coordinador/(15650:15741): Desempaqueto la instruccion
+[INFO] 05:56:33:114 Coordinador/(15650:15741): Le consulto al Planificador si ESI 7 puede hacer uso del recurso

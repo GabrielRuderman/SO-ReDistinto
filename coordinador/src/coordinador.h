@@ -23,20 +23,10 @@
 #include "../../biblioteca-El-Rejunte/src/misSockets.h"
 #include "../../biblioteca-El-Rejunte/src/miSerializador.h"
 
-typedef enum {
-	CONFIGURACION_OK,
-	CONFIGURACION_ERROR
-} t_control_configuracion;
-
 enum handshake {
 	ESI = 1,
 	INSTANCIA = 2,
 	PLANIFICADOR = 3
-};
-
-enum chequeo_planificador {
-	SE_EJECUTA_ESI = 1,
-	SE_BLOQUEA_ESI = 0
 };
 
 typedef struct {
@@ -54,7 +44,7 @@ void establecerProtocoloDistribucion();
 void* establecerConexion(void* parametros);
 void atenderInstancia(int socketInstancia);
 void atenderESI(int socketESI);
-int procesarPaquete(char* paquete, uint32_t esi_ID);
+int procesarInstruccion(t_instruccion* instruccion);
 bool instanciaTieneLaClave(void* nodo);
 bool claveEsLaActual(void* nodo);
 void loguearOperacion(uint32_t esi_ID, t_instruccion* instruccion);
