@@ -366,7 +366,6 @@ void dumpMemoria(){
 			log_error(logger, "Error al abrir archivo para DUMP");
 			//ERROR AL ABRIR ARCHIVO
 		} else {
-
 			write(_fd, entrada->valor, strlen(entrada->valor));
 			close(_fd);
 		}
