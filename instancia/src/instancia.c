@@ -42,8 +42,8 @@ struct stat sb;
 const uint32_t PAQUETE_OK = 1;
 const int32_t PAQUETE_ERROR = -1;
 
-void imprimirBloqueEntradas(){
-	for(int i = 0; i < strlen(bloque_instancia); i++) {
+void imprimirBloqueEntradas() {
+	for (int i = 0; i < strlen(bloque_instancia); i++) {
 			printf("%c", bloque_instancia[i]);
 		}
 		printf("\n");
@@ -51,7 +51,7 @@ void imprimirBloqueEntradas(){
 
 void imprimirTablaDeEntradas() {
 	printf("\n_______TABLA DE ENTRADAS_______\n");
-	for(int i = 0; i < list_size(tabla_entradas); i++) {
+	for (int i = 0; i < list_size(tabla_entradas); i++) {
 		t_entrada* entrada = list_get(tabla_entradas, i);
 		printf("%s - %d - %d\n", entrada->clave, entrada->entrada_asociada, entrada->size_valor_almacenado);
 	}
@@ -73,15 +73,16 @@ int operacion_STORE(char* clave) {
 	t_entrada* entrada = (t_entrada*) list_find(tabla_entradas, comparadorDeClaves);
 
 	_valor = malloc(sizeof(char) * tam_entrada);
-	strncpy(_valor, bloque_instancia+entrada->entrada_asociada, entrada->size_valor_almacenado);
+	strncpy(_valor, bloque_instancia + entrada->entrada_asociada, entrada->size_valor_almacenado);
 	_valor[entrada->size_valor_almacenado] = '\0';
 	_nombreArchivo = clave;
 
 	//MANEJO DE ERRORES!
-	if((_archivoClave = open(_nombreArchivo, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)) > 0){
+	if ((_archivoClave = open(_nombreArchivo, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)) > 0) {
 		if ((int)write(_archivoClave, _valor, string_length(_valor)) > 0) {
-			//SE ESCRIBIÓ PERSISTIÓ LA CLAVE
+			//SE PERSISTIÓ LA CLAVE
 			actualizarMapaMemoria();
+			log_debug(logger, "%s", mapa_archivo);
 			log_info(logger, "Se persistió la clave-valor");
 			close(_archivoClave);
 			return 1;
@@ -103,7 +104,7 @@ int operacion_SET_reemplazo(t_entrada* entrada, char* valor) {
 	int entradas_a_ocupar = (int) ceilf((float) strlen(valor) / (float) tam_entrada);
 
 	//Verificamos el tamaño del nuevo valor.
-	if(entradas_a_ocupar <= entrada->entradas_ocupadas){
+	if (entradas_a_ocupar <= entrada->entradas_ocupadas) {
 		//Ocupa lo mismo que el valor anterior.
 		escribirEntrada(entrada);
 		strcpy(entrada->valor, valor);
@@ -121,9 +122,9 @@ int operacion_SET_reemplazo(t_entrada* entrada, char* valor) {
 		//Ocupa más que el valor anterior.
 		int entradas_extra = entradas_a_ocupar - entradas_ocupadas;
 		//Libero el valor a reemplazar
-		if(entradas_extra <= entradas_libres){
+		if (entradas_extra <= entradas_libres) {
 			//Entonces, pregunto si hay entradas libres y contigüas.
-			if(1){
+			if (1) {
 				//Escribo
 			} else {
 				//Compacto el almacenamiento
@@ -134,7 +135,7 @@ int operacion_SET_reemplazo(t_entrada* entrada, char* valor) {
 			t_entrada* entrada = algoritmoDeReemplazo(entradas_a_ocupar);
 			//Libero la entrada a reemplazar
 			//Entonces, pregunto si hay entradas libres y contigüas.
-			if(1){
+			if (1) {
 				//Escribo
 			} else {
 				//Compacto el almacenamiento
@@ -199,10 +200,10 @@ int operacion_SET(t_instruccion* instruccion) {
 	t_entrada* entrada_a_reemplazar = NULL;
 	log_info(logger, "El valor a almacenar requiere %i entradas", entradas_a_ocupar);
 
-	if(entradas_a_ocupar <= entradas_libres){
+	if (entradas_a_ocupar <= entradas_libres) {
 		//Entonces, pregunto si hay entradas libres y contigüas.
 		log_info(logger, "Hay %d entradas libres para almacenar el valor", entradas_a_ocupar);
-		if (hayEntradasContiguas(entradas_a_ocupar) >= 0){
+		if (hayEntradasContiguas(entradas_a_ocupar) >= 0) {
 			log_info(logger, "Hay %d entradas contiguas", entradas_a_ocupar);
 		} else {
 			log_info(logger, "No hay %d entradas contiguas para almacenar el valor", entradas_a_ocupar);
@@ -215,7 +216,7 @@ int operacion_SET(t_instruccion* instruccion) {
 		entrada_a_reemplazar = algoritmoDeReemplazo(entradas_a_ocupar);
 		//Libero la entrada a reemplazar
 		//Entonces, pregunto si hay entradas libres y contiguas.
-		if(hayEntradasContiguas(entradas_a_ocupar) >= 0){
+		if (hayEntradasContiguas(entradas_a_ocupar) >= 0) {
 			log_info(logger, "Hay %d entradas libres y contiguas para almacenar el valor", entradas_a_ocupar);
 		} else {
 			log_info(logger, "No hay %d entradas contiguas para almacenar el valor", entradas_a_ocupar);
@@ -291,9 +292,9 @@ void abrirArchivoInstancia(int* fileDescriptor) {
 	}
 }
 
-void actualizarMapaMemoria(){
+void actualizarMapaMemoria() {
 	//Reescribe el mapa de memoria con los últimos valores y claves en memoria.
-	void guardarValoresEnMap(void* nodo){
+	void guardarValoresEnMap(void* nodo) {
 		t_entrada* entrada_en_tabla = (t_entrada*) nodo;
 		char* entrada_a_map = string_new();
 
@@ -301,23 +302,31 @@ void actualizarMapaMemoria(){
 		string_append(&entrada_a_map, "-");
 		string_append(&entrada_a_map, entrada_en_tabla->valor);
 		string_append(&entrada_a_map, ";");
-		string_append(&entrada_a_map, "\0");
 
-		for (int i = 0; i < string_length(entrada_a_map); i++){
+		for (int i = 0; i < string_length(entrada_a_map); i++) {
 			mapa_archivo[i] = entrada_a_map[i];
 		}
+
+		/*for (int i = 0; i < string_length(entrada_a_map); i++) {
+			mapa_archivo[pos_mapa] = entrada_a_map[i];
+			pos_mapa++;
+		}*/
+
 	}
+
+
+	//pos_mapa = 0;
 
 	list_iterate(tabla_entradas, guardarValoresEnMap);
 }
 
-void almacenarValorYGenerarTabla(char* valor, char* clave){
+void almacenarValorYGenerarTabla(char* valor, char* clave) {
 	t_entrada* entrada = (t_entrada*) malloc(sizeof(t_entrada));
 
 	double entradas_a_ocupar = ceilf((float) entrada->size_valor_almacenado / (float)tam_entrada);
 
-	for(int i = 0; i < cant_entradas * tam_entrada; i = i + tam_entrada){
-		if(bloque_instancia[i] == '0'){
+	for (int i = 0; i < cant_entradas * tam_entrada; i = i + tam_entrada) {
+		if (bloque_instancia[i] == '0') {
 			strncpy(bloque_instancia+i, valor, strlen(valor));
 			entrada->clave = string_new();
 			string_append(&(entrada->clave), clave);
@@ -334,15 +343,15 @@ void almacenarValorYGenerarTabla(char* valor, char* clave){
 
 void compactarAlmacenamiento() {
 	log_debug(logger, "Se inicia la compactacion");
-	for(int x = 0; x < cant_entradas * tam_entrada; x += tam_entrada) {
+	for (int x = 0; x < cant_entradas * tam_entrada; x += tam_entrada) {
 		if (bloque_instancia[x] == '0') {
-			for(int y = x + tam_entrada; x < cant_entradas * tam_entrada; y += tam_entrada) {
+			for (int y = x + tam_entrada; x < cant_entradas * tam_entrada; y += tam_entrada) {
 				if (bloque_instancia[y] != '0') {
 					log_debug(logger, "Encontre %d entradas libres", y - x);
 					log_debug(logger, "Corro todos los valores posteriores hacia atras");
 					int pos_reemplazo = x;
 					char* porcion = string_new();
-					for(int z = y; z < cant_entradas * tam_entrada; z++) {
+					for (int z = y; z < cant_entradas * tam_entrada; z++) {
 						string_append_with_format(&porcion, "%c", bloque_instancia[z]);
 					}
 					strncpy(bloque_instancia + pos_reemplazo, porcion, strlen(porcion));
@@ -353,7 +362,7 @@ void compactarAlmacenamiento() {
 	log_debug(logger, "Se corrieron todas las entradas");
 }
 
-void dumpMemoria(){
+void dumpMemoria() {
 	int _fd;
 
 	// Funcion magica para comparar si esta la clave que quiero en la tabla de entradas
@@ -362,7 +371,7 @@ void dumpMemoria(){
 		char* _nombreArchivo = string_new();
 		string_append(&_nombreArchivo, entrada->clave);
 		_fd = open(_nombreArchivo, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
-		if(fd < 0){
+		if (fd < 0) {
 			log_error(logger, "Error al abrir archivo para DUMP");
 			//ERROR AL ABRIR ARCHIVO
 		} else {
@@ -375,7 +384,7 @@ void dumpMemoria(){
 }
 
 void* dumpAutomatico() {
-	while(1){
+	while(1) {
 		sleep(intervalo_dump);
 		dumpMemoria();
 	}
@@ -383,7 +392,8 @@ void* dumpAutomatico() {
 }
 
 void escribirEntrada(t_entrada* entrada) {
-	strncpy(bloque_instancia+entrada->entrada_asociada, entrada->valor, entrada->entradas_ocupadas*tam_entrada);
+	strncpy(bloque_instancia + entrada->entrada_asociada, entrada->valor, entrada->entradas_ocupadas * tam_entrada);
+	log_debug(logger, "%s", bloque_instancia);
 }
 
 void generarTablaDeEntradas() {
@@ -408,6 +418,7 @@ void generarTablaDeEntradas() {
 
 	mapa_archivo = string_new();
 	mapa_archivo = mmap(0, tam_entrada*cant_entradas, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	log_debug(logger, "mapa_archivo: %s", mapa_archivo);
 
 	bloque_instancia = (char*) malloc(cant_entradas * tam_entrada);
 	memset(bloque_instancia, '0', cant_entradas * tam_entrada);
@@ -451,17 +462,17 @@ void generarTablaDeEntradas() {
 	printf("Lista size: %i\n", list_size(tabla_entradas));
 }
 
-int hayEntradasContiguas(int entradas_necesarias){
+int hayEntradasContiguas(int entradas_necesarias) {
 	int contador = 0;
 	int primer_entrada;
 
-	for (int i = 0; i < tam_entrada * cant_entradas; i = i + tam_entrada){
-		if(bloque_instancia[i] == '0'){
+	for (int i = 0; i < tam_entrada * cant_entradas; i = i + tam_entrada) {
+		if (bloque_instancia[i] == '0') {
 			contador++;
-			if(contador == 1){
+			if (contador == 1) {
 				primer_entrada = i;
 			}
-			if(contador == entradas_necesarias){
+			if (contador == entradas_necesarias) {
 				return primer_entrada;
 			}
 		} else {
@@ -472,17 +483,17 @@ int hayEntradasContiguas(int entradas_necesarias){
 	return -1;
 }
 
-void liberarEntrada(t_entrada* entrada){
+void liberarEntrada(t_entrada* entrada) {
 	//strncpy(bloque_instancia+entrada->entrada_asociada, '0', entrada->entradas_ocupadas*tam_entrada);
 	memset(bloque_instancia+entrada->entrada_asociada, 0, entrada->entradas_ocupadas*tam_entrada);
 }
 
-void actualizarCantidadEntradasLibres(){
+void actualizarCantidadEntradasLibres() {
 	int cont = 0;
 
 	// Recorre el almacenamiento por cada entrada, preguntando si el primer valor en c/u es nulo.
-	for (int i = 0; i < tam_entrada * cant_entradas; i = i + tam_entrada){
-		if(bloque_instancia[i] == '0'){
+	for (int i = 0; i < tam_entrada * cant_entradas; i = i + tam_entrada) {
+		if (bloque_instancia[i] == '0') {
 			cont++;
 		}
 	}
@@ -516,7 +527,7 @@ int procesar(t_instruccion* instruccion) {
 	} else { // la entrada si estaba
 		log_warning(logger, "La clave esta registrada en la Tabla de Entradas");
 
-		switch (instruccion->operacion){
+		switch (instruccion->operacion) {
 		case opSET: // SET de clave presente.
 			return operacion_SET_reemplazo(entrada, instruccion->valor);
 		case opSTORE: // STORE de clave presente.
@@ -626,16 +637,16 @@ int main() {
 		log_debug(logger, "Cantidad de entradas libres: %d", entradas_libres);
 		t_instruccion* instruccion = recibirInstruccion(socketCoordinador);
 		if (validarArgumentosInstruccion(instruccion) > 0) {
-			if(procesar(instruccion) > 0){
+			if (procesar(instruccion) > 0) {
 				list_iterate(tabla_entradas, incrementarUltimasReferencias);
 
 				log_info(logger, "Le aviso al Coordinador que se proceso la instruccion");
-				char** para_imprimir = string_split(mapa_archivo, ";");
+				/*char** para_imprimir = string_split(mapa_archivo, ";");
 				int i = 0;
 				while (para_imprimir[i] != NULL) {
 					printf("%s\n", para_imprimir[i]);
 					i++;
-				}
+				}*/
 				//send(socketCoordinador, &entradas_libres, sizeof(uint32_t), 0);
 			} else {
 				log_error(logger, "Le aviso al Coordinador que no se pudo procesar la instrucción");
