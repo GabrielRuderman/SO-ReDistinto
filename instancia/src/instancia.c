@@ -326,6 +326,7 @@ void actualizarMapaMemoria() {
 	entradas_leidas = 0;
 
 	list_iterate(tabla_entradas, guardarValoresEnMap);
+	msync(mapa_archivo, strlen(mapa_archivo), MS_SYNC);
 }
 
 void almacenarValorYGenerarTabla(char* valor, char* clave) {
