@@ -36,6 +36,7 @@ char* mapa_archivo;
 char* bloque_instancia;
 int puntero_circular;
 t_instruccion* instruccion; // es la instruccion actual
+int entradas_leidas, pos_mapa = 0;
 
 struct stat sb;
 
@@ -197,6 +198,7 @@ t_entrada* algoritmoDeReemplazo() {
 
 int operacion_SET(t_instruccion* instruccion) {
 	int entradas_a_ocupar = (int) ceilf((float) strlen(instruccion->valor) / (float)tam_entrada);
+
 	t_entrada* entrada_a_reemplazar = NULL;
 	log_info(logger, "El valor a almacenar requiere %i entradas", entradas_a_ocupar);
 
@@ -296,34 +298,39 @@ void actualizarMapaMemoria() {
 	//Reescribe el mapa de memoria con los últimos valores y claves en memoria.
 	void guardarValoresEnMap(void* nodo) {
 		t_entrada* entrada_en_tabla = (t_entrada*) nodo;
-		char* entrada_a_map = string_new();
+		entradas_leidas++;
 
+		char* entrada_a_map = string_new();
 		string_append(&entrada_a_map, entrada_en_tabla->clave);
 		string_append(&entrada_a_map, "-");
 		string_append(&entrada_a_map, entrada_en_tabla->valor);
 		string_append(&entrada_a_map, ";");
 
-		for (int i = 0; i < string_length(entrada_a_map); i++) {
-			mapa_archivo[i] = entrada_a_map[i];
-		}
-
 		/*for (int i = 0; i < string_length(entrada_a_map); i++) {
-			mapa_archivo[pos_mapa] = entrada_a_map[i];
-			pos_mapa++;
+			mapa_archivo[i] = entrada_a_map[i];
 		}*/
 
+		for (int i = 0; i < string_length(entrada_a_map); i++) {
+			mapa_archivo[pos_mapa] = entrada_a_map[i];
+			printf("%s\n", mapa_archivo);
+			pos_mapa++;
+		}
+
+		if (entradas_leidas == list_size(tabla_entradas)) {
+			mapa_archivo[pos_mapa] = '\0';
+		}
 	}
 
 
-	//pos_mapa = 0;
+	pos_mapa = 0;
+	entradas_leidas = 0;
 
 	list_iterate(tabla_entradas, guardarValoresEnMap);
 }
 
 void almacenarValorYGenerarTabla(char* valor, char* clave) {
 	t_entrada* entrada = (t_entrada*) malloc(sizeof(t_entrada));
-
-	double entradas_a_ocupar = ceilf((float) entrada->size_valor_almacenado / (float)tam_entrada);
+	int entradas_a_ocupar = (int) ceilf((float) strlen(valor) / (float)tam_entrada);
 
 	for (int i = 0; i < cant_entradas * tam_entrada; i = i + tam_entrada) {
 		if (bloque_instancia[i] == '0') {
