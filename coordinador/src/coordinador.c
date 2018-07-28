@@ -343,8 +343,7 @@ void atenderESI(int socketESI) {
 	// ANALIZAR CONCURRENCIA CON SEMAFOROS MUTEX
 
 	uint32_t esi_ID;
-	int res = recv(socketESI, &esi_ID, sizeof(uint32_t), 0);
-	if (res < 1) {
+	if (recv(socketESI, &esi_ID, sizeof(uint32_t), 0) < 1) {
 		log_error(logger, "El ESI no tiene permiso de conexion");
 		return;
 	}
@@ -354,8 +353,7 @@ void atenderESI(int socketESI) {
 	while (1) {
 		bool recien_desbloqueado = false;
 		uint32_t tam_paquete;
-		res = recv(socketESI, &tam_paquete, sizeof(uint32_t), 0); // Recibo el header
-		if (res < 1) {
+		if (recv(socketESI, &tam_paquete, sizeof(uint32_t), 0) < 1) {
 			log_error(logger, "Error de Comunicacion: conexion rota con el ESI %d", esi_ID);
 			return;
 		}

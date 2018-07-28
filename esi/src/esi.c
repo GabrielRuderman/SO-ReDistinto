@@ -150,9 +150,12 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			log_info(logger, "Envio la instruccion al Cooordinador");
 			uint32_t tam_paquete = strlen(paquete) + 1;
 			send(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0); // Envio el header
-			send(socketCoordinador, paquete, tam_paquete, 0); // Envio el paquete
+			send(socketCoordinador, paquete, tam_paquete, MSG_NOSIGNAL); // Envio el paquete
 
-			recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+			if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
+				log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+				finalizar(EXIT_FAILURE);
+			}
 			if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que el paquete llego correctamente");
 
 			if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 0) {

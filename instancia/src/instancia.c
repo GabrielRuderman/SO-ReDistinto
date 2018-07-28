@@ -196,10 +196,11 @@ bool buscadorEntradaConPuntero(void* nodo) {
 
 t_entrada* algoritmoCircular(t_list* tabla_entradas_atomicas) {
 	t_entrada* entrada_apuntada = NULL;
+
 	while (!entrada_apuntada) {
 		entrada_apuntada = list_find(tabla_entradas_atomicas, buscadorEntradaConPuntero);
 		puntero_circular++;
-		if (puntero_circular == list_size(tabla_entradas)) puntero_circular = 1;
+		if (puntero_circular > cant_entradas) puntero_circular = 1;
 	}
 	return entrada_apuntada;
 }
@@ -241,6 +242,7 @@ void algoritmoDeReemplazo() {
 		entrada_a_reemplazar = algoritmoCircular(tabla_entradas_atomicas);
 	}
 
+	if (!entrada_a_reemplazar) return; // No hay valores atomicos para reemplazar
 	liberarEntrada(entrada_a_reemplazar);
 	actualizarCantidadEntradasLibres();
 	log_warning(logger, "Se ha liberado la entrada %d de clave %s", entrada_a_reemplazar->entrada_asociada, entrada_a_reemplazar->clave);
