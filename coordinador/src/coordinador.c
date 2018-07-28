@@ -432,8 +432,6 @@ bool existeInstanciaID(void* nodo) {
 
 void atenderInstancia(int socketInstancia) {
 
-	log_warning(logger, "NRO SOCKET: %d", socketInstancia);
-
 	/*
 	 * TODO: cuando una Instancia INACTIVA se conecta, necesita saber cuales claves tenia asignadas
 	 * Si lee su archivo montaje, seguramente se va a encontrar con claves que ya habian sido reemplazadas
@@ -460,8 +458,6 @@ void atenderInstancia(int socketInstancia) {
 
 	if (instancia) {
 		instancia->estado = chequearEstadoInstancia(instancia);
-		log_warning(logger, "NRO SOCKET VIEJO: %d", instancia->socket);
-		log_warning(logger, "ESTADO SOCKET VIEJO: %d", instancia->estado);
 
 		if (instancia->estado == ACTIVA) {
 			log_error(logger, "No puede estar iniciada 2 veces la misma Instancia, se aborta la ultima");
