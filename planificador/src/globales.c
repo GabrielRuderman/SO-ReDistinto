@@ -606,7 +606,7 @@ void lanzarConsola(){
 			log_info(logPlanificador, "Clave recurso ingresada por consola : %s", linea);
 			liberarGlobales();
 			free(linea);
-			exit(-1);
+			exit(EXIT_SUCCESS);
 		}
 		else
 		{

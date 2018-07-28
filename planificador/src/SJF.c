@@ -199,9 +199,10 @@ void planificacionSJF(bool desalojo) {
 
 				if (resp <= 0) {
 
-					log_info(logPlanificador, " conexion rota ");
-					liberarGlobales();
-					exit(-1);
+					log_info(logPlanificador, " conexion rota con el ESI. Se lo finaliza ");
+					liberarRecursos(nuevo);
+					list_add(listaFinalizados, nuevo);
+					break;
 				}
 				if (respuesta != CONTINUAR) {
 					log_info(logPlanificador, " el ESI quiere finalizar ");
