@@ -60,11 +60,11 @@ const uint32_t TERMINA_ESI = 0;
 const uint32_t CHEQUEO_INSTANCIA_ACTIVA = 0;
 
 int chequearEstadoInstancia(t_instancia* instancia) {
-	if (send(instancia->socket, &CHEQUEO_INSTANCIA_ACTIVA, sizeof(uint32_t), MSG_NOSIGNAL) < 1) {
-		return INACTIVA;
-	} else {
-		return ACTIVA;
-	}
+	if (send(instancia->socket, &CHEQUEO_INSTANCIA_ACTIVA, sizeof(uint32_t), MSG_NOSIGNAL) < 1) return INACTIVA;
+	uint32_t respuesta;
+	if (recv(instancia->socket, &respuesta, sizeof(uint32_t), 0) < 1) return INACTIVA;
+	if (respuesta != CHEQUEO_INSTANCIA_ACTIVA) return INACTIVA;
+	return ACTIVA;
 }
 
 bool comparadorEntradasLibres(void* nodo1, void* nodo2) {
@@ -432,6 +432,8 @@ bool existeInstanciaID(void* nodo) {
 
 void atenderInstancia(int socketInstancia) {
 
+	log_warning(logger, "NRO SOCKET: %d", socketInstancia);
+
 	/*
 	 * TODO: cuando una Instancia INACTIVA se conecta, necesita saber cuales claves tenia asignadas
 	 * Si lee su archivo montaje, seguramente se va a encontrar con claves que ya habian sido reemplazadas
@@ -457,6 +459,10 @@ void atenderInstancia(int socketInstancia) {
 	pthread_mutex_unlock(&mutexNuevaInstancia);
 
 	if (instancia) {
+		instancia->estado = chequearEstadoInstancia(instancia);
+		log_warning(logger, "NRO SOCKET VIEJO: %d", instancia->socket);
+		log_warning(logger, "ESTADO SOCKET VIEJO: %d", instancia->estado);
+
 		if (instancia->estado == ACTIVA) {
 			log_error(logger, "No puede estar iniciada 2 veces la misma Instancia, se aborta la ultima");
 			finalizarSocket(socketInstancia);

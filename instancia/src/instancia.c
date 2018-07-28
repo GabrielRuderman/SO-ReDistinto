@@ -611,7 +611,10 @@ t_instruccion* recibirInstruccion(int socketCoordinador) {
 	uint32_t tam_paquete;
 	if (recv(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0) < 0) return NULL; // Recibo el header
 
-	if (tam_paquete == CHEQUEO_INSTANCIA_ACTIVA) return NULL; // Esto lo usa el Coordinador para saber si estoy activa
+	if (tam_paquete == CHEQUEO_INSTANCIA_ACTIVA) {
+		send(socketCoordinador, &CHEQUEO_INSTANCIA_ACTIVA, sizeof(uint32_t), 0);
+		return NULL; // Esto lo usa el Coordinador para saber si estoy activa
+	}
 
 	char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
 	if (recv(socketCoordinador, paquete, tam_paquete, 0) < 1) {
@@ -663,6 +666,7 @@ t_control_configuracion cargarConfiguracion() {
 }
 
 void finalizar() {
+	printf("ME CERRE\n");
 	if (socketCoordinador > 0) finalizarSocket(socketCoordinador);
 	list_destroy(tabla_entradas);
 	log_destroy(logger);
@@ -671,12 +675,14 @@ void finalizar() {
 }
 
 void signalHandler(int senal) {
-	printf("ME CERRE\n");
+	finalizar();
 	exit(-1);
 }
 
 int main() {
 	error_config = false;
+
+	signal(SIGINT, signalHandler);
 
 	// Creo el logger
 	logger = log_create("instancia.log", "Instancia", true, LOG_LEVEL_DEBUG);
@@ -693,8 +699,6 @@ int main() {
 		finalizar();
 		return EXIT_FAILURE;
 	}
-
-	signal(SIGINT, signalHandler);
 
 	uint32_t handshake = INSTANCIA;
 	send(socketCoordinador, &handshake, sizeof(uint32_t), 0);
