@@ -455,20 +455,20 @@ void lanzarConsola(){
 
 		if (string_equals_ignore_case(linea, PAUSEAR_PLANIFICACION) || string_equals_ignore_case(linea, "1"))  //Hermosa cadena de if que se viene
 		{
-			log_info(logPlanificador, "Comando ingresado por consola : %s", linea);
+			log_info(logPlanificador, "Comando ingresado por consola : Pausear planificacion", linea);
 			pausearPlanificacion = true;
 			free(linea);
 		}
 		else if (string_equals_ignore_case(linea,REANUDAR_PLANIFICACION)  || string_equals_ignore_case(linea, "2"))
 		{
-			log_info(logPlanificador, "Comando ingresado por consola : %s", linea);
+			log_info(logPlanificador, "Comando ingresado por consola : Reanudar planificacion", linea);
 			pausearPlanificacion= false;
 			free(linea);
 		}
 		else if (string_equals_ignore_case(linea, BLOQUEAR_ESI)  || string_equals_ignore_case(linea, "3"))
 		{
-			log_info(logPlanificador, "Comando ingresado por consola : %s", linea);
-			linea = readline("CLAVE ESI:");
+			log_info(logPlanificador, "Comando ingresado por consola : bloquear ESI ", linea);
+			linea = readline("ID ESI:");
 			log_info(logPlanificador, "clave ESI ingresada por consola : %s", linea);
 
 			int clave = atoi(linea);
@@ -606,7 +606,7 @@ void lanzarConsola(){
 			log_info(logPlanificador, "Clave recurso ingresada por consola : %s", linea);
 			liberarGlobales();
 			free(linea);
-			exit(-1);
+			exit(EXIT_SUCCESS);
 		}
 		else
 		{
@@ -849,19 +849,18 @@ void desbloquearRecurso (char* claveRecurso) {
 	while(list_size(listaRecursos) > i && !encontrado)
 	{
 		t_recurso * nuevoRecurso = list_get(listaRecursos,i);
-		log_info(logPlanificador, "clave a analizar = %s", nuevoRecurso->clave);
 		if(string_equals_ignore_case(nuevoRecurso->clave,claveRecurso))
 		{
 			log_info(logPlanificador, "recurso encontrado");
 			if(nuevoRecurso->estado == 1){ // libera el recurso y saca de la cola a SOLO UN ESI que lo estaba esperando
 				log_info(logPlanificador, "que esta bloqueado");
 				log_info(logPlanificador, "clave recurso : %s", nuevoRecurso->clave);
-				nuevoRecurso->estado = 0;
 				encontrado = true;
 				ESI * nuevo = queue_pop(nuevoRecurso->ESIEncolados);
 				if(nuevo != NULL){
 					log_info(logPlanificador, "desencolo el primer esi bloqueado");
 					nuevo->recienDesbloqueadoPorRecurso = true;
+					list_add(nuevo->recursosAsignado, nuevoRecurso->clave);
 					pthread_mutex_lock(&mutexColaListos);
 					if(string_equals_ignore_case(algoritmoDePlanificacion, SJF) || string_equals_ignore_case(algoritmoDePlanificacion, SJFConDesalojo)){
 						log_info(logPlanificador, " a cola SJF ");
@@ -899,11 +898,32 @@ void bloquearESI(char * claveRecurso, ESI * esi){
 
 		t_recurso * recursoAuxiliar = list_get(listaRecursos, i);
 		if(string_equals_ignore_case(recursoAuxiliar->clave,claveRecurso)){
-			log_info(logPlanificador, "inficando que el ESI fue bloqueado por una clave");
+
+			if(recursoAuxiliar->estado == 1){
+			log_info(logPlanificador, "el recurso esta tomado y el ESI entra en su cola");
 			esi->bloqueadoPorClave = true;
 			queue_push(recursoAuxiliar->ESIEncolados,esi);
 			encontrado = true;
 			log_info(logPlanificador, "esi de clave %d en cola de recurso clave : %s", esi->id, recursoAuxiliar->clave);
+
+			} else {
+
+				log_info(logPlanificador, "se pidio bloquear un ESI a una clave no bloqueada. Se asigna la clave (BLOQUEO POR CONSOLA)");
+				recursoAuxiliar -> estado = 1;
+				list_add(esi->recursosAsignado, recursoAuxiliar->clave);
+				log_info(logPlanificador, " Clave asignada y bloqueada ");
+
+				if(string_equals_ignore_case(algoritmoDePlanificacion, SJF ) || string_equals_ignore_case(algoritmoDePlanificacion, SJFConDesalojo)){
+
+					log_info(logPlanificador, "metiendolo en cola listos");
+					armarColaListos(esi);
+				} else if (string_equals_ignore_case(algoritmoDePlanificacion, HRRN ) || string_equals_ignore_case(algoritmoDePlanificacion, HRRNConDesalojo)){
+
+					log_info(logPlanificador, "metiendolo en cola listos");
+					armarCola(esi);
+				}
+
+			}
 		}
 
 		i++;
@@ -1141,7 +1161,7 @@ void liberarRecursos(ESI * esi){
 		i++;
 	}
 
-	log_info(logPlanificador,"Terminado");
+	log_info(logPlanificador,"Recursos liberados");
 
 	list_clean(esi->recursosAsignado);
 

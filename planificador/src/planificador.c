@@ -12,14 +12,6 @@ int main(void) {
 	configurar();
 
 	socketCoordinador = conectarComoCliente(logPlanificador, ipCoordinador, puertoCoordinador);
-	socketDeEscucha = conectarComoServidor(logPlanificador, ipPropia, puertoPropio);
-
-	if(socketCoordinador == -1)
-	{
-		log_info(logPlanificador, "se rompio todo wacho");
-		liberarGlobales();
-		exit(-1);
-	}
 
 	socketClienteCoordinador = escucharCliente(logPlanificador, socketDeEscucha);
 
@@ -45,7 +37,15 @@ int main(void) {
 		exit(-1);
 	}
 
-	socketDeEscucha = conectarComoServidor(logPlanificador, "127.0.0.2", "8001");
+	socketDeEscucha = conectarComoServidor(logPlanificador, ipPropia, puertoPropio);
+
+	if(socketCoordinador == -1)
+	{
+		log_info(logPlanificador, "se rompio todo wacho");
+		liberarGlobales();
+		exit(-1);
+	}
+
 
 	if(string_equals_ignore_case(algoritmoDePlanificacion, SJF) == true)
 		{

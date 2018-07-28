@@ -75,7 +75,7 @@ extern char* COMPROBAR_DEADLOCK;
 extern int socketDeEscucha;
 char * ipPropia;
 char * puertoPropio;
-char * socketClienteCoordinador;
+int socketClienteCoordinador;
 extern int backlog;
 extern int CONTINUAR;
 extern int FINALIZAR;

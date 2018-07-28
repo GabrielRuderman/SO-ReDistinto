@@ -165,9 +165,10 @@ planificacionHRRN (bool desalojo)
 	  pthread_mutex_unlock(&mutexComunicacion);
 
 	  if(conexion <= 0){
-		  log_info(logPlanificador, "se rompio la conexion");
-		  liberarGlobales();
-		  exit(-1);
+		  log_info(logPlanificador, "se rompio la conexion con el ESI. Se lo finaliza");
+		  liberarRecursos(nuevoESI);
+		  list_add(listaFinalizados, nuevoESI);
+		  break;
 	  }
 	  if (respuesta != CONTINUAR)
 	  {

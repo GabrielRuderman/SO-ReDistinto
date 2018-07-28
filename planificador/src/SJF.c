@@ -47,13 +47,15 @@ void planificacionSJF(bool desalojo) {
 
 			pthread_mutex_lock(&mutexComunicacion);
 
-			if (nuevo->bloqueadoPorClave) {
+			if (nuevo->bloqueadoPorClave && !nuevo->bloqueadoPorConsola ) {
 				log_info(logPlanificador,
 						"entra un ESI recien desbloqueado de la clave");
 				log_debug(logPlanificador, "Recurso pedido: %s",
 						nuevo->recursoPedido);
 				permiso = true;
 			} else {
+
+				nuevo->bloqueadoPorConsola = false;
 				log_info(logPlanificador, "empieza comunicacion");
 				send(nuevo->id, &CONTINUAR, sizeof(uint32_t), 0);
 
@@ -128,6 +130,15 @@ void planificacionSJF(bool desalojo) {
 				}
 				pthread_mutex_unlock(&mutexComunicacion);
 
+				/* ESTO TIENE QUE ESTAR -> Explicacion:
+				 *
+				 * Si un ESI se desbloquea de un bloqueo por consola, el recurso que se le asigna cuando se desbloquea
+				 * no va a ser el que el realmente necesita. Por ende, se lo añade ahora.
+				 * Es una comprobacion de mas para los demas esis desbloqueados, pero no deberia traer problemas
+				 * de performance
+				 *
+				 */
+
 				if (!recursoEnLista(nuevo)) {
 
 					log_debug(logPlanificador, "Recurso pedido: %s",
@@ -188,9 +199,10 @@ void planificacionSJF(bool desalojo) {
 
 				if (resp <= 0) {
 
-					log_info(logPlanificador, " conexion rota ");
-					liberarGlobales();
-					exit(-1);
+					log_info(logPlanificador, " conexion rota con el ESI. Se lo finaliza ");
+					liberarRecursos(nuevo);
+					list_add(listaFinalizados, nuevo);
+					break;
 				}
 				if (respuesta != CONTINUAR) {
 					log_info(logPlanificador, " el ESI quiere finalizar ");
@@ -246,7 +258,7 @@ void planificacionSJF(bool desalojo) {
 				} else if (nuevo->proximaOperacion > 1) {
 
 					log_info(logPlanificador,
-							" El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado ");
+							" El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado) ");
 					liberarRecursos(nuevo);
 					list_add(listaFinalizados, nuevo);
 					uint32_t aviso = -2;
@@ -297,6 +309,7 @@ void planificacionSJF(bool desalojo) {
 		} else if (bloquear) { // este caso sería para bloqueados por usuario. No se libera clave acá
 
 			log_info(logPlanificador, "bloqueando esi..");
+			nuevo->bloqueadoPorConsola = true;
 			bloquearRecurso(claveParaBloquearRecurso);
 			bloquearESI(claveParaBloquearRecurso, nuevo);
 			bloquearESIActual = false;
