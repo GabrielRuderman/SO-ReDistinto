@@ -46,11 +46,12 @@ int claveMatar = -1;
 char * PAUSEAR_PLANIFICACION= "pausear_planificacion";
 char* REANUDAR_PLANIFICACION = "reanudar_planificacion";
 char* BLOQUEAR_ESI = "bloquear_esi";
-char* DESBLOQUEAR_ESI = "desbloquear_esi";
+char* DESBLOQUEAR_CLAVE = "desbloquear_clave";
 char* LISTAR_POR_RECURSO = "listar_por_recurso";
 char* KILL_ESI = "kill_esi";
 char* STATUS_CLAVE = "status_clave";
 char* COMPROBAR_DEADLOCK = "comprobar_deadlock";
+char* LISTAR_FINALIZADOS = "listar_finalizados";
 
 
 // --------------------------- SEMAFOROS --------------------------------- //
@@ -443,12 +444,12 @@ void lanzarConsola(){
 		printf("1. Pausear_planificacion \n");
 		printf("2. Reanudar_planificacion \n");
 		printf("3. Bloquear_ESI \n");
-		printf("4. Desbloquear_ESI \n");
+		printf("4. Desbloquear_clave \n");
 		printf("5. Listar_por_recurso \n");
 		printf("6. Kill_ESI \n");
 		printf("7. Status_clave \n");
 		printf("8. Comprobar_Deadlock \n");
-		printf("9. Listar finalizados \n");
+		printf("9. Listar_finalizados \n");
 		printf("10. Salir \n");
 		printf("Ingrese el numero o el nombre de la opcion, incluyendo el guion bajo \n");
 		linea = readline(">");
@@ -508,22 +509,46 @@ void lanzarConsola(){
 
 				if(nuevoESI == NULL){
 
-					log_info(logPlanificador, "la clave ingresada no existe");
+					log_info(logPlanificador, "la clave ingresada no existe en los ESI listos o en ejecucion");
 
 					printf("se introdujo una id erronea o la misma ya se encuentra bloqueada : %d \n", clave);
 
 				} else {
-					log_info(logPlanificador, "mandando a bloquear esi");
-					nuevoESI->bloqueadoPorConsola = true;
-					bloquearESI(linea, nuevoESI);
+
+					int i = 0;
+					bool encontrado = false;
+					log_info(logPlanificador, " chequeando que el ESI no tenga asignada esa clave ");
+					while(list_size(nuevoESI-> recursosAsignado ) > i && !encontrado){
+
+						char * recurso = list_get (nuevoESI->recursosAsignado , i);
+						if(string_equals_ignore_case(linea, recurso)){
+
+							log_info(logPlanificador, " la clave ya esta asignada al ESI, no se puede bloquear");
+							printf(" la clave ya esta asignada al ESI, no se puede bloquear \n");
+							encontrado = true;
+
+						}
+
+						i++;
+
+					}
+
+					if(!encontrado){
+
+						log_info(logPlanificador, " no tiene asignada la clave ");
+						log_info(logPlanificador, "mandando a bloquear esi");
+						nuevoESI->bloqueadoPorConsola = true;
+						bloquearESI(linea, nuevoESI);
+					}
+
 				}
 			}
 			free(linea);
 
 		}
-		else if (string_equals_ignore_case(linea,DESBLOQUEAR_ESI)  || string_equals_ignore_case(linea, "4"))
+		else if (string_equals_ignore_case(linea,DESBLOQUEAR_CLAVE)  || string_equals_ignore_case(linea, "4"))
 		{
-			log_info(logPlanificador, "Comando ingresado por consola : %s", linea);
+			log_info(logPlanificador, "Comando ingresado por consola : DESBLOQUEAR_ESI");
 
 			linea = readline("CLAVE RECURSO:");
 			log_info(logPlanificador, "Clave recurso ingresada por consola : %s", linea);
@@ -536,7 +561,7 @@ void lanzarConsola(){
 		}
 		else if (string_equals_ignore_case(linea, LISTAR_POR_RECURSO)  || string_equals_ignore_case(linea, "5")){
 
-			log_info(logPlanificador, "comando ingresado por consola : %s", linea);
+			log_info(logPlanificador, "comando ingresado por consola : LISTAR_POR_RECURSO", linea);
 			linea = readline("RECURSO:");
 			log_info(logPlanificador, "Clave recurso ingresada por consola : %s", linea);
 
@@ -545,7 +570,7 @@ void lanzarConsola(){
 		}
 		else if (string_equals_ignore_case(linea, KILL_ESI)  || string_equals_ignore_case(linea, "6"))
 		{
-			log_info(logPlanificador, "comando ingresado por consola : %s", linea);
+			log_info(logPlanificador, "comando ingresado por consola : KILL_ESI", linea);
 			linea = readline("CLAVE ESI:");
 			log_info(logPlanificador, "Clave esi ingresada por consola : %s", linea);
 
@@ -574,7 +599,7 @@ void lanzarConsola(){
 
 		}else if (string_equals_ignore_case(linea, STATUS_CLAVE)  || string_equals_ignore_case(linea, "7"))
 		{
-			log_info(logPlanificador, "Comando ingresado por consola : %s", linea);
+			log_info(logPlanificador, "Comando ingresado por consola : STATUS_CLAVE", linea);
 			linea = readline("CLAVE:");
 			log_info(logPlanificador, "Clave esi ingresada por consola : %s", linea);
 			statusClave(linea);
@@ -582,12 +607,13 @@ void lanzarConsola(){
 
 		}	else if (string_equals_ignore_case(linea, COMPROBAR_DEADLOCK)  || string_equals_ignore_case(linea, "8"))
 		{
-			log_info(logPlanificador, "Clave recurso ingresada por consola : %s", linea);
+			log_info(logPlanificador, "Comando ingresado por consola  : COMPROBAR_DEADLOCK");
 			comprobarDeadlock(); // hace printf en la funcion
 			free(linea);
 
-		} else if ( string_equals_ignore_case(linea, "listar_finalizados")  || string_equals_ignore_case(linea, "9")){
+		} else if ( string_equals_ignore_case(linea, LISTAR_FINALIZADOS)  || string_equals_ignore_case(linea, "9")){
 
+			log_info(logPlanificador, "Comando ingresado por consola  : LISTAR_FINALIZADOS");
 			int i = 0;
 			while(i< list_size(listaFinalizados)){
 
@@ -603,7 +629,7 @@ void lanzarConsola(){
 		else if (string_equals_ignore_case(linea, "salir")  || string_equals_ignore_case(linea, "10"))
 		{
 			printf("cerrando planificador");
-			log_info(logPlanificador, "Clave recurso ingresada por consola : %s", linea);
+			log_info(logPlanificador, "Comando ingresado por consola  : salir");
 			liberarGlobales();
 			free(linea);
 			exit(EXIT_SUCCESS);
