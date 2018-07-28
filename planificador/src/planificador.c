@@ -13,8 +13,6 @@ int main(void) {
 
 	socketCoordinador = conectarComoCliente(logPlanificador, ipCoordinador, puertoCoordinador);
 
-	socketClienteCoordinador = escucharCliente(logPlanificador, socketDeEscucha);
-
 	if(socketClienteCoordinador == -1)
 	{
 		log_info(logPlanificador, "se rompio todo wacho");
@@ -38,6 +36,8 @@ int main(void) {
 	}
 
 	socketDeEscucha = conectarComoServidor(logPlanificador, ipPropia, puertoPropio);
+
+	socketClienteCoordinador = escucharCliente(logPlanificador, socketDeEscucha);
 
 	if(socketCoordinador == -1)
 	{
