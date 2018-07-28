@@ -78,7 +78,6 @@ void planificacionSJF(bool desalojo) {
 				} else {
 					log_info(logPlanificador,
 							"las respuestas llegaron satisfactoriamente");
-					free(nuevo->recursoPedido);
 					nuevo->recursoPedido = string_new();
 					string_append(&(nuevo->recursoPedido), recursoPedido);
 					nuevo->proximaOperacion = operacion;
