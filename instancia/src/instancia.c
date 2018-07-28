@@ -381,21 +381,23 @@ int dumpearClave(void* nodo) {
 		entrada->fd = _fd;
 		entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
 
-		int pos_inicial = (entrada->entrada_asociada - 1) * tam_entrada;
-		for (int i = pos_inicial; i < pos_inicial + entrada->size_valor_almacenado; i++) {
-			entrada->mapa_archivo[i - pos_inicial] = bloque_instancia[i];
-		}
 		//msync(NULL, entrada->size_valor_almacenado, MS_SYNC);
 	} else {
 		if (entrada->size_valor_almacenado <= strlen(entrada->mapa_archivo)) {
 			memset(entrada->mapa_archivo, '0', strlen(entrada->mapa_archivo));
-			strncpy(entrada->mapa_archivo, bloque_instancia + ((entrada->entrada_asociada - 1) * tam_entrada), strlen(entrada->mapa_archivo));
+			ftruncate(entrada->fd, entrada->size_valor_almacenado);
+			//strncpy(entrada->mapa_archivo, bloque_instancia + ((entrada->entrada_asociada - 1) * tam_entrada), strlen(entrada->mapa_archivo));
 		} else {
 			ftruncate(entrada->fd, entrada->size_valor_almacenado);
 			munmap(entrada->mapa_archivo, strlen(entrada->mapa_archivo));
 			entrada->mapa_archivo = string_new();
 			entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
+
 			//entrada->mapa_archivo = mremap(NULL, strlen(entrada->mapa_archivo), entrada->size_valor_almacenado, 0);
+		}
+		int pos_inicial = (entrada->entrada_asociada - 1) * tam_entrada;
+		for (int i = pos_inicial; i < pos_inicial + entrada->size_valor_almacenado; i++) {
+			entrada->mapa_archivo[i - pos_inicial] = bloque_instancia[i];
 		}
 	}
 	close(_fd);
