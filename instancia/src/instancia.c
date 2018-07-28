@@ -40,6 +40,7 @@ char* bloque_instancia;
 int puntero_circular;
 int pos_a_pisar;
 t_entrada* entrada_a_reemplazar;
+t_list* reemplazos_recientes;
 t_instruccion* instruccion; // es la instruccion actual
 int referencia_actual = 0;
 pthread_mutex_t mutexDumpeo = PTHREAD_MUTEX_INITIALIZER;
@@ -221,12 +222,11 @@ bool valorEsAtomico(void* nodo) {
 
 void algoritmoDeReemplazo() {
 	t_list* tabla_entradas_atomicas = list_filter(tabla_entradas, valorEsAtomico); // Solo evaluo los valores atomicos
+
 	if (list_size(tabla_entradas_atomicas) == 0) {
 		entrada_a_reemplazar = NULL;
 		return;
 	}
-	//printf("\n--------- TABLA DE ENTRADAS ATOMICAS ---------");
-	//imprimirTablaDeEntradas(tabla_entradas_atomicas);
 
 	switch (protocolo_reemplazo) {
 	case LRU:
@@ -270,9 +270,10 @@ int operacion_SET(t_instruccion* instruccion) {
 		while (entradas_a_ocupar > entradas_libres) {
 			algoritmoDeReemplazo();
 			if (!entrada_a_reemplazar) {
-				log_error(logger, "No hay ninguna entrada atomica para reemplazar");
+				log_error(logger, "No hay ningun valor atomico para reemplazar");
 				return -1;
 			}
+			list_add(reemplazos_recientes, entrada_a_reemplazar->clave);
 		}
 		log_info(logger, "Hay %d entradas libres para almacenar el valor", entradas_a_ocupar);
 		// Entonces, pregunto si hay contiguas.
@@ -338,7 +339,7 @@ void actualizarEntradaAsociada(void* nodo) {
 }
 
 void compactarAlmacenamiento() {
-	log_error(logger, "Se inicia la compactacion del almacenamiento");
+	log_warning(logger, "Se inicia la compactacion del almacenamiento");
 
 	for (int x = 0; x < cant_entradas * tam_entrada; x += tam_entrada) {
 		if (bloque_instancia[x] == '0') {
@@ -385,23 +386,16 @@ int dumpearClave(void* nodo) {
 
 		//msync(NULL, entrada->size_valor_almacenado, MS_SYNC);
 	} else {
-		if (entrada->size_valor_almacenado <= strlen(entrada->mapa_archivo)) {
-			memset(entrada->mapa_archivo, '0', strlen(entrada->mapa_archivo));
-			ftruncate(entrada->fd, entrada->size_valor_almacenado);
-			//strncpy(entrada->mapa_archivo, bloque_instancia + ((entrada->entrada_asociada - 1) * tam_entrada), strlen(entrada->mapa_archivo));
-		} else {
-			ftruncate(entrada->fd, entrada->size_valor_almacenado);
-			munmap(entrada->mapa_archivo, strlen(entrada->mapa_archivo));
-			entrada->mapa_archivo = string_new();
-			entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
-
-			//entrada->mapa_archivo = mremap(NULL, strlen(entrada->mapa_archivo), entrada->size_valor_almacenado, 0);
-		}
-		int pos_inicial = (entrada->entrada_asociada - 1) * tam_entrada;
-		for (int i = pos_inicial; i < pos_inicial + entrada->size_valor_almacenado; i++) {
-			entrada->mapa_archivo[i - pos_inicial] = bloque_instancia[i];
-		}
+		ftruncate(_fd, entrada->size_valor_almacenado);
+		entrada->fd = _fd;
+		entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
 	}
+
+	int pos_inicial = (entrada->entrada_asociada - 1) * tam_entrada;
+	for (int i = pos_inicial; i < pos_inicial + entrada->size_valor_almacenado; i++) {
+		entrada->mapa_archivo[i - pos_inicial] = bloque_instancia[i];
+	}
+
 	close(_fd);
 	return 1;
 
@@ -484,30 +478,6 @@ int iniciarDirectorio() {
 	DIR* dirp = opendir(montaje);
 	// TODO: Chequear los permisos del mkdir
 	if (!dirp) return mkdir(montaje, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH); // Si no existe creo el directorio
-
-	char* archivos = string_new();
-
-	struct dirent *dp;
-	while ((dp = readdir(dirp)) != NULL) {
-		if (dp->d_type == 8) { // Si es .txt
-			string_append(&archivos, "-");
-			string_append(&archivos, dp->d_name);
-		}
-	}
-
-	if (string_length(archivos) == 0) {
-		closedir(dirp);
-		return 1;
-	}
-
-	archivos = string_substring_from(archivos, 1);
-	char** vector_archivos = string_split(archivos, "-");
-
-	int i = 0;
-	while (vector_archivos[i] != NULL) {
-		list_add(tabla_entradas, crearEntradaDesdeArchivo(vector_archivos[i]));
-		i++;
-	}
 
 	closedir(dirp);
 	return 1;
@@ -722,10 +692,27 @@ int main() {
 	log_debug(logger, "Tamaño de cada entrada: %d\n", tam_entrada);
 
 	inicializarBloqueInstancia();
+
 	if (iniciarDirectorio() < 0) {
 		log_error(logger, "El directorio %s no es valido", montaje);
 		finalizar(EXIT_FAILURE);
 	}
+
+	uint32_t cant_claves_cargadas;
+	recv(socketCoordinador, &cant_claves_cargadas, sizeof(uint32_t), 0);
+	log_info(logger, "El Coordinador me informa que tenia %d claves cargadas", cant_claves_cargadas);
+	for (int i = 0; i < cant_claves_cargadas; i++) {
+		uint32_t tam_clave_cargada;
+		recv(socketCoordinador, &tam_clave_cargada, sizeof(uint32_t), 0);
+		char* clave_cargada = malloc(sizeof(char) * tam_clave_cargada);
+		recv(socketCoordinador, clave_cargada, tam_clave_cargada, 0);
+		char* archivo = string_new();
+		string_append(&archivo, clave_cargada);
+		string_append(&archivo, ".txt");
+		list_add(tabla_entradas, crearEntradaDesdeArchivo(archivo));
+	}
+
+	log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
 
 	//Generamos temporizador
 	pthread_t hiloTemporizador;
@@ -735,14 +722,10 @@ int main() {
 
 	while (1) {
 		entrada_a_reemplazar = NULL;
+		reemplazos_recientes = list_create();
 
 		t_instruccion* instruccion = recibirInstruccion(socketCoordinador);
 		if (instruccion != NULL) {
-
-			log_debug(logger, "Cantidad de entradas libres: %d", entradas_libres);
-			log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
-			//if (list_size(tabla_entradas) > 0) imprimirTablaDeEntradas(tabla_entradas);
-
 			if (validarArgumentosInstruccion(instruccion) > 0) {
 
 				referencia_actual++;
@@ -753,22 +736,19 @@ int main() {
 
 				if (resultado > 0) {
 					log_info(logger, "Le aviso al Coordinador que se proceso la instruccion");
-					/*/char** para_imprimir = string_split(mapa_archivo, ";");
-					int i = 0;
-					while (para_imprimir[i] != NULL) {
-						printf("%s\n", para_imprimir[i]);
-						i++;
-					}*/
 
-					if (entrada_a_reemplazar != NULL) { // Le informo al Coordinador que clave fue reemplazada
-						uint32_t tam_clave_reemplazada = strlen(entrada_a_reemplazar->clave) + 1;
-						send(socketCoordinador, &tam_clave_reemplazada, sizeof(uint32_t), 0);
-						char* clave_reemplazada = string_new();
-						string_append(&clave_reemplazada, entrada_a_reemplazar->clave);
-						send(socketCoordinador, clave_reemplazada, tam_clave_reemplazada, 0);
+					if (entrada_a_reemplazar != NULL) { // Le informo al Coordinador que claves fueron reemplazada
+						uint32_t cant_claves_reemplazadas = list_size(reemplazos_recientes);
+						send(socketCoordinador, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
+						for (int i = 0; i < cant_claves_reemplazadas; i++) {
+							char* clave_reemplazada = list_get(reemplazos_recientes, i);
+							uint32_t tam_clave_reemplazada = strlen(clave_reemplazada) + 1;
+							send(socketCoordinador, &tam_clave_reemplazada, sizeof(uint32_t), 0);
+							send(socketCoordinador, clave_reemplazada, tam_clave_reemplazada, 0);
+						}
 					} else {
-						uint32_t sin_reemplazo = 0;
-						send(socketCoordinador, &sin_reemplazo, sizeof(uint32_t), 0);
+						uint32_t sin_reemplazos = 0;
+						send(socketCoordinador, &sin_reemplazos, sizeof(uint32_t), 0);
 					}
 
 					send(socketCoordinador, &entradas_libres, sizeof(uint32_t), 0);
@@ -779,8 +759,15 @@ int main() {
 
 				if (instruccion->operacion == 2) printf("\x1b[34m	INSTRUCCION:%d %s %s\x1b[0m\n", instruccion->operacion, instruccion->clave, instruccion->valor);
 				if (instruccion->operacion == 3) printf("\x1b[34m	INSTRUCCION:%d %s\x1b[0m\n", instruccion->operacion, instruccion->clave);
+
+				log_debug(logger, "Cantidad de entradas libres: %d", entradas_libres);
+				log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
+				//if (list_size(tabla_entradas) > 0) imprimirTablaDeEntradas(tabla_entradas);
+
+
 			}
 		}
+		list_destroy(reemplazos_recientes);
 	}
 	finalizar(EXIT_SUCCESS);
 }

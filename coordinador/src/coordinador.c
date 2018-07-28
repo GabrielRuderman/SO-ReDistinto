@@ -262,6 +262,7 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			clave_inaccesible = string_new();
 			string_append(&clave_inaccesible, instruccion->clave);
 			list_remove_by_condition(instancia->claves_asignadas, claveEsLaInaccesible);
+			// En claves_cargadas se mantiene registrada para una posterior reconexion
 			free(clave_inaccesible);
 
 			log_error(logger, "Error de Clave Inaccesible");
@@ -298,24 +299,25 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			send(instancia->socket, &tam_paquete, sizeof(uint32_t), 0);
 			send(instancia->socket, paquete, tam_paquete, MSG_NOSIGNAL);
 
-			uint32_t tam_clave_reemplazada;
-			recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0);
+			uint32_t cant_claves_reemplazadas;
+			recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
 
-			if (tam_clave_reemplazada == PAQUETE_ERROR) {
+			if (cant_claves_reemplazadas == PAQUETE_ERROR) {
 				log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
 				return -1;
-			} else if (tam_clave_reemplazada > 0) {
-				clave_reemplazada = malloc(sizeof(char) * tam_clave_reemplazada);
-				recv(instancia->socket, clave_reemplazada, tam_clave_reemplazada, 0);
-				for (int i = 0; i < list_size(instancia->claves_asignadas); i++) {
-					printf("%s\n", (char*) list_get(instancia->claves_asignadas, i));
+			} else if (cant_claves_reemplazadas > 0) {
+				for (int i = 0; i < cant_claves_reemplazadas; i++) {
+					uint32_t tam_clave_reemplazada;
+					recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0);
+					clave_reemplazada = malloc(sizeof(char) * tam_clave_reemplazada);
+					recv(instancia->socket, clave_reemplazada, tam_clave_reemplazada, 0);
+					log_warning(logger, "Se informa reemplazo de la clave: %s", clave_reemplazada);
+
+					list_remove_by_condition(instancia->claves_asignadas, claveEsLaReemplazada);
+					list_remove_by_condition(instancia->claves_cargadas, claveEsLaReemplazada);
+
+					free(clave_reemplazada);
 				}
-				log_warning(logger, "Se informa reemplazo de la clave: %s", clave_reemplazada);
-				list_remove_by_condition(instancia->claves_asignadas, claveEsLaReemplazada);
-				for (int i = 0; i < list_size(instancia->claves_asignadas); i++) {
-					printf("%s\n", (char*) list_get(instancia->claves_asignadas, i));
-				}
-				free(clave_reemplazada);
 			}
 
 			// La Instancia me devuelve la cantidad de entradas libres que tiene
@@ -329,6 +331,8 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 
 			instancia->entradas_libres = entradas_libres;
 			log_info(logger, "La Instancia %d me informa que le quedan %d entradas libres", instancia->id, entradas_libres);
+
+			if (instruccion->operacion == opSET) list_add(instancia->claves_cargadas, instruccion->clave);
 		} else {
 			log_error(logger, "Error de Clave no Identificada");
 			return -1;
@@ -426,7 +430,7 @@ void atenderESI(int socketESI) {
 		}
 
 		destruirPaquete(paquete);
-		destruirInstruccion(instruccion);
+		//destruirInstruccion(instruccion);
 	}
 }
 
@@ -485,6 +489,7 @@ void atenderInstancia(int socketInstancia) {
 		instancia->entradas_libres = cant_entradas;
 		instancia->estado = ACTIVA;
 		instancia->claves_asignadas = list_create();
+		instancia->claves_cargadas = list_create();
 
 		list_add(tabla_instancias, instancia);
 		log_info(logger, "Instancia %d agregada a la Tabla de Instancias", instancia_ID);
@@ -495,6 +500,15 @@ void atenderInstancia(int socketInstancia) {
 
 	log_info(logger, "Envio a la Instancia el tamaño de las entradas");
 	send(socketInstancia, &tam_entradas, sizeof(uint32_t), 0);
+
+	uint32_t cant_claves_cargadas = list_size(instancia->claves_cargadas);
+	send(socketInstancia, &cant_claves_cargadas, sizeof(uint32_t), 0);
+	for (int i = 0; i < list_size(instancia->claves_cargadas); i++) {
+		char* clave_cargada = list_get(instancia->claves_cargadas, i);
+		uint32_t tam_clave_cargada = strlen(clave_cargada) + 1;
+		send(socketInstancia, &tam_clave_cargada, sizeof(uint32_t), 0);
+		send(socketInstancia, clave_cargada, tam_clave_cargada, 0);
+	}
 
 	log_debug(logger, "La cantidad de instancias actual es %d", list_count_satisfying(tabla_instancias, instanciaEstaActiva));
 }
