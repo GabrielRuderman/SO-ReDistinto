@@ -300,7 +300,11 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 
 			uint32_t tam_clave_reemplazada;
 			recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0);
-			if (tam_clave_reemplazada > 0) {
+
+			if (tam_clave_reemplazada == PAQUETE_ERROR) {
+				log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
+				return -1;
+			} else if (tam_clave_reemplazada > 0) {
 				clave_reemplazada = malloc(sizeof(char) * tam_clave_reemplazada);
 				recv(instancia->socket, clave_reemplazada, tam_clave_reemplazada, 0);
 				for (int i = 0; i < list_size(instancia->claves_asignadas); i++) {

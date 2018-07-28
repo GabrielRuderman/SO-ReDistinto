@@ -718,7 +718,7 @@ int main() {
 
 	log_info(logger, "Se recibio la cantidad y tamaño de las entradas correctamente");
 
-	log_debug(logger, "Cantitdad de entradas: %d\n", cant_entradas);
+	log_debug(logger, "Cantidad de entradas: %d\n", cant_entradas);
 	log_debug(logger, "Tamaño de cada entrada: %d\n", tam_entrada);
 
 	inicializarBloqueInstancia();
