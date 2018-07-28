@@ -62,11 +62,12 @@ extern char * KEY_PUERTO_PROPIO;
 extern char * PAUSEAR_PLANIFICACION;
 extern char* REANUDAR_PLANIFICACION ;
 extern char* BLOQUEAR_ESI ;
-extern char* DESBLOQUEAR_ESI ;
+extern char* DESBLOQUEAR_CLAVE ;
 extern char* LISTAR_POR_RECURSO ;
 extern char* KILL_ESI ;
 extern char* STATUS_CLAVE ;
 extern char* COMPROBAR_DEADLOCK;
+extern char* LISTAR_FINALIZADOS;
 
 
 // ---------------------------------- VARIABLES DE LOS SOCKETS ------------------------------- //
