@@ -38,6 +38,7 @@ typedef struct {
 	int rango_fin;
 	int estado; // 1 = activa, 0 = inactiva
 	t_list* claves_asignadas;
+	t_list* claves_cargadas;
 } __attribute__((packed)) t_instancia;
 
 t_control_configuracion cargarConfiguracion();

@@ -381,10 +381,6 @@ int dumpearClave(void* nodo) {
 		entrada->fd = _fd;
 		entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
 
-		int pos_inicial = (entrada->entrada_asociada - 1) * tam_entrada;
-		for (int i = pos_inicial; i < pos_inicial + entrada->size_valor_almacenado; i++) {
-			entrada->mapa_archivo[i - pos_inicial] = bloque_instancia[i];
-		}
 		//msync(NULL, entrada->size_valor_almacenado, MS_SYNC);
 	} else {
 		if (entrada->size_valor_almacenado <= strlen(entrada->mapa_archivo)) {
@@ -398,6 +394,12 @@ int dumpearClave(void* nodo) {
 			//entrada->mapa_archivo = mremap(NULL, strlen(entrada->mapa_archivo), entrada->size_valor_almacenado, 0);
 		}
 	}
+
+	int pos_inicial = (entrada->entrada_asociada - 1) * tam_entrada;
+	for (int i = pos_inicial; i < pos_inicial + entrada->size_valor_almacenado; i++) {
+		entrada->mapa_archivo[i - pos_inicial] = bloque_instancia[i];
+	}
+
 	close(_fd);
 	return 1;
 
@@ -713,11 +715,21 @@ int main() {
 		log_error(logger, "El Coordinador no me permite conectarme");
 		return EXIT_FAILURE;
 	}
-
 	log_info(logger, "Se recibio la cantidad y tamaño de las entradas correctamente");
 
 	log_debug(logger, "Cantitdad de entradas: %d\n", cant_entradas);
 	log_debug(logger, "Tamaño de cada entrada: %d\n", tam_entrada);
+
+	uint32_t cant_claves_cargadas;
+	recv(socketCoordinador, &cant_claves_cargadas, sizeof(uint32_t), 0);
+	for (int i = 0; i < cant_claves_cargadas; i++) {
+		uint32_t tam_clave_cargada;
+		recv(socketCoordinador, &tam_clave_cargada, sizeof(uint32_t), 0);
+		char* clave_cargada = malloc(sizeof(char) * tam_clave_cargada);
+		recv(socketCoordinador, clave_cargada, tam_clave_cargada, 0);
+		printf("--> %s\n", clave_cargada);
+	}
+	log_info(logger, "El Coordinador me informa que tenia %d claves cargadas", cant_claves_cargadas);
 
 	inicializarBloqueInstancia();
 	if (iniciarDirectorio() < 0) {
@@ -737,10 +749,6 @@ int main() {
 
 		t_instruccion* instruccion = recibirInstruccion(socketCoordinador);
 		if (instruccion != NULL) {
-
-			log_debug(logger, "Cantidad de entradas libres: %d", entradas_libres);
-			log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
-			//if (list_size(tabla_entradas) > 0) imprimirTablaDeEntradas(tabla_entradas);
 
 			if (validarArgumentosInstruccion(instruccion) > 0) {
 
@@ -778,6 +786,10 @@ int main() {
 
 				if (instruccion->operacion == 2) printf("\x1b[34m	INSTRUCCION:%d %s %s\x1b[0m\n", instruccion->operacion, instruccion->clave, instruccion->valor);
 				if (instruccion->operacion == 3) printf("\x1b[34m	INSTRUCCION:%d %s\x1b[0m\n", instruccion->operacion, instruccion->clave);
+
+				log_debug(logger, "Cantidad de entradas libres: %d", entradas_libres);
+				log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
+				//if (list_size(tabla_entradas) > 0) imprimirTablaDeEntradas(tabla_entradas);
 			}
 		}
 	}
