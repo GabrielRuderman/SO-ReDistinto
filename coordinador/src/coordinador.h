@@ -58,6 +58,6 @@ t_instancia* algoritmoLSU();
 bool comparadorEntradasLibres(void* nodo1, void* nodo2);
 t_instancia* algoritmoKE();
 bool buscadorDeRango(void* nodo);
-void finalizar();
+void finalizar(int cod);
 
 #endif /* COORDINADOR_H_ */

@@ -343,14 +343,22 @@ void atenderESI(int socketESI) {
 	// ANALIZAR CONCURRENCIA CON SEMAFOROS MUTEX
 
 	uint32_t esi_ID;
-	recv(socketESI, &esi_ID, sizeof(uint32_t), 0);
+	int res = recv(socketESI, &esi_ID, sizeof(uint32_t), 0);
+	if (res < 1) {
+		log_error(logger, "El ESI no tiene permiso de conexion");
+		return;
+	}
 	log_info(logger, "Se ha conectado un ESI con ID: %d", esi_ID);
 	send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 
 	while (1) {
 		bool recien_desbloqueado = false;
 		uint32_t tam_paquete;
-		recv(socketESI, &tam_paquete, sizeof(uint32_t), 0); // Recibo el header
+		res = recv(socketESI, &tam_paquete, sizeof(uint32_t), 0); // Recibo el header
+		if (res < 1) {
+			log_error(logger, "Error de Comunicacion: conexion rota con el ESI %d", esi_ID);
+			return;
+		}
 
 		if (tam_paquete == DESBLOQUEA_ESI) {
 			log_warning(logger, "El ESI %d se ha desbloqueado", esi_ID);
@@ -493,6 +501,52 @@ void atenderInstancia(int socketInstancia) {
 	log_debug(logger, "La cantidad de instancias actual es %d", list_count_satisfying(tabla_instancias, instanciaEstaActiva));
 }
 
+void atenderConsola() {
+	int socketConsola = conectarComoCliente(logger, ip_planificador, port_planificador);
+	/*
+	 * Instancia actual en la cual se encuentra la clave. (En caso de que la clave no se encuentre en una instancia,
+	 * no se debe mostrar este valor)
+	 * Instancia en la cual se guardaría actualmente la clave (Calcular este valor mediante el algoritmo de distribución,
+	 * pero sin afectar la distribución actual de las claves).
+	 */
+
+	while (1) {
+		uint32_t tam_clave;
+		int res1 = recv(socketConsola, &tam_clave, sizeof(uint32_t), 0);
+		char* clave_solicitada = malloc(sizeof(char) * tam_clave);
+		int res2 = recv(socketConsola, clave_solicitada, sizeof(char) * tam_clave, 0);
+
+		if (res1 < 1 || res2 < 1) {
+			log_error(logger, "Error de Comunicacion: conexion con el Planificador rota");
+			finalizarSocket(socketConsola);
+			finalizarSocket(socketPlanificador);
+			break;
+		}
+
+		log_debug(logger, "STATUS CLAVE %s", clave_solicitada);
+
+		t_instancia* instancia_posta = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave); // Instancia actual
+		if (!instancia_posta) {
+			log_info(logger, "La clave %s no tiene una Instancia asignada", clave_solicitada);
+			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
+		} else {
+			log_info(logger, "La clave corresponde a la Instancia %d", clave_solicitada, instancia_posta->id);
+			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
+		}
+		simulacion_activada = true;
+		t_instancia* instancia_simulada = algoritmoDeDistribucion(); // Instancia simulada
+		if (!instancia_posta) {
+			log_warning(logger, "No hay Instancias conectadas");
+			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
+		} else {
+			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_solicitada, instancia_posta->id);
+			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
+		}
+		simulacion_activada = false;
+		send(socketConsola, &(instancia_simulada->id), sizeof(uint32_t), 0);
+	}
+}
+
 void establecerConexion(void* socketCliente) {
 	log_info(logger, "Cliente conectado");
 
@@ -523,42 +577,6 @@ void establecerConexion(void* socketCliente) {
 	} else {
 		log_error(logger, "No se pudo reconocer al cliente");
 	}
-}
-
-void atenderConsola() {
-	int socketConsola = conectarComoCliente(logger, ip_planificador, port_planificador);
-	/*
-	 * Instancia actual en la cual se encuentra la clave. (En caso de que la clave no se encuentre en una instancia,
-	 * no se debe mostrar este valor)
-	 * Instancia en la cual se guardaría actualmente la clave (Calcular este valor mediante el algoritmo de distribución,
-	 * pero sin afectar la distribución actual de las claves).
-	 */
-	uint32_t tam_clave;
-	recv(socketConsola, &tam_clave, sizeof(uint32_t), 0);
-	log_error(logger, "TAMANO: %d", tam_clave);
-	char* clave_solicitada = malloc(sizeof(char) * tam_clave);
-	recv(socketConsola, clave_solicitada, sizeof(char) * tam_clave, 0);
-	log_debug(logger, "STATUS CLAVE %s", clave_solicitada);
-
-	t_instancia* instancia_posta = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave); // Instancia actual
-	if (!instancia_posta) {
-		log_info(logger, "La clave %s no tiene una Instancia asignada", clave_solicitada);
-		send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
-	} else {
-		log_info(logger, "La clave corresponde a la Instancia %d", clave_solicitada, instancia_posta->id);
-		send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
-	}
-	simulacion_activada = true;
-	t_instancia* instancia_simulada = algoritmoDeDistribucion(); // Instancia simulada
-	if (!instancia_posta) {
-		log_warning(logger, "No hay Instancias conectadas");
-		send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
-	} else {
-		log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_solicitada, instancia_posta->id);
-		send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
-	}
-	simulacion_activada = false;
-	send(socketConsola, &(instancia_simulada->id), sizeof(uint32_t), 0);
 }
 
 // Protocolo numerico de ALGORITMO_DISTRIBUCION
@@ -603,11 +621,12 @@ t_control_configuracion cargarConfiguracion() {
 	return CONFIGURACION_OK;
 }
 
-void finalizar() {
+void finalizar(int cod) {
 	finalizarSocket(socketDeEscucha);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);
+	exit(cod);
 }
 
 int main() { // ip y puerto son char* porque en la biblioteca se los necesita de ese tipo
@@ -623,8 +642,7 @@ int main() { // ip y puerto son char* porque en la biblioteca se los necesita de
 
 	if (cargarConfiguracion() == CONFIGURACION_ERROR) {
 		log_error(logger, "No se pudo cargar la configuracion");
-		finalizar();
-		return EXIT_FAILURE;
+		finalizar(EXIT_FAILURE);
 	}
 
 	log_info(logger, "Se crea la Tabla de Instancias");

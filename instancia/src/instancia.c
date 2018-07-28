@@ -611,7 +611,10 @@ int procesar(t_instruccion* instruccion) {
 t_instruccion* recibirInstruccion(int socketCoordinador) {
 	// Recibo linea de script parseada
 	uint32_t tam_paquete;
-	if (recv(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0) < 0) return NULL; // Recibo el header
+	if (recv(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+		finalizar(EXIT_FAILURE);
+	}
 
 	if (tam_paquete == CHEQUEO_INSTANCIA_ACTIVA) {
 		send(socketCoordinador, &CHEQUEO_INSTANCIA_ACTIVA, sizeof(uint32_t), 0);
@@ -619,11 +622,8 @@ t_instruccion* recibirInstruccion(int socketCoordinador) {
 	}
 
 	char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
-	if (recv(socketCoordinador, paquete, tam_paquete, 0) < 1) {
-		log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
-		finalizar();
-		exit(-1);
-	}
+	recv(socketCoordinador, paquete, tam_paquete, 0);
+
 	log_info(logger, "Recibi un paquete que me envia el Coordinador");
 	log_debug(logger, "%s", paquete);
 
@@ -667,18 +667,18 @@ t_control_configuracion cargarConfiguracion() {
 	return CONFIGURACION_OK;
 }
 
-void finalizar() {
+void finalizar(int cod) {
 	printf("ME CERRE\n");
 	if (socketCoordinador > 0) finalizarSocket(socketCoordinador);
 	list_destroy(tabla_entradas);
 	log_destroy(logger);
 	close(fd);
 	free(bloque_instancia);
+	exit(cod);
 }
 
 void signalHandler(int senal) {
-	finalizar();
-	exit(-1);
+	finalizar(EXIT_FAILURE);
 }
 
 int main() {
@@ -691,15 +691,13 @@ int main() {
 
 	if (cargarConfiguracion() == CONFIGURACION_ERROR) {
 		log_error(logger, "No se pudo cargar la configuracion");
-		finalizar(); // Si hubo error, se corta la ejecucion.
-		return EXIT_FAILURE;
+		finalizar(EXIT_FAILURE); // Si hubo error, se corta la ejecucion.
 	}
 
 	socketCoordinador = conectarComoCliente(logger, ip_coordinador, port_coordinador);
 	if (socketCoordinador < 0) {
 		log_error(logger, "Error de Comunicacion: no me pude conectar con el Coordinador, me aborto");
-		finalizar();
-		return EXIT_FAILURE;
+		finalizar(EXIT_FAILURE);
 	}
 
 	uint32_t handshake = INSTANCIA;
@@ -724,8 +722,7 @@ int main() {
 	inicializarBloqueInstancia();
 	if (iniciarDirectorio() < 0) {
 		log_error(logger, "El directorio %s no es valido", montaje);
-		finalizar();
-		return EXIT_FAILURE;
+		finalizar(EXIT_FAILURE);
 	}
 
 	//Generamos temporizador
@@ -783,6 +780,5 @@ int main() {
 			}
 		}
 	}
-	finalizar();
-	return EXIT_SUCCESS;
+	finalizar(EXIT_SUCCESS);
 }

@@ -78,6 +78,6 @@ t_entrada* algoritmoBSU(t_list* tabla_entradas_atomicas);
 bool mayorValorAlmacenado(void* nodo1, void* nodo2);
 void actualizarCantidadEntradasLibres();
 bool comparadorClaveInstruccion(void* nodo);
-void finalizar();
+void finalizar(int cod);
 
 #endif /* INSTANCIA_H_ */
