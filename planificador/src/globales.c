@@ -855,12 +855,12 @@ void desbloquearRecurso (char* claveRecurso) {
 			if(nuevoRecurso->estado == 1){ // libera el recurso y saca de la cola a SOLO UN ESI que lo estaba esperando
 				log_info(logPlanificador, "que esta bloqueado");
 				log_info(logPlanificador, "clave recurso : %s", nuevoRecurso->clave);
-				nuevoRecurso->estado = 0;
 				encontrado = true;
 				ESI * nuevo = queue_pop(nuevoRecurso->ESIEncolados);
 				if(nuevo != NULL){
 					log_info(logPlanificador, "desencolo el primer esi bloqueado");
 					nuevo->recienDesbloqueadoPorRecurso = true;
+					list_add(nuevo->recursosAsignado, nuevoRecurso->clave);
 					pthread_mutex_lock(&mutexColaListos);
 					if(string_equals_ignore_case(algoritmoDePlanificacion, SJF) || string_equals_ignore_case(algoritmoDePlanificacion, SJFConDesalojo)){
 						log_info(logPlanificador, " a cola SJF ");
@@ -920,7 +920,6 @@ void bloquearESI(char * claveRecurso, ESI * esi){
 				} else if (string_equals_ignore_case(algoritmoDePlanificacion, HRRN ) || string_equals_ignore_case(algoritmoDePlanificacion, HRRNConDesalojo)){
 
 					log_info(logPlanificador, "metiendolo en cola listos");
-					log_info(logPlanificador);
 					armarCola(esi);
 				}
 
