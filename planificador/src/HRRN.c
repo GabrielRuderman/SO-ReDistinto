@@ -48,7 +48,7 @@ planificacionHRRN (bool desalojo)
 
   pthread_mutex_lock(&mutexComunicacion);
 
-  if(nuevoESI->bloqueadoPorClave && !nuevoESI->bloqueadoPorConsola){
+  if(nuevoESI->bloqueadoPorClave){
 
 	  log_info(logPlanificador, " entra un esi recien desbloqueado de la clave ");
 	  permiso = true;

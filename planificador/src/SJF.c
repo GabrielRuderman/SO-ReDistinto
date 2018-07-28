@@ -246,7 +246,7 @@ void planificacionSJF(bool desalojo) {
 				} else if (nuevo->proximaOperacion > 1) {
 
 					log_info(logPlanificador,
-							" El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado ");
+							" El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado) ");
 					liberarRecursos(nuevo);
 					list_add(listaFinalizados, nuevo);
 					uint32_t aviso = -2;
