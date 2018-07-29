@@ -56,7 +56,6 @@ planificacionHRRN (bool desalojo)
 
 		log_info(logPlanificador, "empieza comunicacion");
 
-	  nuevoESI->bloqueadoPorConsola = false;
 	  send(nuevoESI->id,&CONTINUAR,sizeof(uint32_t),0);
 	  int respuesta1 = recv(socketCoordinador, &operacion, sizeof(operacion), 0);
 	  int respuesta2 = recv(socketCoordinador, &tamanioRecurso, sizeof(uint32_t), 0);
@@ -134,15 +133,22 @@ planificacionHRRN (bool desalojo)
 
 	  pthread_mutex_lock(&mutexComunicacion);
 
-		if( !nuevoESI->bloqueadoPorClave ){
-			log_info(logPlanificador, " le aviso al coordinador de que el ESI tiene permiso");
-			send(socketCoordinador, &CONTINUAR, sizeof(uint32_t),0);
-		} else {
-			log_info(logPlanificador, " el ESI sabe que estaba bloqueado, le aviso a el");
-			send(nuevoESI->id, &CONTINUAR, sizeof(uint32_t),0);
+		if (nuevoESI->bloqueadoPorClave && !nuevoESI->bloqueadoPorConsola) {
+			log_info(logPlanificador,
+					" el ESI sabe que estaba bloqueado, le aviso que puede seguir ");
+			send(nuevoESI->id, &CONTINUAR, sizeof(uint32_t), 0);
 			nuevoESI->bloqueadoPorClave = false;
-			log_info(logPlanificador, " El esi se entero de que puede continuar");
+			log_info(logPlanificador,
+					" El esi se entero de que puede continuar");
+
+		} else {
+			nuevoESI->bloqueadoPorClave = false;
+			nuevoESI->bloqueadoPorConsola = false;
+			log_info(logPlanificador,
+					" le aviso al coordinador de que el ESI tiene permiso");
+			send(socketCoordinador, &CONTINUAR, sizeof(uint32_t), 0);
 		}
+
 
 	  log_info(logPlanificador, " ejecuta una sentencia ");
 
