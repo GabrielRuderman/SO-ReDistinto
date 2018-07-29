@@ -632,7 +632,7 @@ void lanzarConsola(){
 			log_info(logPlanificador, "Comando ingresado por consola  : salir");
 			liberarGlobales();
 			free(linea);
-			exit(EXIT_SUCCESS);
+			exit(EXIT_FAILURE);
 		}
 		else
 		{
@@ -999,19 +999,26 @@ void listarBloqueados(char * clave){
 		}else{
 
 			int i=0;
-			t_queue * colaAuxiliar = queue_create();
-			colaAuxiliar = encontrado->ESIEncolados;
-			log_info(logPlanificador, "mostrando por pantalla los esi encolados");
+			t_list * listaAuxiliar = list_create();
+			log_info(logPlanificador, " lleno lista auxiliar ");
 
-			printf("esis en cola:");
-			while(x > i){
+			while ( !queue_is_empty(encontrado->ESIEncolados)){
 
-				ESI * esi = queue_pop(colaAuxiliar);
-				printf("ESI: %d  \n", esi->id);
-				i++;
+				list_add(listaAuxiliar, queue_pop(encontrado->ESIEncolados));
 
 			}
-			queue_destroy(colaAuxiliar);
+
+			log_info(logPlanificador, "mostrando por pantalla los esi encolados y vuelvo a encolar ESIS");
+
+			while(i<list_size(listaAuxiliar)){
+
+				ESI * aux = list_get(listaAuxiliar, i);
+				printf("ESI en cola: %d ", aux->id);
+				queue_push(encontrado->ESIEncolados, aux);
+				i++;
+			}
+
+			list_destroy(listaAuxiliar);
 		}
 	}
 
