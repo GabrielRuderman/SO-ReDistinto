@@ -257,6 +257,7 @@ void planificacionSJF(bool desalojo) {
 
 					log_info(logPlanificador,
 							" El esi no tiene permiso de ejecucion y se bloquea ");
+					claveActual = -1;
 					bloquearESI(nuevo->recursoPedido, nuevo);
 					uint32_t aviso = 0;
 					send(socketCoordinador, &aviso, sizeof(aviso), 0);
@@ -266,6 +267,7 @@ void planificacionSJF(bool desalojo) {
 
 					log_info(logPlanificador,
 							" El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado) ");
+					claveActual = -1;
 					liberarRecursos(nuevo);
 					list_add(listaFinalizados, nuevo);
 					uint32_t aviso = -2;
@@ -284,6 +286,7 @@ void planificacionSJF(bool desalojo) {
 			log_info(logPlanificador,
 					"ESI de clave %d fue mandado a matar por consola",
 					nuevo->id);
+			claveActual = -1;
 			pthread_mutex_lock(&mutexComunicacion);
 			log_info(logPlanificador, "le aviso al esi");
 
@@ -306,6 +309,7 @@ void planificacionSJF(bool desalojo) {
 
 		} else if (finalizar) { //aca con el mensaje del ESI, determino si se bloquea o se finaliza
 
+			claveActual = -1;
 			list_add(listaFinalizados, nuevo);
 			log_info(logPlanificador, " ESI de clave %d en finalizados!",
 					nuevo->id);
@@ -314,7 +318,7 @@ void planificacionSJF(bool desalojo) {
 				bloquearESIActual = false;
 
 		} else if (bloquear) { // este caso sería para bloqueados por usuario. No se libera clave acá
-
+			claveActual = -1;
 			log_info(logPlanificador, "bloqueando esi..");
 			nuevo->bloqueadoPorConsola = true;
 			bloquearRecurso(claveParaBloquearRecurso);
@@ -325,6 +329,8 @@ void planificacionSJF(bool desalojo) {
 					claveParaBloquearESI);
 
 		} else if (desalojar) {
+
+			claveActual = -1;
 			nuevo->recienDesalojado = true;
 			armarColaListos(nuevo); //aca no meto mutex porque si llega otro ESI que esté primero que el que genero el desalojo, lo desalojaria igual.
 			log_info(logPlanificador, " ESI de clave %d desalojado", nuevo->id);

@@ -223,13 +223,14 @@ planificacionHRRN (bool desalojo)
 
 		  uint32_t aviso = 0;
 		  send(socketCoordinador, &aviso,  sizeof(aviso), 0);
-
+		  claveActual = -1;
 		  bloquearESI(nuevoESI->recursoPedido, nuevoESI);
 		  pthread_mutex_unlock(&mutexComunicacion);
 	  } else if (nuevoESI-> proximaOperacion > 1){
 
 		  log_info(logPlanificador, " El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado ");
 		  log_info(logPlanificador, "se procede a liberar sus recursos");
+		  claveActual = -1;
 		  liberarRecursos(nuevoESI);
 		  list_add(listaFinalizados, nuevoESI);
 		  log_info(logPlanificador, "ESI de clave % d en finalizados", nuevoESI->id);
@@ -250,6 +251,7 @@ planificacionHRRN (bool desalojo)
 
     	  log_info(logPlanificador, "ESI de clave %d fue matado por consola", nuevoESI->id);
 		  log_info(logPlanificador, "le comunico al coordinador");
+		  claveActual = -1;
     	  pthread_mutex_lock(&mutexComunicacion);
     	  uint32_t abortar = -2;
     	  send(socketCoordinador,&abortar,sizeof(uint32_t),0);
@@ -269,6 +271,7 @@ planificacionHRRN (bool desalojo)
       } else if (finalizar)
 	{			//aca con el mensaje del ESI, determino si se bloquea o se finaliza
 
+    	  claveActual = -1;
 		  list_add (listaFinalizados, nuevoESI);
 		  log_info (logPlanificador, " ESI de clave %s en finalizados!",
 				nuevoESI->id);
@@ -280,6 +283,7 @@ planificacionHRRN (bool desalojo)
       else if (bloquear)
 	{			// acá bloqueo usuario
 
+    	  claveActual = -1;
     	  nuevoESI->bloqueadoPorConsola = true;
     	  bloquearRecurso(claveParaBloquearRecurso);
     	  bloquearESI(claveParaBloquearRecurso,nuevoESI);
@@ -290,6 +294,7 @@ planificacionHRRN (bool desalojo)
 	}
       else if (desalojar)
       {
+    	  claveActual = -1;
     	  armarCola(nuevoESI);
     	  log_info(logPlanificador," ESI de clave %d desalojado", nuevoESI->id);
 

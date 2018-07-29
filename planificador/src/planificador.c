@@ -3,7 +3,7 @@
 
 int main(void) {
 
-	logPlanificador = log_create("planificador.log", "Planificador" , true, LOG_LEVEL_INFO);
+	logPlanificador = log_create("planificador.log", "Planificador" , true, LOG_LEVEL_DEBUG);
 	colaListos = queue_create();
 	listaFinalizados = list_create();
 	listaRecursos = list_create();
@@ -136,7 +136,7 @@ void configurar(){
 		i++;
 
 	}
-	log_info(logPlanificador, "se llenó la cola de bloqueados");
+	log_info(logPlanificador, "se llenó la lista de claves bloqueadas");
 
 	config_destroy(archivoConfiguracion);
 }
