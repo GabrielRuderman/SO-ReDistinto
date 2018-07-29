@@ -105,11 +105,17 @@ void comprobarDeadlock(){
 
 		int contador2 = 0;
 
-		t_queue * colaRecurso = recursoAnalizar->ESIEncolados;
+		t_list * listaColaRecurso = list_create();
 
-		while (contador2 < queue_size(recursoAnalizar->ESIEncolados)){ // tomo su primer ESI bloqueado
+		while(!queue_is_empty(recursoAnalizar->ESIEncolados)){
 
-			ESI * Aux = queue_pop(colaRecurso);
+			list_add(listaColaRecurso, queue_pop(recursoAnalizar->ESIEncolados));
+
+		}
+
+		while (contador2 < list_size(listaColaRecurso)){ // tomo su primer ESI bloqueado
+
+			ESI * Aux = list_get(listaColaRecurso, contador2);
 
 			log_info(logPlanificador, "tomo ESI clave: %d ", Aux->id);
 
@@ -144,14 +150,26 @@ void comprobarDeadlock(){
 
 				}
 
-				}
 			}
-
 			contador2++;
 
 		}
 
+		int cont4 = 0;
+
+		while(list_size(listaColaRecurso)> cont4){
+
+			queue_push(recursoAnalizar->ESIEncolados, list_get(listaColaRecurso, cont4));
+			cont4 ++;
+
+		}
+
+		list_destroy(listaColaRecurso);
+
 		contador++;
+
+	}
+
 
 
 }
@@ -171,15 +189,20 @@ void chequearDependenciaDeClave(char * recursoOriginal, char * recursoESI, int i
 
 		int i = 0;
 
-		t_queue * colaESIS = recurso->ESIEncolados; // creo cola para no modificar la cola de esis original
+		t_list * listaColaESI = list_create();
+
+		while(!queue_is_empty(recurso->ESIEncolados)){
+			list_add(listaColaESI, queue_pop(recurso->ESIEncolados));
+
+		}
 
 		bool DLEncontrado = false;
 
-		while ( queue_size(colaESIS) > i && !DLEncontrado){ // por cada ESI encolado
+		while ( list_size(listaColaESI)> i && !DLEncontrado){ // por cada ESI encolado
 
 			log_info(logPlanificador, "Cola ESI tiene elementos");
 
-			ESI * esi = queue_pop(recurso->ESIEncolados); // tomo de a uno
+			ESI * esi = list_get(listaColaESI, i); // tomo de a uno
 
 			int t = 0;
 
@@ -217,6 +240,17 @@ void chequearDependenciaDeClave(char * recursoOriginal, char * recursoESI, int i
 			i++;
 
 		}
+
+		int cont = 0;
+
+		while(list_size(listaColaESI)> cont){
+
+			queue_push(recurso->ESIEncolados, list_get(listaColaESI, cont));
+			cont ++;
+
+		}
+
+		list_destroy(listaColaESI);
 
 	}
 
