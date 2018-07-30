@@ -716,7 +716,7 @@ int main() {
 
 	//Generamos temporizador
 	pthread_t hiloTemporizador;
-	pthread_create(&hiloTemporizador, NULL, dumpAutomatico, NULL);
+	//pthread_create(&hiloTemporizador, NULL, dumpAutomatico, NULL);
 
 	actualizarCantidadEntradasLibres();
 
@@ -761,6 +761,8 @@ int main() {
 				if (instruccion->operacion == 3) printf("\x1b[34m	INSTRUCCION:%d %s\x1b[0m\n", instruccion->operacion, instruccion->clave);
 
 				log_debug(logger, "Cantidad de entradas libres: %d", entradas_libres);
+				log_warning(logger, "CANTIDAD DE CLAVES CARGADAS: %d", list_size(tabla_entradas));
+				log_debug(logger, "Soy la Instancia %d", id_instancia);
 				log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
 				//if (list_size(tabla_entradas) > 0) imprimirTablaDeEntradas(tabla_entradas);
 
