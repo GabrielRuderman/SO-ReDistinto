@@ -95,7 +95,7 @@ bool buscadorDeRango(void* nodo) {
 
 	int caracter_inicial = tolower(clave_actual[0]);
 
-	return ((instancia->estado == ACTIVA) && (instancia->rango_inicio <= caracter_inicial) && (instancia->rango_inicio >= caracter_inicial));
+	return ((instancia->estado == ACTIVA) && (instancia->rango_inicio <= caracter_inicial) && (instancia->rango_fin >= caracter_inicial));
 }
 
 t_instancia* algoritmoKE() {
@@ -107,21 +107,34 @@ t_instancia* algoritmoKE() {
 	int letra_fin = 'z'; // z
 
 	int rango_letras = letra_fin - letra_inicio; // a-z
+	log_trace(logger, "RANGO_LETRAS: %d", rango_letras);
 	int cant_instancias = list_count_satisfying(tabla_instancias, instanciaEstaActiva);
-	int asignacion = rango_letras / cant_instancias;
+	log_trace(logger, "CANT_INSTANCIAS: %d", cant_instancias);
+
+	div_t division = div(rango_letras, cant_instancias);
+	int asignacion = division.quot;
+	if (division.rem > 0) asignacion++;
+
+	log_trace(logger, "ASIGNACION: %d", asignacion);
 
 	int i;
 	t_instancia* instancia;
 	int letra_actual = letra_inicio;
 	for (i = 0; i < cant_instancias - 1; i++) {
 		instancia = list_get(tabla_instancias, i);
+		//log_trace(logger, "INSTANCIA %d", instancia->id);
 		instancia->rango_inicio = letra_actual;
+		//log_trace(logger, "RANGO INICIO = %d", instancia->rango_inicio);
 		instancia->rango_fin = letra_actual + asignacion;
+		//log_trace(logger, "RANGO FIN = %d", instancia->rango_fin);
 		letra_actual = instancia->rango_fin + 1;
 	}
 	instancia = list_get(tabla_instancias, i);
 	instancia->rango_inicio = letra_actual;
 	instancia->rango_fin = letra_fin;
+	//log_trace(logger, "INSTANCIA %d", instancia->id);
+	//log_trace(logger, "RANGO INICIO = %d", instancia->rango_inicio);
+	//log_trace(logger, "RANGO FIN = %d", instancia->rango_fin);
 
 	// Busco la instancia correspondiente
 	t_instancia* instanciaAsignada;
@@ -649,7 +662,7 @@ int main() { // ip y puerto son char* porque en la biblioteca se los necesita de
 	 * Se crea el logger, es una estructura a la cual se le da forma con la biblioca "log.h", me sirve para
 	 * comunicar distintos tipos de mensajes que emite el S.O. como ser: WARNINGS, ERRORS, INFO.
 	 */
-	logger = log_create("coordinador.log", "Coordinador", true, LOG_LEVEL_DEBUG);
+	logger = log_create("coordinador.log", "Coordinador", true, LOG_LEVEL_TRACE);
 	logger_operaciones = log_create("log_operaciones.log", "Log de Operaciones", true, LOG_LEVEL_INFO);
 
 	if (cargarConfiguracion() == CONFIGURACION_ERROR) {
