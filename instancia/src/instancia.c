@@ -449,6 +449,8 @@ t_entrada* crearEntradaDesdeArchivo(char* archivo) {
 	struct stat sb;
 	t_entrada* entrada = (t_entrada*) malloc(sizeof(t_entrada));
 
+	log_trace(logger, "ARCHIVO: %s", archivo);
+
 	entrada->clave = string_new();
 	char** vector_clave = string_split(archivo, ".");
 	string_append(&(entrada->clave), vector_clave[0]);
@@ -457,11 +459,15 @@ t_entrada* crearEntradaDesdeArchivo(char* archivo) {
 	string_append(&(entrada->path), montaje);
 	string_append(&(entrada->path), archivo);
 
+	log_trace(logger, "PATH: %s", entrada->path);
+
 	entrada->fd = open(entrada->path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
 	fstat(entrada->fd, &sb);
 
 	entrada->mapa_archivo = string_new();
 	entrada->mapa_archivo = mmap(NULL, sb.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
+
+	log_trace(logger, "CLAVE: %s", entrada->mapa_archivo);
 
 	entrada->size_valor_almacenado = sb.st_size;
 
@@ -659,7 +665,7 @@ int main() {
 	signal(SIGINT, signalHandler);
 
 	// Creo el logger
-	logger = log_create("instancia.log", "Instancia", true, LOG_LEVEL_DEBUG);
+	logger = log_create("instancia.log", "Instancia", true, LOG_LEVEL_TRACE);
 
 	if (cargarConfiguracion() == CONFIGURACION_ERROR) {
 		log_error(logger, "No se pudo cargar la configuracion");
@@ -706,6 +712,7 @@ int main() {
 		recv(socketCoordinador, &tam_clave_cargada, sizeof(uint32_t), 0);
 		char* clave_cargada = malloc(sizeof(char) * tam_clave_cargada);
 		recv(socketCoordinador, clave_cargada, tam_clave_cargada, 0);
+		log_trace(logger, "CLAVE: %s", clave_cargada);
 		char* archivo = string_new();
 		string_append(&archivo, clave_cargada);
 		string_append(&archivo, ".txt");
