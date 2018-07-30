@@ -107,15 +107,14 @@ t_instancia* algoritmoKE() {
 	int letra_fin = 'z'; // z
 
 	int rango_letras = letra_fin - letra_inicio; // a-z
-	log_trace(logger, "RANGO_LETRAS: %d", rango_letras);
+	//log_trace(logger, "RANGO_LETRAS: %d", rango_letras);
 	int cant_instancias = list_count_satisfying(tabla_instancias, instanciaEstaActiva);
-	log_trace(logger, "CANT_INSTANCIAS: %d", cant_instancias);
+	//log_trace(logger, "CANT_INSTANCIAS: %d", cant_instancias);
 
 	div_t division = div(rango_letras, cant_instancias);
 	int asignacion = division.quot;
 	if (division.rem > 0) asignacion++;
-
-	log_trace(logger, "ASIGNACION: %d", asignacion);
+	//log_trace(logger, "ASIGNACION: %d", asignacion);
 
 	int i;
 	t_instancia* instancia;
