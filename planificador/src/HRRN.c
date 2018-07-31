@@ -226,6 +226,7 @@ planificacionHRRN (bool desalojo)
 		  claveActual = -1;
 		  bloquearESI(nuevoESI->recursoPedido, nuevoESI);
 		  pthread_mutex_unlock(&mutexComunicacion);
+
 	  } else if (nuevoESI-> proximaOperacion > 1){
 
 		  log_info(logPlanificador, " El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado ");
