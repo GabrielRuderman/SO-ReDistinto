@@ -37,7 +37,6 @@
 typedef struct {
 	char* clave;
 	char* mapa_archivo;
-	char* path;
 	int fd;
 	int entrada_asociada;
 	int size_valor_almacenado;
@@ -81,5 +80,6 @@ bool mayorValorAlmacenado(void* nodo1, void* nodo2);
 void actualizarCantidadEntradasLibres();
 bool comparadorClaveInstruccion(void* nodo);
 void finalizar(int cod);
+void destruirEntrada(void* nodo);
 
 #endif /* INSTANCIA_H_ */

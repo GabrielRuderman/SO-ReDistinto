@@ -24,6 +24,7 @@ typedef enum {
 } t_reemplazo;
 
 t_log* logger;
+t_config* config;
 bool error_config;
 char* ip_coordinador;
 char* port_coordinador;
@@ -35,6 +36,7 @@ t_reemplazo protocolo_reemplazo;
 int socketCoordinador, intervalo_dump, fd;
 uint32_t cant_entradas, tam_entrada, entradas_libres;
 t_list* tabla_entradas;
+t_list* tabla_entradas_atomicas;
 t_list* lista_claves;
 char* bloque_instancia;
 int puntero_circular;
@@ -43,6 +45,8 @@ t_entrada* entrada_a_reemplazar;
 t_list* reemplazos_recientes;
 t_instruccion* instruccion; // es la instruccion actual
 int referencia_actual = 0;
+bool ejecutarDumpAutomatico;
+pthread_t hiloTemporizador;
 pthread_mutex_t mutexDumpeo = PTHREAD_MUTEX_INITIALIZER;
 
 const uint32_t PAQUETE_OK = 1;
@@ -213,6 +217,7 @@ void quitarEntrada(t_entrada* entrada) {
 	}
 
 	list_remove_by_condition(tabla_entradas, comparadorClaveReemplazo);
+	list_remove_by_condition(tabla_entradas_atomicas, comparadorClaveReemplazo);
 }
 
 bool valorEsAtomico(void* nodo) {
@@ -221,7 +226,7 @@ bool valorEsAtomico(void* nodo) {
 }
 
 void algoritmoDeReemplazo() {
-	t_list* tabla_entradas_atomicas = list_filter(tabla_entradas, valorEsAtomico); // Solo evaluo los valores atomicos
+	tabla_entradas_atomicas = list_filter(tabla_entradas, valorEsAtomico); // Solo evaluo los valores atomicos
 
 	if (list_size(tabla_entradas_atomicas) == 0) {
 		entrada_a_reemplazar = NULL;
@@ -247,6 +252,7 @@ void algoritmoDeReemplazo() {
 	actualizarCantidadEntradasLibres();
 	log_warning(logger, "Se ha liberado la entrada %d de clave %s", entrada_a_reemplazar->entrada_asociada, entrada_a_reemplazar->clave);
 	quitarEntrada(entrada_a_reemplazar);
+	list_destroy(tabla_entradas_atomicas);
 }
 
 int operacion_SET(t_instruccion* instruccion) {
@@ -389,6 +395,7 @@ int dumpearClave(t_entrada* entrada) {
 		entrada->mapa_archivo[i - pos_inicial] = bloque_instancia[i];
 	}
 
+	free(_nombreArchivo);
 	close(_fd);
 	return 1;
 
@@ -426,7 +433,7 @@ void dumpAutomatico() {
 		dumpearClave(entrada);
 	}
 
-	while (1) {
+	while (ejecutarDumpAutomatico) {
 		sleep(intervalo_dump * 0.001);
 		pthread_mutex_lock(&mutexDumpeo);
 		list_iterate(tabla_entradas, dumpeoConReturnVoid);
@@ -449,15 +456,20 @@ t_entrada* crearEntradaDesdeArchivo(char* archivo) {
 	entrada->clave = string_new();
 	char** vector_clave = string_split(archivo, ".");
 	string_append(&(entrada->clave), vector_clave[0]);
+	int i = 0;
+	while(vector_clave[i] != NULL) {
+		free(vector_clave[i]);
+		i++;
+	}
+	free(vector_clave);
 
-	entrada->path = string_new();
-	string_append(&(entrada->path), montaje);
-	string_append(&(entrada->path), archivo);
-
-	entrada->fd = open(entrada->path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	char* path = string_new();
+	string_append(&path, montaje);
+	string_append(&path, archivo);
+	entrada->fd = open(path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	free(path);
 	fstat(entrada->fd, &sb);
 
-	entrada->mapa_archivo = string_new();
 	entrada->mapa_archivo = mmap(NULL, sb.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
 
 	entrada->size_valor_almacenado = sb.st_size;
@@ -597,7 +609,7 @@ t_instruccion* recibirInstruccion(int socketCoordinador) {
 	log_debug(logger, "%s", paquete);
 
 	t_instruccion* instruccion = desempaquetarInstruccion(paquete, logger);
-	//destruirPaquete(paquete);
+	destruirPaquete(paquete);
 
 	return instruccion;
 }
@@ -616,7 +628,7 @@ void establecerProtocoloReemplazo() {
 
 t_control_configuracion cargarConfiguracion() {
 	// Importo los datos del archivo de configuracion
-	t_config* config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/instancia/config_instancia.cfg", &error_config);
+	config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/instancia/config_instancia.cfg", &error_config);
 
 	ip_coordinador = obtenerCampoString(logger, config, "IP_COORDINADOR", &error_config);
 	port_coordinador = obtenerCampoString(logger, config, "PORT_COORDINADOR", &error_config);
@@ -636,13 +648,23 @@ t_control_configuracion cargarConfiguracion() {
 	return CONFIGURACION_OK;
 }
 
+void destruirEntrada(void* nodo) {
+	t_entrada* entrada = (t_entrada*) nodo;
+	if (entrada->clave != NULL) free(entrada->clave);
+	munmap(entrada->mapa_archivo, strlen(entrada->mapa_archivo));
+	free(entrada);
+}
+
 void finalizar(int cod) {
-	printf("ME CERRE\n");
 	if (socketCoordinador > 0) finalizarSocket(socketCoordinador);
-	list_destroy(tabla_entradas);
+	ejecutarDumpAutomatico = false;
+	pthread_mutex_destroy(&mutexDumpeo);
+	list_destroy_and_destroy_elements(reemplazos_recientes, free);
+	list_destroy_and_destroy_elements(tabla_entradas, destruirEntrada);
 	log_destroy(logger);
 	close(fd);
 	free(bloque_instancia);
+	finalizarConexionArchivo(config);
 	exit(cod);
 }
 
@@ -673,7 +695,9 @@ int main() {
 	send(socketCoordinador, &handshake, sizeof(uint32_t), 0);
 
 	// Le aviso cual es mi ID
-	id_instancia = atoi(string_substring_from(nombre_instancia, strlen("Inst"))); // Agarro lo que viene despues de "Inst"
+	char* porcion_id = string_substring_from(nombre_instancia, strlen("Inst"));
+	id_instancia = atoi(porcion_id); // Agarro lo que viene despues de "Inst"
+	free(porcion_id);
 	send(socketCoordinador, &id_instancia, sizeof(uint32_t), 0);
 
 	int resp1 = recv(socketCoordinador, &cant_entradas, sizeof(uint32_t), 0);
@@ -705,14 +729,16 @@ int main() {
 		recv(socketCoordinador, clave_cargada, tam_clave_cargada, 0);
 		char* archivo = string_new();
 		string_append(&archivo, clave_cargada);
+		free(clave_cargada);
 		string_append(&archivo, ".txt");
 		list_add(tabla_entradas, crearEntradaDesdeArchivo(archivo));
+		free(archivo);
 	}
 
 	log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
 
 	//Generamos temporizador
-	pthread_t hiloTemporizador;
+	ejecutarDumpAutomatico = true;
 	pthread_create(&hiloTemporizador, NULL, (void*) dumpAutomatico, NULL);
 
 	actualizarCantidadEntradasLibres();
@@ -766,7 +792,8 @@ int main() {
 
 			}
 		}
-		list_destroy(reemplazos_recientes);
+		destruirInstruccion(instruccion);
+		list_destroy_and_destroy_elements(reemplazos_recientes, free);
 	}
 	finalizar(EXIT_SUCCESS);
 }
