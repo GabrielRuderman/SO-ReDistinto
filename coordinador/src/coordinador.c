@@ -221,6 +221,7 @@ void loguearOperacion(uint32_t esi_ID, t_instruccion* instruccion) {
 		break;
 	}
 	log_info(logger_operaciones, cadena_log_operaciones);
+	free(cadena_log_operaciones);
 }
 
 bool claveEsLaInaccesible(void* nodo) {
@@ -344,7 +345,11 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			instancia->entradas_libres = entradas_libres;
 			log_info(logger, "La Instancia %d me informa que le quedan %d entradas libres", instancia->id, entradas_libres);
 
-			if ((instruccion->operacion == opSET) && !list_any_satisfy(instancia->claves_cargadas, claveEsLaActual)) list_add(instancia->claves_cargadas, instruccion->clave);
+			if ((instruccion->operacion == opSET) && !list_any_satisfy(instancia->claves_cargadas, claveEsLaActual)) {
+				char* clave_cargada = string_new();
+				string_append(&clave_cargada, instruccion->clave);
+				list_add(instancia->claves_cargadas, clave_cargada);
+			}
 		} else {
 			log_error(logger, "Error de Clave no Identificada");
 			return -1;
@@ -442,7 +447,7 @@ void atenderESI(int socketESI) {
 		}
 
 		destruirPaquete(paquete);
-		//destruirInstruccion(instruccion);
+		destruirInstruccion(instruccion);
 	}
 }
 
@@ -624,7 +629,7 @@ t_control_configuracion cargarConfiguracion() {
 	 */
 
 	// Importo los datos del archivo de configuracion
-	t_config* config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/coordinador/config_coordinador.cfg", &error_config);
+	config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/coordinador/config_coordinador.cfg", &error_config);
 
 	ip = obtenerCampoString(logger, config, "IP", &error_config);
 	port = obtenerCampoString(logger, config, "PORT", &error_config);
@@ -647,6 +652,7 @@ t_control_configuracion cargarConfiguracion() {
 
 void finalizar(int cod) {
 	finalizarSocket(socketDeEscucha);
+	finalizarConexionArchivo(config);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);
