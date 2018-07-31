@@ -739,7 +739,7 @@ int main() {
 
 	//Generamos temporizador
 	ejecutarDumpAutomatico = true;
-	pthread_create(&hiloTemporizador, NULL, (void*) dumpAutomatico, NULL);
+	//pthread_create(&hiloTemporizador, NULL, (void*) dumpAutomatico, NULL);
 
 	actualizarCantidadEntradasLibres();
 
