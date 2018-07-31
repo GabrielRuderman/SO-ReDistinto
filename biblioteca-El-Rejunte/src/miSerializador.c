@@ -112,7 +112,8 @@ void destruirPaquete(char* paquete) {
 }
 
 void destruirInstruccion(t_instruccion* instruccion) {
-	free(instruccion->clave);
-	if (instruccion->operacion == opSET) free(instruccion->valor);
+	if (!instruccion) return;
+	if (instruccion->clave != NULL) free(instruccion->clave);
+	if ((instruccion->operacion == opSET) && (instruccion->valor != NULL)) free(instruccion->valor);
 	free(instruccion);
 }

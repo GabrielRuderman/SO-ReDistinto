@@ -126,8 +126,8 @@ typedef struct{
 	uint32_t id;
 	int rafagasRealizadas;
 	int rafagaAnterior;
-	int estimacionAnterior;
-	int estimacionSiguiente;
+	float estimacionAnterior;
+	float estimacionSiguiente;
 	int tiempoEspera;
 	bool bloqueadoPorClave;
 	bool bloqueadoPorConsola;
@@ -162,7 +162,7 @@ void estimarRafagaSiguiente(int tiempoAnterior);
 ESI * crearESI(uint32_t clave);
 void ESI_destroy(ESI * estructura);
 void liberarRecursos(ESI * esi);
-ESI* estimarProximaRafaga(ESI* proceso );
+void estimarProximaRafaga(ESI* proceso );
 bool compararClaves (ESI * esi);
 void comprobarDeadlock();
 t_recurso * crearRecurso (char * id);
@@ -198,4 +198,6 @@ bool buscarYMatarEnCola(int clave);
 bool idEnLista(t_list * lista, ESI * id);
 bool ordenarESIS(void* nodo1, void* nodo2);
 bool ordenarESISHRRN(void* nodo1, void* nodo2);
+void liberarUnRecurso ( ESI * esi );
+
 #endif /* PLANIFICADOR_H_ */

@@ -99,7 +99,7 @@ void configurar(){
 
 	log_info(logPlanificador, "constante estimacion leida = %d", alfa);
 
-	estimacionInicial = config_get_int_value(archivoConfiguracion, KEY_ESTIMACION_INICIAL);
+	estimacionInicial = config_get_int_value(archivoConfiguracion, KEY_ESTIMACION_INICIAL) ;
 
 	log_info(logPlanificador, "estimacion inicial leida = %d", estimacionInicial);
 

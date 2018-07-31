@@ -151,6 +151,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			uint32_t tam_paquete = strlen(paquete) + 1;
 			send(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0); // Envio el header
 			send(socketCoordinador, paquete, tam_paquete, MSG_NOSIGNAL); // Envio el paquete
+			destruirPaquete(paquete);
 
 			if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
 				log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
@@ -230,13 +231,10 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 				send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), MSG_DONTWAIT);
 				finalizar(EXIT_FAILURE);
 			}
-			destruirPaquete(paquete);
-
 		} else {
 			log_error(logger, "El Planificador me informa que debo abortar");
 			break;
 		}
 	}
-
 	finalizar(EXIT_SUCCESS);
 }

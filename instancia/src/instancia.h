@@ -37,7 +37,6 @@
 typedef struct {
 	char* clave;
 	char* mapa_archivo;
-	char* path;
 	int fd;
 	int entrada_asociada;
 	int size_valor_almacenado;
@@ -53,7 +52,9 @@ void llenarAlmacenamiento(t_entrada* entrada);
 t_entrada* crearEntradaDesdeArchivo(char* archivo);
 void compactarAlmacenamiento();
 void actualizarEntradaAsociada(void* nodo);
-int dumpearClave(void* nodo);
+void dumpAutomatico();
+void dumpeoConReturnVoid(void* nodo);
+int dumpearClave(t_entrada* entrada);
 void imprimirTablaDeEntradas(t_list* tabla);
 t_instruccion* recibirInstruccion(int socketCoorinador);
 int obtenerEntradasAOcupar(char* valor);
@@ -79,5 +80,6 @@ bool mayorValorAlmacenado(void* nodo1, void* nodo2);
 void actualizarCantidadEntradasLibres();
 bool comparadorClaveInstruccion(void* nodo);
 void finalizar(int cod);
+void destruirEntrada(void* nodo);
 
 #endif /* INSTANCIA_H_ */
