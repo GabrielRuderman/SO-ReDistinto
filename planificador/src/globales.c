@@ -275,13 +275,21 @@ void estimarProximaRafaga(ESI * proceso ){
 
 	log_info (logPlanificador, "EL ESI DE CLAVE %d TIENE RAFAGA ANTERIOR DE %d", proceso->id, proceso->rafagaAnterior);
 
-	float constante = ((float) alfa) /100;
-	float anterior = (float)  proceso->rafagaAnterior;
-	float estimacionAnterior = (float)  proceso->estimacionAnterior;
+	if(proceso->rafagaAnterior > 0){
+		float constante = ((float) alfa) /100;
+		float anterior = (float)  proceso->rafagaAnterior;
+		float estimacionAnterior = (float)  proceso->estimacionAnterior;
 
-	proceso->estimacionSiguiente = ((constante * anterior)+(1-constante)* estimacionAnterior);
+		proceso->estimacionSiguiente = ((constante * anterior)+(1-constante)* estimacionAnterior);
 
-	log_debug(logPlanificador,"un tiempo estimado: %.6f", proceso->estimacionSiguiente);
+		log_debug(logPlanificador,"un tiempo estimado: %.6f", proceso->estimacionSiguiente);
+
+	}else{
+
+		proceso->estimacionSiguiente = estimacionInicial;
+		log_debug(logPlanificador,"un tiempo estimado: %.6f (primera estimacion)", proceso->estimacionSiguiente);
+
+	}
 
 
 }
