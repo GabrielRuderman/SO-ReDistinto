@@ -259,6 +259,14 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 
 	if (!instancia) {
 		log_info(logger, "La clave %s no esta en ninguna Instancia", instruccion->clave);
+		log_info(logger, "Escojo una Instancia segun el algoritmo %s", algoritmo_distribucion);
+		instancia = algoritmoDeDistribucion();
+		log_info(logger, "La Instancia sera la %d", instancia->id);
+		char* nueva_clave = string_new();
+		string_append(&nueva_clave, instruccion->clave);
+		//nueva_clave[strlen(instruccion->clave)] = '\0';
+		list_add(instancia->claves_asignadas, nueva_clave);
+		log_info(logger, "La clave %s fue asignada a la Instancia %d", instruccion->clave, instancia->id);
 	} else {
 		log_info(logger, "La clave %s esta asignada a Instancia %d", instruccion->clave, instancia->id);
 		instancia->estado = chequearEstadoInstancia(instancia);
@@ -283,78 +291,49 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 		}
 	}
 
-	if (instruccion->operacion == opGET) {
+	log_info(logger, "Le envio a Instancia %d el paquete", instancia->id);
+	uint32_t tam_paquete = strlen(paquete) + 1;
+	send(instancia->socket, &tam_paquete, sizeof(uint32_t), 0);
+	send(instancia->socket, paquete, tam_paquete, MSG_NOSIGNAL);
 
-		// existe => no hago nada
-		// no existe => la creo
+	uint32_t cant_claves_reemplazadas;
+	recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
 
-		if (!instancia) {
-			log_info(logger, "Escojo una Instancia segun el algoritmo %s", algoritmo_distribucion);
-			instancia = algoritmoDeDistribucion();
-			log_info(logger, "La Instancia sera la %d", instancia->id);
-			char* nueva_clave = string_new();
-			string_append(&nueva_clave, instruccion->clave);
-			//nueva_clave[strlen(instruccion->clave)] = '\0';
-			list_add(instancia->claves_asignadas, nueva_clave);
-			log_info(logger, "La clave %s fue asignada a la Instancia %d", instruccion->clave, instancia->id);
-		} else {
-			log_info(logger, "Como la clave ya esta asignada no hago nada");
-			return 1;
-		}
-	} else { // SET o STORE
+	if (cant_claves_reemplazadas == PAQUETE_ERROR) {
+		log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
+		return -1;
+	} else if (cant_claves_reemplazadas > 0) {
+		for (int i = 0; i < cant_claves_reemplazadas; i++) {
+			uint32_t tam_clave_reemplazada;
+			recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0);
+			clave_reemplazada = malloc(sizeof(char) * tam_clave_reemplazada);
+			recv(instancia->socket, clave_reemplazada, tam_clave_reemplazada, 0);
+			log_warning(logger, "Se informa reemplazo de la clave: %s", clave_reemplazada);
 
-		// existe => la envio a Instancia
-		// no existe => Error de Clave no Identificada
+			list_remove_by_condition(instancia->claves_asignadas, claveEsLaReemplazada);
 
-		if (instancia) {
-			log_info(logger, "Le envio a Instancia %d el paquete", instancia->id);
-			uint32_t tam_paquete = strlen(paquete) + 1;
-			send(instancia->socket, &tam_paquete, sizeof(uint32_t), 0);
-			send(instancia->socket, paquete, tam_paquete, MSG_NOSIGNAL);
-
-			uint32_t cant_claves_reemplazadas;
-			recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
-
-			if (cant_claves_reemplazadas == PAQUETE_ERROR) {
-				log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
-				return -1;
-			} else if (cant_claves_reemplazadas > 0) {
-				for (int i = 0; i < cant_claves_reemplazadas; i++) {
-					uint32_t tam_clave_reemplazada;
-					recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0);
-					clave_reemplazada = malloc(sizeof(char) * tam_clave_reemplazada);
-					recv(instancia->socket, clave_reemplazada, tam_clave_reemplazada, 0);
-					log_warning(logger, "Se informa reemplazo de la clave: %s", clave_reemplazada);
-
-					list_remove_by_condition(instancia->claves_asignadas, claveEsLaReemplazada);
-					list_remove_by_condition(instancia->claves_cargadas, claveEsLaReemplazada);
-
-					free(clave_reemplazada);
-				}
-			}
-
-			// La Instancia me devuelve la cantidad de entradas libres que tiene
-			uint32_t entradas_libres;
-			recv(instancia->socket, &entradas_libres, sizeof(uint32_t), 0);
-
-			if (entradas_libres == PAQUETE_ERROR) {
-				log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
-				return -1;
-			}
-
-			instancia->entradas_libres = entradas_libres;
-			log_info(logger, "La Instancia %d me informa que le quedan %d entradas libres", instancia->id, entradas_libres);
-
-			if ((instruccion->operacion == opSET) && !list_any_satisfy(instancia->claves_cargadas, claveEsLaActual)) {
-				char* clave_cargada = string_new();
-				string_append(&clave_cargada, instruccion->clave);
-				list_add(instancia->claves_cargadas, clave_cargada);
-			}
-		} else {
-			log_error(logger, "Error de Clave no Identificada");
-			return -1;
+			free(clave_reemplazada);
 		}
 	}
+
+	// La Instancia me devuelve la cantidad de entradas libres que tiene
+	uint32_t entradas_libres;
+	recv(instancia->socket, &entradas_libres, sizeof(uint32_t), 0);
+
+	if (entradas_libres == PAQUETE_ERROR) {
+		log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
+		return -1;
+	}
+
+	instancia->entradas_libres = entradas_libres;
+	log_info(logger, "La Instancia %d me informa que le quedan %d entradas libres", instancia->id, entradas_libres);
+
+	if ((instruccion->operacion == opSET) && !list_any_satisfy(instancia->claves_asignadas, claveEsLaActual)) {
+		char* clave_cargada = string_new();
+		string_append(&clave_cargada, instruccion->clave);
+		list_add(instancia->claves_asignadas, clave_cargada);
+	}
+
 	loguearOperacion(esi_ID, instruccion);
 	return 1;
 }
@@ -428,11 +407,13 @@ void atenderESI(int socketESI) {
 
 		if (respuesta_permiso == SE_EJECUTA_ESI) {
 			log_info(logger, "El Planificador me autoriza a que el ESI %d pueda utilizar el recurso", esi_ID);
-			if (procesarPaquete(paquete, instruccion, esi_ID) == -1) { // Hay que abortar el ESI
-				log_error(logger, "Se aborta el ESI %d", esi_ID);
-				send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
-				finalizarSocket(socketESI);
-				break;
+			if (instruccion->operacion != opGET) {
+				if (procesarPaquete(paquete, instruccion, esi_ID) == -1) { // Hay que abortar el ESI
+					log_error(logger, "Se aborta el ESI %d", esi_ID);
+					send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
+					finalizarSocket(socketESI);
+					break;
+				}
 			}
 			log_info(logger, "Le aviso al ESI %d que la instruccion se ejecuto satisfactoriamente", esi_ID);
 			send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
@@ -506,7 +487,6 @@ void atenderInstancia(int socketInstancia) {
 		instancia->entradas_libres = cant_entradas;
 		instancia->estado = ACTIVA;
 		instancia->claves_asignadas = list_create();
-		instancia->claves_cargadas = list_create();
 
 		list_add(tabla_instancias, instancia);
 		log_info(logger, "Instancia %d agregada a la Tabla de Instancias", instancia_ID);
@@ -518,10 +498,10 @@ void atenderInstancia(int socketInstancia) {
 	log_info(logger, "Envio a la Instancia el tamaño de las entradas");
 	send(socketInstancia, &tam_entradas, sizeof(uint32_t), 0);
 
-	uint32_t cant_claves_cargadas = list_size(instancia->claves_cargadas);
+	uint32_t cant_claves_cargadas = list_size(instancia->claves_asignadas);
 	send(socketInstancia, &cant_claves_cargadas, sizeof(uint32_t), 0);
-	for (int i = 0; i < list_size(instancia->claves_cargadas); i++) {
-		char* clave_cargada = list_get(instancia->claves_cargadas, i);
+	for (int i = 0; i < list_size(instancia->claves_asignadas); i++) {
+		char* clave_cargada = list_get(instancia->claves_asignadas, i);
 		uint32_t tam_clave_cargada = strlen(clave_cargada) + 1;
 		send(socketInstancia, &tam_clave_cargada, sizeof(uint32_t), 0);
 		send(socketInstancia, clave_cargada, tam_clave_cargada, 0);
