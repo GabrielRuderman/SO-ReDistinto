@@ -365,8 +365,7 @@ void compactarAlmacenamiento() {
 	log_info(logger, "Se compactaron todas las entradas");
 }
 
-int dumpearClave(void* nodo) {
-	t_entrada* entrada = (t_entrada*) nodo;
+int dumpearClave(t_entrada* entrada) {
 	char* _nombreArchivo = string_new();
 	string_append(&_nombreArchivo, montaje);
 	string_append(&_nombreArchivo, entrada->clave);
@@ -421,14 +420,18 @@ int dumpearClave(void* nodo) {
 	}*/
 }
 
-void* dumpAutomatico() {
+void dumpAutomatico() {
+	void dumpeoConReturnVoid(void* nodo) { // Para que no tire el warning pelotudo
+		t_entrada* entrada = (t_entrada*) nodo;
+		dumpearClave(entrada);
+	}
+
 	while (1) {
 		sleep(intervalo_dump * 0.001);
 		pthread_mutex_lock(&mutexDumpeo);
-		list_iterate(tabla_entradas, dumpearClave);
+		list_iterate(tabla_entradas, dumpeoConReturnVoid);
 		pthread_mutex_unlock(&mutexDumpeo);
 	}
-	return NULL;
 }
 
 void escribirEntrada(t_entrada* entrada, char* valor) {
@@ -710,7 +713,7 @@ int main() {
 
 	//Generamos temporizador
 	pthread_t hiloTemporizador;
-	pthread_create(&hiloTemporizador, NULL, dumpAutomatico, NULL);
+	pthread_create(&hiloTemporizador, NULL, (void*) dumpAutomatico, NULL);
 
 	actualizarCantidadEntradasLibres();
 
