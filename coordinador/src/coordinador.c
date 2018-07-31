@@ -651,8 +651,7 @@ t_control_configuracion cargarConfiguracion() {
 }
 
 void finalizar(int cod) {
-	finalizarSocket(socketDeEscucha);
-	finalizarConexionArchivo(config);
+	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);

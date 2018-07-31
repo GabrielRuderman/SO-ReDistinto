@@ -660,10 +660,9 @@ void finalizar(int cod) {
 	if (socketCoordinador > 0) finalizarSocket(socketCoordinador);
 	ejecutarDumpAutomatico = false;
 	pthread_mutex_destroy(&mutexDumpeo);
-	list_destroy_and_destroy_elements(reemplazos_recientes, free);
-	list_destroy_and_destroy_elements(tabla_entradas, destruirEntrada);
+	if (reemplazos_recientes != NULL) list_destroy_and_destroy_elements(reemplazos_recientes, free);
+	if (tabla_entradas != NULL) list_destroy_and_destroy_elements(tabla_entradas, destruirEntrada);
 	log_destroy(logger);
-	close(fd);
 	free(bloque_instancia);
 	finalizarConexionArchivo(config);
 	exit(cod);
