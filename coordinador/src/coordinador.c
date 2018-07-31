@@ -258,6 +258,10 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 	t_instancia* instancia = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave);
 
 	if (!instancia) {
+		if (instruccion->operacion == opSTORE) {
+			log_error(logger, "Error de Clave Inaccesible");
+			return -1;
+		}
 		log_info(logger, "La clave %s no esta en ninguna Instancia", instruccion->clave);
 		log_info(logger, "Escojo una Instancia segun el algoritmo %s", algoritmo_distribucion);
 		instancia = algoritmoDeDistribucion();
