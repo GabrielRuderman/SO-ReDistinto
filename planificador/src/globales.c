@@ -270,26 +270,43 @@ void chequearDependenciaDeClave(char * recursoOriginal, char * recursoESI, int i
 
 // ----------------------------------- UTILIDADES Y PLANIFICACION --------------------------------- //
 
-ESI* estimarProximaRafaga(ESI * proceso ){
+void estimarProximaRafaga(ESI * proceso ){
 
 
 	log_info (logPlanificador, "EL ESI DE CLAVE %d TIENE RAFAGA ANTERIOR DE %d", proceso->id, proceso->rafagaAnterior);
-	if(proceso -> rafagaAnterior == 0){
 
-		log_info(logPlanificador, "ESTIMACION = 0");
+	float constante = ((float) alfa) /100;
+	float anterior = (float)  proceso->rafagaAnterior;
+	float estimacionAnterior = (float)  proceso->estimacionAnterior;
 
-		proceso -> estimacionSiguiente = 0;
+	proceso->estimacionSiguiente = ((constante * anterior)+(1-constante)* estimacionAnterior);
 
-	} else{
+	log_debug(logPlanificador,"un tiempo estimado: %.6f", proceso->estimacionSiguiente);
 
-		proceso->estimacionSiguiente = ((alfa*proceso->estimacionAnterior)+(1-alfa)*proceso->rafagaAnterior);
-
-	}
-	log_info(logPlanificador,"un tiempo estimado");
-	return proceso;
 
 }
 
+
+void liberarUnRecurso ( ESI * esi ){
+
+	int i = 0;
+	log_info(logPlanificador, " se libera clave %s debido a un STORE del ESI de id %", esi->recursoPedido, esi->id);
+
+	while (i<list_size(esi->recursosAsignado)){
+
+		if(string_equals_ignore_case(esi->recursoPedido, (char *) list_get(esi->recursosAsignado,i))){
+
+			log_info(logPlanificador, " se saca la clave de la lista de asignados del esi ");
+			list_remove(esi->recursosAsignado, i);
+
+		}
+
+		i++;
+
+	}
+
+	desbloquearRecurso(esi->recursoPedido);
+}
 
 
 t_recurso * traerRecurso (char * clave){
