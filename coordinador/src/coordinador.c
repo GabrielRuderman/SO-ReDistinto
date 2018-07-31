@@ -344,7 +344,7 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			instancia->entradas_libres = entradas_libres;
 			log_info(logger, "La Instancia %d me informa que le quedan %d entradas libres", instancia->id, entradas_libres);
 
-			if (instruccion->operacion == opSET) list_add(instancia->claves_cargadas, instruccion->clave);
+			if ((instruccion->operacion == opSET) && !list_any(instancia->claves_cargadas, claveEsLaActual)) list_add(instancia->claves_cargadas, instruccion->clave);
 		} else {
 			log_error(logger, "Error de Clave no Identificada");
 			return -1;

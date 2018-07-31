@@ -380,16 +380,10 @@ int dumpearClave(void* nodo) {
 			perror("Error");
 			return -1;
 		}
-		ftruncate(_fd, entrada->size_valor_almacenado);
-		entrada->fd = _fd;
-		entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
-
-		//msync(NULL, entrada->size_valor_almacenado, MS_SYNC);
-	} else {
-		ftruncate(_fd, entrada->size_valor_almacenado);
-		entrada->fd = _fd;
-		entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
 	}
+	ftruncate(_fd, entrada->size_valor_almacenado);
+	entrada->fd = _fd;
+	entrada->mapa_archivo = mmap(NULL, entrada->size_valor_almacenado, PROT_READ | PROT_WRITE, MAP_SHARED, entrada->fd, 0);
 
 	int pos_inicial = (entrada->entrada_asociada - 1) * tam_entrada;
 	for (int i = pos_inicial; i < pos_inicial + entrada->size_valor_almacenado; i++) {
@@ -716,7 +710,7 @@ int main() {
 
 	//Generamos temporizador
 	pthread_t hiloTemporizador;
-	//pthread_create(&hiloTemporizador, NULL, dumpAutomatico, NULL);
+	pthread_create(&hiloTemporizador, NULL, dumpAutomatico, NULL);
 
 	actualizarCantidadEntradasLibres();
 
