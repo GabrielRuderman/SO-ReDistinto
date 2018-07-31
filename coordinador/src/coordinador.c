@@ -106,7 +106,7 @@ t_instancia* algoritmoKE() {
 	int letra_inicio = 'a'; // a
 	int letra_fin = 'z'; // z
 
-	int rango_letras = letra_fin - letra_inicio; // a-z
+	int rango_letras = letra_fin - letra_inicio + 1; // 26 letras (sin la ñ)
 	//log_trace(logger, "RANGO_LETRAS: %d", rango_letras);
 	int cant_instancias = list_count_satisfying(tabla_instancias, instanciaEstaActiva);
 	//log_trace(logger, "CANT_INSTANCIAS: %d", cant_instancias);
@@ -123,17 +123,17 @@ t_instancia* algoritmoKE() {
 		instancia = list_get(tabla_instancias, i);
 		//log_trace(logger, "INSTANCIA %d", instancia->id);
 		instancia->rango_inicio = letra_actual;
-		//log_trace(logger, "RANGO INICIO = %d", instancia->rango_inicio);
-		instancia->rango_fin = letra_actual + asignacion;
-		//log_trace(logger, "RANGO FIN = %d", instancia->rango_fin);
+		//log_trace(logger, "CARACTER INICIO = %c", instancia->rango_inicio);
+		instancia->rango_fin = letra_actual + asignacion - 1;
+		//log_trace(logger, "CARACTER FIN: %c", instancia->rango_fin);
 		letra_actual = instancia->rango_fin + 1;
 	}
 	instancia = list_get(tabla_instancias, i);
 	instancia->rango_inicio = letra_actual;
 	instancia->rango_fin = letra_fin;
 	//log_trace(logger, "INSTANCIA %d", instancia->id);
-	//log_trace(logger, "RANGO INICIO = %d", instancia->rango_inicio);
-	//log_trace(logger, "RANGO FIN = %d", instancia->rango_fin);
+	//log_trace(logger, "RANGO INICIO = %c", instancia->rango_inicio);
+	//log_trace(logger, "RANGO FIN = %c", instancia->rango_fin);
 
 	// Busco la instancia correspondiente
 	t_instancia* instanciaAsignada;
@@ -221,6 +221,7 @@ void loguearOperacion(uint32_t esi_ID, t_instruccion* instruccion) {
 		break;
 	}
 	log_info(logger_operaciones, cadena_log_operaciones);
+	free(cadena_log_operaciones);
 }
 
 bool claveEsLaInaccesible(void* nodo) {
@@ -244,6 +245,11 @@ bool instanciaTieneLaClave(void* nodo) {
 }
 
 int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) {
+	if (strlen(instruccion->clave) > TAM_MAXIMO_CLAVE) {
+		log_error(logger, "Error de Tamano de Clave");
+		return -1;
+	}
+
 	log_info(logger, "El Coordinador esta chequeando si la clave ya existe...");
 
 	free(clave_actual);
@@ -273,6 +279,7 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			 * intenta acceder a ella; de tal forma, si la instancia se reincorpora previo al uso de la clave;
 			 * la desconexión sera transparente para el/los ESI que deseen operar con dicha clave.
 			 */
+
 			clave_inaccesible = string_new();
 			string_append(&clave_inaccesible, instruccion->clave);
 			list_remove_by_condition(instancia->claves_asignadas, claveEsLaInaccesible);
@@ -304,7 +311,6 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			log_warning(logger, "Se informa reemplazo de la clave: %s", clave_reemplazada);
 
 			list_remove_by_condition(instancia->claves_asignadas, claveEsLaReemplazada);
-			list_remove_by_condition(instancia->claves_cargadas, claveEsLaReemplazada);
 
 			free(clave_reemplazada);
 		}
@@ -322,7 +328,11 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 	instancia->entradas_libres = entradas_libres;
 	log_info(logger, "La Instancia %d me informa que le quedan %d entradas libres", instancia->id, entradas_libres);
 
-	if (instruccion->operacion == opSET) list_add(instancia->claves_cargadas, instruccion->clave);
+	if ((instruccion->operacion == opSET) && !list_any_satisfy(instancia->claves_asignadas, claveEsLaActual)) {
+		char* clave_cargada = string_new();
+		string_append(&clave_cargada, instruccion->clave);
+		list_add(instancia->claves_asignadas, clave_cargada);
+	}
 
 	loguearOperacion(esi_ID, instruccion);
 	return 1;
@@ -397,15 +407,6 @@ void atenderESI(int socketESI) {
 
 		if (respuesta_permiso == SE_EJECUTA_ESI) {
 			log_info(logger, "El Planificador me autoriza a que el ESI %d pueda utilizar el recurso", esi_ID);
-
-			if (strlen(instruccion->clave) > TAM_MAXIMO_CLAVE) {
-				log_error(logger, "Error de Tamano de Clave");
-				log_error(logger, "Se aborta el ESI %d", esi_ID);
-				send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
-				finalizarSocket(socketESI);
-				break;
-			}
-
 			if (instruccion->operacion != opGET) {
 				if (procesarPaquete(paquete, instruccion, esi_ID) == -1) { // Hay que abortar el ESI
 					log_error(logger, "Se aborta el ESI %d", esi_ID);
@@ -427,7 +428,7 @@ void atenderESI(int socketESI) {
 		}
 
 		destruirPaquete(paquete);
-		//destruirInstruccion(instruccion);
+		destruirInstruccion(instruccion);
 	}
 }
 
@@ -486,7 +487,6 @@ void atenderInstancia(int socketInstancia) {
 		instancia->entradas_libres = cant_entradas;
 		instancia->estado = ACTIVA;
 		instancia->claves_asignadas = list_create();
-		instancia->claves_cargadas = list_create();
 
 		list_add(tabla_instancias, instancia);
 		log_info(logger, "Instancia %d agregada a la Tabla de Instancias", instancia_ID);
@@ -498,14 +498,13 @@ void atenderInstancia(int socketInstancia) {
 	log_info(logger, "Envio a la Instancia el tamaño de las entradas");
 	send(socketInstancia, &tam_entradas, sizeof(uint32_t), 0);
 
-	uint32_t cant_claves_cargadas = list_size(instancia->claves_cargadas);
+	uint32_t cant_claves_cargadas = list_size(instancia->claves_asignadas);
 	send(socketInstancia, &cant_claves_cargadas, sizeof(uint32_t), 0);
-	for (int i = 0; i < list_size(instancia->claves_cargadas); i++) {
-		char* clave_cargada = list_get(instancia->claves_cargadas, i);
+	for (int i = 0; i < list_size(instancia->claves_asignadas); i++) {
+		char* clave_cargada = list_get(instancia->claves_asignadas, i);
 		uint32_t tam_clave_cargada = strlen(clave_cargada) + 1;
 		send(socketInstancia, &tam_clave_cargada, sizeof(uint32_t), 0);
 		send(socketInstancia, clave_cargada, tam_clave_cargada, 0);
-		log_trace(logger, "CLAVE: %s", clave_cargada);
 	}
 
 	log_debug(logger, "La cantidad de instancias actual es %d", list_count_satisfying(tabla_instancias, instanciaEstaActiva));
@@ -610,7 +609,7 @@ t_control_configuracion cargarConfiguracion() {
 	 */
 
 	// Importo los datos del archivo de configuracion
-	t_config* config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/coordinador/config_coordinador.cfg", &error_config);
+	config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/coordinador/config_coordinador.cfg", &error_config);
 
 	ip = obtenerCampoString(logger, config, "IP", &error_config);
 	port = obtenerCampoString(logger, config, "PORT", &error_config);
@@ -632,7 +631,7 @@ t_control_configuracion cargarConfiguracion() {
 }
 
 void finalizar(int cod) {
-	finalizarSocket(socketDeEscucha);
+	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);
