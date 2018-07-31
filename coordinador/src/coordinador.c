@@ -106,7 +106,7 @@ t_instancia* algoritmoKE() {
 	int letra_inicio = 'a'; // a
 	int letra_fin = 'z'; // z
 
-	int rango_letras = letra_fin - letra_inicio; // a-z
+	int rango_letras = letra_fin - letra_inicio + 1; // 26 letras (sin la ñ)
 	//log_trace(logger, "RANGO_LETRAS: %d", rango_letras);
 	int cant_instancias = list_count_satisfying(tabla_instancias, instanciaEstaActiva);
 	//log_trace(logger, "CANT_INSTANCIAS: %d", cant_instancias);
@@ -121,19 +121,19 @@ t_instancia* algoritmoKE() {
 	int letra_actual = letra_inicio;
 	for (i = 0; i < cant_instancias - 1; i++) {
 		instancia = list_get(tabla_instancias, i);
-		//log_trace(logger, "INSTANCIA %d", instancia->id);
+		log_trace(logger, "INSTANCIA %d", instancia->id);
 		instancia->rango_inicio = letra_actual;
-		//log_trace(logger, "RANGO INICIO = %d", instancia->rango_inicio);
-		instancia->rango_fin = letra_actual + asignacion;
-		//log_trace(logger, "RANGO FIN = %d", instancia->rango_fin);
+		log_trace(logger, "CARACTER INICIO = %c", instancia->rango_inicio);
+		instancia->rango_fin = letra_actual + asignacion - 1;
+		log_trace(logger, "CARACTER FIN: %c", instancia->rango_fin);
 		letra_actual = instancia->rango_fin + 1;
 	}
 	instancia = list_get(tabla_instancias, i);
 	instancia->rango_inicio = letra_actual;
 	instancia->rango_fin = letra_fin;
-	//log_trace(logger, "INSTANCIA %d", instancia->id);
-	//log_trace(logger, "RANGO INICIO = %d", instancia->rango_inicio);
-	//log_trace(logger, "RANGO FIN = %d", instancia->rango_fin);
+	log_trace(logger, "INSTANCIA %d", instancia->id);
+	log_trace(logger, "RANGO INICIO = %c", instancia->rango_inicio);
+	log_trace(logger, "RANGO FIN = %c", instancia->rango_fin);
 
 	// Busco la instancia correspondiente
 	t_instancia* instanciaAsignada;
