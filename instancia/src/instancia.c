@@ -383,6 +383,7 @@ int dumpearClave(t_entrada* entrada) {
 		if (_fd < 0) {
 			log_error(logger, "El archivo %s no se puede crear", _nombreArchivo);
 			perror("Error");
+			free(_nombreArchivo);
 			return -1;
 		}
 	}
