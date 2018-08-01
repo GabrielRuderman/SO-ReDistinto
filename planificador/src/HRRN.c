@@ -52,11 +52,28 @@ planificacionHRRN (bool desalojo)
 
 	  log_info(logPlanificador, " entra un esi recien desbloqueado de la clave ");
 	  permiso = true;
+
   } else {
 
-		log_info(logPlanificador, "empieza comunicacion");
+	  log_info(logPlanificador, "empieza comunicacion");
+	  uint32_t continuacion;
+	  send(nuevoESI->id, &CONTINUAR, sizeof(uint32_t), 0);
+	  int respuesta0 =recv(nuevoESI->id, &continuacion,sizeof(uint32_t),0);
 
-	  send(nuevoESI->id,&CONTINUAR,sizeof(uint32_t),0);
+	  if(respuesta0 < 0){
+
+		  log_error(logPlanificador, "Conexion con ESI rota");
+		  liberarRecursos(nuevoESI);
+		  list_add(listaFinalizados, nuevoESI);
+
+	  }
+	  if(continuacion == 0){
+		  log_error(logPlanificador, " El ESI de ID : %d se aborto por un motivo desconocido", nuevoESI->id);
+		  liberarRecursos(nuevoESI);
+		  list_add(listaFinalizados, nuevoESI);
+		  break;
+	  }
+
 	  int respuesta1 = recv(socketCoordinador, &operacion, sizeof(operacion), 0);
 	  int respuesta2 = recv(socketCoordinador, &tamanioRecurso, sizeof(uint32_t), 0);
 	  recursoPedido = malloc(sizeof(char)*tamanioRecurso);
@@ -411,7 +428,7 @@ bool ordenarESISHRRN(void* nodo1, void* nodo2){
 	ESI* e2 = (ESI*) nodo2;
 
 
-	log_info (logPlanificador, "ESI id : %d de tiempo de respuesta %.6f contra ESI a comparar de id: %d y tiempo de respuesta %.6f ", e1->estimacionSiguiente, e1->tiempoRespuesta, e2->estimacionSiguiente, e2->tiempoRespuesta);
+	log_info (logPlanificador, "ESI id : %d de tiempo de respuesta %.6f contra ESI a comparar de id: %d y tiempo de respuesta %.6f ", e1->id, e1->tiempoRespuesta, e2->id, e2->tiempoRespuesta);
 
 	if (e1->tiempoRespuesta > e2->tiempoRespuesta){
 
@@ -454,7 +471,12 @@ calcularTiempoEspera (float espera, float estimacionSiguiente)
 {
 
   log_info (logPlanificador, "calculando tiempo respuesta..");
-  return ((espera + estimacionSiguiente) / estimacionSiguiente);
+  log_error(logPlanificador, "est : %.6f", espera);
+  log_error(logPlanificador, "espera : %.6f", estimacionSiguiente);
+
+  float respuesta = ((espera + estimacionSiguiente) / estimacionSiguiente);
+  log_error(logPlanificador, "resp : %.6f", respuesta);
+  return respuesta;
 
 }
 
