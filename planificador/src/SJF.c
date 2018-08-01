@@ -101,10 +101,10 @@ void planificacionSJF(bool desalojo) {
 
 				log_info(logPlanificador, "el esi tiene permiso de ejecucion");
 
-				char * valorRecurso;
-				uint32_t tamValor;
+				if (nuevo->proximaOperacion == 2) {
 
-				if (operacion == 2) {
+					char * valorRecurso;
+					uint32_t tamValor;
 
 					log_debug(logPlanificador, "Recurso pedido: %s",
 							nuevo->recursoPedido);
@@ -200,6 +200,7 @@ void planificacionSJF(bool desalojo) {
 
 				uint32_t respuesta;
 				int resp = recv(nuevo->id, &respuesta, sizeof(uint32_t), 0);
+
 				log_info(logPlanificador,
 						" recibo respuesta del ESI %d, resp: %d", nuevo->id,
 						respuesta);

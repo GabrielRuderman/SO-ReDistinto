@@ -275,22 +275,23 @@ void estimarProximaRafaga(ESI * proceso ){
 
 	log_info (logPlanificador, "EL ESI DE CLAVE %d TIENE RAFAGA ANTERIOR DE %d", proceso->id, proceso->rafagaAnterior);
 
-	if(proceso->rafagaAnterior > 0){
-		float constante = ((float) alfa) /100;
-		float anterior = (float)  proceso->rafagaAnterior;
-		float estimacionAnterior = (float)  proceso->estimacionAnterior;
+	if(!proceso->recienDesalojado){
+		if(proceso->rafagaAnterior > 0){
+			float constante = ((float) alfa) /100;
+			float anterior = (float)  proceso->rafagaAnterior;
+			float estimacionAnterior = (float)  proceso->estimacionAnterior;
 
-		proceso->estimacionSiguiente = ((constante * anterior)+(1-constante)* estimacionAnterior);
+			proceso->estimacionSiguiente = ((constante * anterior)+(1-constante)* estimacionAnterior);
 
-		log_debug(logPlanificador,"un tiempo estimado: %.6f", proceso->estimacionSiguiente);
+			log_debug(logPlanificador,"un tiempo estimado: %.6f", proceso->estimacionSiguiente);
 
-	}else{
+		}else{
 
-		proceso->estimacionSiguiente = estimacionInicial;
-		log_debug(logPlanificador,"un tiempo estimado: %.6f (primera estimacion)", proceso->estimacionSiguiente);
+			proceso->estimacionSiguiente = estimacionInicial;
+			log_debug(logPlanificador,"un tiempo estimado: %.6f (primera estimacion)", proceso->estimacionSiguiente);
 
+		}
 	}
-
 
 }
 
@@ -298,7 +299,7 @@ void estimarProximaRafaga(ESI * proceso ){
 void liberarUnRecurso ( ESI * esi ){
 
 	int i = 0;
-	log_info(logPlanificador, " se libera clave %s debido a un STORE del ESI de id %", esi->recursoPedido, esi->id);
+	log_info(logPlanificador, " se libera clave %s debido a un STORE del ESI de id %d", esi->recursoPedido, esi->id);
 
 	while (i<list_size(esi->recursosAsignado)){
 
@@ -1328,7 +1329,7 @@ void limpiarRecienLlegados(){
 	t_queue * colaAuxiliar = queue_create();
 	log_info(logPlanificador, "creada cola auxiliar");
 
-	while(queue_is_empty(colaListos)){
+	while(!queue_is_empty(colaListos)){
 
 		ESI*nuevo = queue_pop(colaListos);
 

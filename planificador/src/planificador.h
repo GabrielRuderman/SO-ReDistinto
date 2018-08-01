@@ -182,7 +182,7 @@ extern void estimarTiempos();
 extern void armarColaListos(ESI * esi);
 extern void planificacionHRRN(bool desalojo);
 extern void estimarYCalcularTiempos(ESI * esi);
-extern float calcularTiempoEspera (float espera, int estimacionSiguiente);
+extern float calcularTiempoEspera (float espera, float estimacionSiguiente);
 extern void armarCola (ESI * esi);
 extern void sumarTiemposEspera ();
 extern void aumentarEspera();
