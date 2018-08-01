@@ -15,14 +15,14 @@ planificacionHRRN (bool desalojo)
   while (1)
     {
 
-  while (queue_size(colaListos) == 0){
+  while (queue_size(colaListos) == 0){ // todo
 
 	if (queue_size(colaListos) > 0){
 		break;
 	}
   }
 
-  while(pausearPlanificacion){}
+  while(pausearPlanificacion){} //todo
 
 	bool finalizar = false;
 
@@ -37,25 +37,30 @@ planificacionHRRN (bool desalojo)
 	char * recursoPedido;
 
 	ESI* nuevoESI = queue_pop (colaListos);
-	log_info (logPlanificador, "clave actual ahora es : %d", nuevoESI->id);
+	log_info (logPlanificador, "Clave actual ahora es : %d", nuevoESI->id);
 
 	claveActual = nuevoESI -> id;
+
+	nuevoESI->tiempoEspera = 0; // se indico que si el ESI entra, aunque no tenga permiso, reiniciara su tiempo de espera
+
 
   while (!finalizar && !bloquear && permiso && !desalojar && !matarESI)
 {
 
-  while(pausearPlanificacion){}
+  while(pausearPlanificacion){} // todo
 
   pthread_mutex_lock(&mutexComunicacion);
 
   if(nuevoESI->bloqueadoPorClave && !nuevoESI->bloqueadoPorConsola){
 
-	  log_info(logPlanificador, " entra un esi recien desbloqueado de la clave ");
+	  log_info(logPlanificador, " El ESI fue recien desbloqueado de la clave ");
 	  permiso = true;
+	  pthread_mutex_unlock(&mutexComunicacion);
+
 
   } else {
 
-	  log_info(logPlanificador, "empieza comunicacion");
+	  log_info(logPlanificador, "Empieza comunicacion con ESI y Coordinador");
 	  uint32_t continuacion;
 	  send(nuevoESI->id, &CONTINUAR, sizeof(uint32_t), 0);
 	  int respuesta0 =recv(nuevoESI->id, &continuacion,sizeof(uint32_t),0);
@@ -63,14 +68,16 @@ planificacionHRRN (bool desalojo)
 	  if(respuesta0 < 0){
 
 		  log_error(logPlanificador, "Conexion con ESI rota");
-		  liberarRecursos(nuevoESI);
-		  list_add(listaFinalizados, nuevoESI);
-
+		  finalizar = true;
+		  pthread_mutex_unlock(&mutexComunicacion);
+		  break;
 	  }
 	  if(continuacion == 0){
 		  log_error(logPlanificador, " El ESI de ID : %d se aborto por un motivo desconocido", nuevoESI->id);
 		  liberarRecursos(nuevoESI);
 		  list_add(listaFinalizados, nuevoESI);
+		  pthread_mutex_unlock(&mutexComunicacion);
+
 		  break;
 	  }
 
@@ -79,15 +86,12 @@ planificacionHRRN (bool desalojo)
 	  recursoPedido = malloc(sizeof(char)*tamanioRecurso);
 	  int respuesta3 = recv(socketCoordinador, recursoPedido, sizeof(char)*tamanioRecurso,0);
 
-		log_info(logPlanificador, "recibo datos suficientes para corroborar permiso");
-
-
 	  if(respuesta1 <= 0 || respuesta2 <= 0 || respuesta3 <= 0){
-		  log_info(logPlanificador, "conexion con el coordinador rota");
+		  log_info(logPlanificador, "Conexion con el coordinador rota. Me cierro");
 		  liberarGlobales();
 		  exit(-1);
 	  } else {
-		  log_info(logPlanificador, "se carga recurso pedido : %s", recursoPedido);
+		  log_info(logPlanificador, "Se carga recurso pedido : %s", recursoPedido);
 		  nuevoESI->recursoPedido = string_new();
 		  string_append(&(nuevoESI->recursoPedido), recursoPedido);
 		  nuevoESI->proximaOperacion = operacion;
@@ -99,7 +103,6 @@ planificacionHRRN (bool desalojo)
   if(permiso){
 
 	  nuevoESI->rafagaAnterior = 0;
-	  nuevoESI->tiempoEspera = 0;
 
 	  log_info(logPlanificador, "ESI tiene permiso de ejecucion");
 
@@ -108,20 +111,17 @@ planificacionHRRN (bool desalojo)
 		  char * valorRecurso;
 		  uint32_t tamValor;
 
-		  log_info(logPlanificador, "recibo mas datos para ejecucion");
-
 		  int resp = recv (socketCoordinador, &tamValor,sizeof(uint32_t),0);
 		  valorRecurso=malloc(sizeof(char)*tamValor);
 		  int resp2 =recv (socketCoordinador,valorRecurso,sizeof(char)*tamValor,0);
 
 		  if(resp <= 0 || resp2 <= 0){
 
-			  log_info(logPlanificador, "conexion con el coordinador rota");
+			  log_info(logPlanificador, "Conexion con el coordinador rota");
 			  liberarGlobales();
 			  exit(-1);
 
 		  } else {
-			  log_info(logPlanificador, "cargo valor obtenidos");
 			  cargarValor(recursoPedido,valorRecurso);
 		  }
 
@@ -129,56 +129,44 @@ planificacionHRRN (bool desalojo)
 	  }
 	  pthread_mutex_unlock(&mutexComunicacion);
 
-	  log_info(logPlanificador, "terminada comunicacion");
-
 	  if(nuevoESI->proximaOperacion == 1 && !recursoEnLista(nuevoESI)){
 
-		  log_info(logPlanificador, "el recurso se añade a asignados");
+		  log_debug(logPlanificador, "El recurso %s se agrega a los asignados del ESI", nuevoESI->recursoPedido);
 		  list_add(nuevoESI->recursosAsignado, nuevoESI->recursoPedido);
 
 	  }
-
-	  log_info(logPlanificador, "se bloquea recurso a usar");
 
 	  bloquearRecurso(recursoPedido);
 
 	  nuevoESI->recienLlegado = false;
 	  nuevoESI->recienDesbloqueadoPorRecurso = false;
 
-	  log_info(logPlanificador, " ESI de clave %d entra al planificador", nuevoESI->id );
-
 	  pthread_mutex_lock(&mutexComunicacion);
 
 		if (nuevoESI->bloqueadoPorClave && !nuevoESI->bloqueadoPorConsola) {
-			log_info(logPlanificador,
-					" el ESI sabe que estaba bloqueado, le aviso que puede seguir ");
 			send(nuevoESI->id, &CONTINUAR, sizeof(uint32_t), 0);
 			nuevoESI->bloqueadoPorClave = false;
 			log_info(logPlanificador,
-					" El esi se entero de que puede continuar");
+					"ESI estaba bloqueado y se entera que puede continuar");
 
 		} else {
 			nuevoESI->bloqueadoPorClave = false;
 			nuevoESI->bloqueadoPorConsola = false;
 			log_info(logPlanificador,
-					" le aviso al coordinador de que el ESI tiene permiso");
+					" Coordinador se entera que el ESI tiene permiso");
 			send(socketCoordinador, &CONTINUAR, sizeof(uint32_t), 0);
 		}
 
-
-	  log_info(logPlanificador, " ejecuta una sentencia ");
 
 	  nuevoESI -> rafagasRealizadas = nuevoESI -> rafagasRealizadas +1;
 
 	  pthread_mutex_lock(&mutexColaListos);
 
-	  log_info(logPlanificador, "se procede a aumentar tiempos de espera");
-
 	  aumentarEspera();
 
 	  pthread_mutex_unlock(&mutexColaListos);
 
-	  log_info(logPlanificador, "rafagas realizadas del esi %d son %d", nuevoESI-> id, nuevoESI->rafagasRealizadas);
+	  log_trace(logPlanificador, "Instrucciones realizadas del ESI %d son %d en este ciclo", nuevoESI-> id, nuevoESI->rafagasRealizadas);
 
 	  uint32_t respuesta ;
 	  int conexion = recv(nuevoESI->id, &respuesta, sizeof(uint32_t),0);
@@ -186,40 +174,37 @@ planificacionHRRN (bool desalojo)
 	  pthread_mutex_unlock(&mutexComunicacion);
 
 	  if(conexion <= 0){
-		  log_info(logPlanificador, "se rompio la conexion con el ESI. Se lo finaliza");
-		  liberarRecursos(nuevoESI);
-		  list_add(listaFinalizados, nuevoESI);
+		  log_info(logPlanificador, "Se rompio la conexion con el ESI. Se lo finaliza");
+		  finalizar = true;
 		  break;
 	  }
 
 	  if(nuevoESI->proximaOperacion == 3) { //si realizo un STORE, se libera el recurso que estaba usando
 
-		  log_debug(logPlanificador, " el ESI termino un STORE");
 		  liberarUnRecurso(nuevoESI);
 
 	  }
 	  if (respuesta != CONTINUAR)
 	  {
-		  log_info(logPlanificador, "el ESI quiere finalizar");
+		  log_info(logPlanificador, "El ESI me informa que va a finalizar");
 		  finalizar = true;
 
 	  } else if(desalojo && queue_size(colaListos) > 0) // si hay desalojo activo
 	  {
-		  log_info(logPlanificador, "Chequeo si hay que desalojar");
 
 		  pthread_mutex_lock(&mutexColaListos);
 		  ESI* auxiliar = queue_peek(colaListos);
 
-		  if(auxiliar->recienLlegado) //chequeo si el proximo en cola es un recien llegado
+		  if(auxiliar->recienLlegado || auxiliar->recienDesbloqueadoPorRecurso)
 		  {
-			  if(auxiliar->tiempoEspera < (nuevoESI->tiempoEspera - nuevoESI->rafagasRealizadas)) // y si su estimacion siguiente es menor que la del que esta en ejecucion menos lo que ya hizo
+			  if(auxiliar->tiempoRespuesta < (nuevoESI->tiempoRespuesta - nuevoESI->rafagasRealizadas))
 			  {
-				  log_info(logPlanificador, "se genera desalojo");
+				  log_trace(logPlanificador, "Se genera desalojo del ESI %d de tiempo de respuesta: %.6f con ESI ID %d de tiempo de respuesta: %.6f", nuevoESI->id, nuevoESI->tiempoRespuesta, auxiliar->id, auxiliar->tiempoRespuesta);
 
 				  desalojar = true; //se va a desalojar
 			  } else
 			  {
-				  log_info(logPlanificador, "no hay necesidad de desalojar, se actualiza cola");
+				  log_debug(logPlanificador, "No hay necesidad de desalojar, se actualiza cola");
 
 				  limpiarRecienLlegados(); // Si no es menor la estimacion, los recien llegados ya no tendrian validez, los actualizo
 			  }
@@ -230,7 +215,7 @@ planificacionHRRN (bool desalojo)
 
 	  if (nuevoESI->id == claveParaBloquearESI)
 	  {
-		  log_info(logPlanificador, "se pide bloqueo del esi");
+		  log_trace(logPlanificador, "Se pidio bloqueo del ESI mediante la consola");
 
 		  bloquear = true;
 	  }
@@ -241,12 +226,11 @@ planificacionHRRN (bool desalojo)
 
 	  if(nuevoESI-> proximaOperacion == 1){
 
-		  log_info(logPlanificador, "El ESI no tiene permiso de ejecucion, se bloquea");
+		  log_error(logPlanificador, "El ESI no tiene permiso de ejecucion, se lo bloquea");
 
 		  claveActual = -1;
 		  int rafagas = nuevoESI->rafagasRealizadas;
 		  int estimacion = nuevoESI->estimacionSiguiente;
-		  nuevoESI->tiempoEspera = 0; //porque entro a planificar, aunque no haya hecho nada
 		  nuevoESI->estimacionAnterior = estimacion;
 		  nuevoESI->rafagaAnterior = rafagas;
 		  nuevoESI->rafagasRealizadas = 0;
@@ -258,12 +242,11 @@ planificacionHRRN (bool desalojo)
 
 	  } else if (nuevoESI-> proximaOperacion > 1){
 
-		  log_info(logPlanificador, " El esi no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado ");
-		  log_info(logPlanificador, "se procede a liberar sus recursos");
+		  log_info(logPlanificador, " El ESI %d no tiene permiso de ejecucion y se aborta (quiso hacer SET o STORE de recurso no tomado) ", nuevoESI->id);
 		  claveActual = -1;
 		  liberarRecursos(nuevoESI);
 		  list_add(listaFinalizados, nuevoESI);
-		  log_info(logPlanificador, "ESI de clave %d en finalizados", nuevoESI->id);
+		  log_debug(logPlanificador, "ESI de ID %d en finalizados", nuevoESI->id);
 		  uint32_t aviso = -2;
 		  send(socketCoordinador, &aviso,  sizeof(aviso), 0);
 		  pthread_mutex_unlock(&mutexComunicacion);
@@ -275,20 +258,18 @@ planificacionHRRN (bool desalojo)
 
 }
 
-      log_info (logPlanificador, "finalizada su rafaga");
+  	  log_trace(logPlanificador, " ESI ID : %d termino su quantum", nuevoESI->id);
+
 
       if(matarESI){
 
-    	  log_info(logPlanificador, "ESI de id %d fue matado por consola", nuevoESI->id);
-		  log_info(logPlanificador, "le comunico al esi");
+    	  log_trace(logPlanificador, "ESI de ID %d fue matado por consola", nuevoESI->id);
 		  claveActual = -1;
     	  pthread_mutex_lock(&mutexComunicacion);
     	  uint32_t abortar = -2;
     	  send(nuevoESI->id,&abortar,sizeof(uint32_t),0);
     	  pthread_mutex_unlock(&mutexComunicacion);
-		  log_info(logPlanificador, "terminada comunicacion");
-		  log_info(logPlanificador, " se liberan sus recursos y se lo finaliza ");
-
+		  log_debug(logPlanificador, "Se le informa al ESI que no puede seguir ejecutando y se agrega a finalizados");
     	  liberarRecursos(nuevoESI);
     	  list_add(listaFinalizados,nuevoESI);
 
@@ -297,12 +278,13 @@ planificacionHRRN (bool desalojo)
     	  matarESI = false;
 
     	  pthread_mutex_unlock(&mutexAsesino);
+
       } else if (finalizar)
 	{			//aca con el mensaje del ESI, determino si se bloquea o se finaliza
 
     	  claveActual = -1;
 		  list_add (listaFinalizados, nuevoESI);
-		  log_info (logPlanificador, " ESI de id %d en finalizados!",
+		  log_debug (logPlanificador, " ESI de ID %d en finalizados",
 				nuevoESI->id);
 		  liberarRecursos(nuevoESI);
 		  if(bloquearESIActual) bloquearESIActual = false;
@@ -322,8 +304,6 @@ planificacionHRRN (bool desalojo)
     	  bloquearRecurso(claveParaBloquearRecurso);
     	  bloquearESI(claveParaBloquearRecurso,nuevoESI);
     	  bloquearESIActual = false;
-    	  log_info(logPlanificador, " ESI de id %s en bloqueados para recurso %s", nuevoESI->id, claveParaBloquearESI);
-
 
 	}
       else if (desalojar)
@@ -336,7 +316,7 @@ planificacionHRRN (bool desalojo)
     	  nuevoESI->rafagasRealizadas = 0;
     	  nuevoESI->recienDesalojado = true;
     	  armarCola(nuevoESI);
-    	  log_info(logPlanificador," ESI de id %d desalojado", nuevoESI->id);
+    	  log_trace(logPlanificador," ESI de ID %d desalojado", nuevoESI->id);
 
       }
 
@@ -349,9 +329,6 @@ planificacionHRRN (bool desalojo)
 void
 estimarYCalcularTiempos (ESI * nuevo)
 {
-
-  log_info (logPlanificador,
-	    "Empieza la estimación de ráfagas y tiempos de respuesta");
 
   estimarProximaRafaga (nuevo);
   float espera = (float) nuevo->tiempoEspera;
@@ -368,57 +345,39 @@ estimarYCalcularTiempos (ESI * nuevo)
 
 void armarCola(ESI * esi){
 
-	log_info(logPlanificador, " ESI de ID %d quiere entrar en cola de listos", esi->id);
-
 	estimarYCalcularTiempos(esi);
 
-	log_info(logPlanificador, "Tiene estimación proxima rafaga: %.6f", esi->estimacionSiguiente);
-
-	log_info(logPlanificador,"Se procede a meterlo en cola listos ");
-
+	log_debug(logPlanificador, "ESI de ID %d quiere entrar en cola de listos. Tiene estimada su proxima rafaga en: %.6f UT y un tiempo de respuesta de %.6f", esi->id, esi->estimacionSiguiente, esi->tiempoRespuesta);
 
 	if(queue_size(colaListos) == 0){
 
-		log_info(logPlanificador, "la cola estaba vacía! Entra directo");
 		queue_push(colaListos, esi);
-		log_info(logPlanificador, "adentro!");
+		log_trace(logPlanificador, "ESI ID %d en cola, con tiempo de respuesta %.6f", esi->id, esi->tiempoRespuesta);
 
 	} else if(queue_size(colaListos) > 0){
 
-
-		log_info(logPlanificador, "La cola tiene tamaño de %d", queue_size(colaListos));
 		queue_push(colaListos, esi);
 
 		t_list * auxiliar = list_create();
 
-		log_info(logPlanificador,"armando lista auxiliar");
-
 		while(!queue_is_empty(colaListos)){
 			ESI * esi1 = queue_pop(colaListos);
 			list_add(auxiliar, esi1);
-			log_info(logPlanificador, " id : %d a lista", esi1->id);
-
 		}
-		log_info(logPlanificador, "la lista quedo de : %d", list_size(auxiliar));
-
 
 		list_sort(auxiliar, ordenarESISHRRN);
-
-		log_info(logPlanificador, "la lista quedo de : %d", list_size(auxiliar));
 
 		int i = 0;
 		while(!list_is_empty(auxiliar)){
 
 			ESI * hola = list_remove(auxiliar,i);
-			log_info(logPlanificador, "meto en cola ESI id : %d", hola->id);
+			log_trace(logPlanificador, "En cola ESI id : %d, con tiempo de respuesta: %.6f", hola->id, hola->tiempoRespuesta);
 			queue_push(colaListos,hola);
 
 		}
 
 
 	}
-
-	log_info(logPlanificador,"cola armada ");
 
 
 }
@@ -432,30 +391,20 @@ bool ordenarESISHRRN(void* nodo1, void* nodo2){
 
 	if (e1->tiempoRespuesta > e2->tiempoRespuesta){
 
-		log_info(logPlanificador, " el esi a comparar fue se especula que será mas rapido");
-
 		return false;
 
 	} else if (e1->tiempoRespuesta == e2->tiempoRespuesta) //Ante empate de estimaciones
 
 	{
-		log_info(logPlanificador, "hay empate de estimaciones");
-
 		if( !e2->recienDesalojado && e1->recienDesalojado){ //si no es recien llegado, tiene prioridad porque ya estaba en disco
-
-			log_info(logPlanificador, "gana esi nuevo por ser recien llegado");
 
 			return false;
 
 		} else if( !e2->recienDesalojado && !e1->recienDesalojado && e2->recienDesbloqueadoPorRecurso && !e1->recienDesbloqueadoPorRecurso ){ // si se da que ninguno de los dos recien fue creado, me fijo si alguno se desbloqueo recien de un recurso
 
-			log_info(logPlanificador, "gana esi nuevo por ser recien desbloqueado por recurso");
-
 			return false;
 
 		} else if ( e2->recienDesalojado && e1->recienDesalojado && e2->recienDesbloqueadoPorRecurso && !e1->recienDesbloqueadoPorRecurso ){ //si los dos recien llegan, me fijo si el auxiliar recien llego de desbloquearse
-
-			log_info(logPlanificador, "gana esi nuevo por ser recien desbloqueado por recurso");
 
 			return false;
 
@@ -469,13 +418,7 @@ bool ordenarESISHRRN(void* nodo1, void* nodo2){
 float
 calcularTiempoEspera (float espera, float estimacionSiguiente)
 {
-
-  log_info (logPlanificador, "calculando tiempo respuesta..");
-  log_error(logPlanificador, "est : %.6f", espera);
-  log_error(logPlanificador, "espera : %.6f", estimacionSiguiente);
-
   float respuesta = ((espera + estimacionSiguiente) / estimacionSiguiente);
-  log_error(logPlanificador, "resp : %.6f", respuesta);
   return respuesta;
 
 }
@@ -487,9 +430,8 @@ void aumentarEspera(){
 	while(!queue_is_empty(colaListos)){
 
 		ESI * nuevo= queue_pop(colaListos);
-		log_info(logPlanificador, "aumentando tiempo espera para : %d", nuevo->id);
 		nuevo->tiempoEspera = nuevo->tiempoEspera +1;
-		log_info(logPlanificador, "queda : %d", nuevo->tiempoEspera);
+		log_debug(logPlanificador, "Tiempo de espera de ESI ID %d ahora es : %d",nuevo->id, nuevo->tiempoEspera);
 
 		queue_push(aux, nuevo);
 	}

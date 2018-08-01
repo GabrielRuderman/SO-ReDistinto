@@ -332,7 +332,6 @@ bool recursoEnLista(ESI * esi){
 
 		if(string_equals_ignore_case(r, esi->recursoPedido)){
 			retorno = true;
-			log_info(logPlanificador,"Está");
 		}
 		i++;
 	}
