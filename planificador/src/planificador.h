@@ -33,6 +33,7 @@
 #include "../../biblioteca-El-Rejunte/src/misSockets.h"
 #include <readline/readline.h>
 #include <pthread.h>
+// #include <semaphore.h> todo
 
 
 
@@ -113,6 +114,7 @@ int socketCoordinador;
 extern pthread_mutex_t mutexColaListos;
 extern pthread_mutex_t mutexAsesino;
 extern pthread_mutex_t mutexComunicacion;
+// sem_t contadorColaListos; todo
 extern bool pausearPlanificacion;
 extern bool matarESI;
 extern int claveMatar;

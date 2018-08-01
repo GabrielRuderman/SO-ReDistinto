@@ -61,9 +61,24 @@ void planificacionSJF(bool desalojo) {
 				permiso = true;
 			} else {
 
+				uint32_t continuacion;
 				log_info(logPlanificador, "empieza comunicacion");
 				send(nuevo->id, &CONTINUAR, sizeof(uint32_t), 0);
+				int respuesta0 =recv(nuevo->id, &continuacion,sizeof(uint32_t),0);
 
+				if(respuesta0 < 0){
+
+					log_error(logPlanificador, "Conexion con ESI rota");
+					liberarRecursos(nuevo);
+					list_add(listaFinalizados, nuevo);
+
+				}
+				if(continuacion == 0){
+					log_error(logPlanificador, " El ESI de ID : %d se aborto por un motivo desconocido", nuevo->id);
+					liberarRecursos(nuevo);
+					list_add(listaFinalizados, nuevo);
+					break;
+				}
 				int respuesta1 = recv(socketCoordinador, &operacion,
 						sizeof(operacion), 0);
 				int respuesta2 = recv(socketCoordinador, &tamanioRecurso,
