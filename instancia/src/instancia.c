@@ -397,6 +397,7 @@ int dumpearClave(t_entrada* entrada) {
 	}
 
 	free(_nombreArchivo);
+	munmap(entrada->mapa_archivo, entrada->size_valor_almacenado);
 	close(_fd);
 	return 1;
 
@@ -435,7 +436,7 @@ void dumpAutomatico() {
 	}
 
 	while (ejecutarDumpAutomatico) {
-		sleep(intervalo_dump * 0.001);
+		sleep(intervalo_dump);
 		pthread_mutex_lock(&mutexDumpeo);
 		list_iterate(tabla_entradas, dumpeoConReturnVoid);
 		pthread_mutex_unlock(&mutexDumpeo);
@@ -652,7 +653,6 @@ t_control_configuracion cargarConfiguracion() {
 void destruirEntrada(void* nodo) {
 	t_entrada* entrada = (t_entrada*) nodo;
 	if (entrada->clave != NULL) free(entrada->clave);
-	munmap(entrada->mapa_archivo, strlen(entrada->mapa_archivo));
 	free(entrada);
 }
 
@@ -739,7 +739,7 @@ int main() {
 
 	//Generamos temporizador
 	ejecutarDumpAutomatico = true;
-	//pthread_create(&hiloTemporizador, NULL, (void*) dumpAutomatico, NULL);
+	pthread_create(&hiloTemporizador, NULL, (void*) dumpAutomatico, NULL);
 
 	actualizarCantidadEntradasLibres();
 
