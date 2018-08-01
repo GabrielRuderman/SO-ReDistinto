@@ -143,7 +143,14 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			log_info(logger, "El planificador me pide que parsee la siguiente instruccion:");
 			// Se parsea la instruccion que se le enviara al coordinador
 			t_esi_operacion instruccion = parsearLineaScript(fp);
-			log_info(logger, "La instruccion fue parseada");
+			if (!instruccion.valido) {
+				log_error(logger, "No se pudo parsear una instruccion, me aborto");
+				send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), 0);
+				send(socketCoordinador, &TERMINA_ESI, sizeof(uint32_t), 0);
+				finalizar(EXIT_FAILURE);
+			}
+			log_info(logger, "La instruccion fue parseada, le aviso al Planificador");
+			send(socketPlanificador, &PAQUETE_OK, sizeof(uint32_t), 0);
 			// Se empaqueta la instruccion
 			char* paquete = empaquetarInstruccion(instruccion, logger);
 
