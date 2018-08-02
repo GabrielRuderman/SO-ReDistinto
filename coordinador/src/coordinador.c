@@ -58,6 +58,7 @@ const uint32_t PETICION_ESPECIAL = -4;
 const uint32_t DESBLOQUEA_ESI = -3;
 const uint32_t TERMINA_ESI = 0;
 const uint32_t CHEQUEO_INSTANCIA_ACTIVA = 0;
+const uint32_t PEDIDO_COMPACTACION = -5;
 
 int chequearEstadoInstancia(t_instancia* instancia) {
 	if (send(instancia->socket, &CHEQUEO_INSTANCIA_ACTIVA, sizeof(uint32_t), MSG_NOSIGNAL) < 1) return INACTIVA;
@@ -244,6 +245,16 @@ bool instanciaTieneLaClave(void* nodo) {
 	return list_any_satisfy(instancia->claves_asignadas, claveEsLaActual);
 }
 
+void solicitarCompactacionAInstancias() {
+	for (int i = 0; i < list_size(tabla_instancias); i++) {
+		t_instancia* instancia = list_get(tabla_instancias, i);
+		instancia->estado = chequearEstadoInstancia(instancia);
+		if (instancia->estado == ACTIVA) {
+			send(instancia->socket, &PEDIDO_COMPACTACION, sizeof(uint32_t), 0);
+		}
+	}
+}
+
 int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) {
 	if (strlen(instruccion->clave) > TAM_MAXIMO_CLAVE) {
 		log_error(logger, "Error de Tamano de Clave");
@@ -306,7 +317,11 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 	if (cant_claves_reemplazadas == PAQUETE_ERROR) {
 		log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
 		return -1;
-	} else if (cant_claves_reemplazadas > 0) {
+	} else if (cant_claves_reemplazadas == PEDIDO_COMPACTACION) {
+		solicitarCompactacionAInstancias();
+		recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
+	}
+	if (cant_claves_reemplazadas > 0) {
 		for (int i = 0; i < cant_claves_reemplazadas; i++) {
 			uint32_t tam_clave_reemplazada;
 			recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0);

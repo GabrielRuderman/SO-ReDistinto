@@ -52,6 +52,7 @@ pthread_mutex_t mutexDumpeo = PTHREAD_MUTEX_INITIALIZER;
 const uint32_t PAQUETE_OK = 1;
 const uint32_t PAQUETE_ERROR = -1;
 const uint32_t CHEQUEO_INSTANCIA_ACTIVA = 0;
+const uint32_t PEDIDO_COMPACTACION = -5;
 
 void imprimirTablaDeEntradas(t_list* tabla) {
 	printf("\n_______TABLA DE ENTRADAS_______\n");
@@ -255,6 +256,19 @@ void algoritmoDeReemplazo() {
 	list_destroy(tabla_entradas_atomicas);
 }
 
+int solicitarCompactacion() {
+	send(socketCoordinador, &PEDIDO_COMPACTACION, sizeof(uint32_t), 0);
+	uint32_t respuesta;
+	recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+	if (respuesta == PAQUETE_OK) {
+		compactarAlmacenamiento();
+		return 1;
+	} else {
+		log_error(logger, "El Coordinador no me autoriza a compactar el almacenamiento");
+		return -1;
+	}
+}
+
 int operacion_SET(t_instruccion* instruccion) {
 	int entradas_a_ocupar = obtenerEntradasAOcupar(instruccion->valor);
 
@@ -267,7 +281,7 @@ int operacion_SET(t_instruccion* instruccion) {
 			log_info(logger, "Hay %d entradas contiguas", entradas_a_ocupar);
 		} else {
 			log_info(logger, "No hay %d entradas contiguas para almacenar el valor", entradas_a_ocupar);
-			compactarAlmacenamiento();
+			solicitarCompactacion();
 		}
 	} else {
 		// Devuelve la entrada a reemplazar
@@ -287,7 +301,7 @@ int operacion_SET(t_instruccion* instruccion) {
 			log_info(logger, "Hay %d entradas contiguas", entradas_a_ocupar);
 		} else {
 			log_info(logger, "No hay %d entradas contiguas para almacenar el valor", entradas_a_ocupar);
-			compactarAlmacenamiento();
+			if (solicitarCompactacion() < 0) return -1;
 		}
 	}
 
@@ -602,6 +616,9 @@ t_instruccion* recibirInstruccion(int socketCoordinador) {
 	if (tam_paquete == CHEQUEO_INSTANCIA_ACTIVA) {
 		send(socketCoordinador, &CHEQUEO_INSTANCIA_ACTIVA, sizeof(uint32_t), 0);
 		return NULL; // Esto lo usa el Coordinador para saber si estoy activa
+	} else if (tam_paquete == PEDIDO_COMPACTACION) {
+		compactarAlmacenamiento();
+		return NULL;
 	}
 
 	char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
