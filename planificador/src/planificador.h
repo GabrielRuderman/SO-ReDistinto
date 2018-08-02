@@ -114,6 +114,7 @@ int socketCoordinador;
 extern pthread_mutex_t mutexColaListos;
 extern pthread_mutex_t mutexAsesino;
 extern pthread_mutex_t mutexComunicacion;
+extern pthread_mutex_t mutexPauseo;
 sem_t semContadorColaListos;
 sem_t semPausarPlanificacion;
 sem_t semComodinColaListos;

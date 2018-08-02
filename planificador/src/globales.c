@@ -60,6 +60,8 @@ char* LISTAR_FINALIZADOS = "listar_finalizados";
 pthread_mutex_t mutexColaListos = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t mutexAsesino = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t mutexComunicacion = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutexPauseo  = PTHREAD_MUTEX_INITIALIZER;
+
 
 
 
@@ -526,12 +528,17 @@ void lanzarConsola(){
 		if (string_equals_ignore_case(linea, PAUSEAR_PLANIFICACION) || string_equals_ignore_case(linea, "1"))  //Hermosa cadena de if que se viene
 		{
 			log_info(logPlanificador, "Comando ingresado por consola : Pausar planificacion", linea);
+			pthread_mutex_lock(&mutexPauseo);
+			pausearPlanificacion = true;
 			sem_wait(&semPausarPlanificacion);
 			free(linea);
 		}
 		else if (string_equals_ignore_case(linea,REANUDAR_PLANIFICACION)  || string_equals_ignore_case(linea, "2"))
 		{
 			log_info(logPlanificador, "Comando ingresado por consola : Reanudar planificacion", linea);
+
+			pthread_mutex_unlock(&mutexPauseo);
+			pausearPlanificacion = false;
 			sem_post(&semPausarPlanificacion);
 			free(linea);
 		}
