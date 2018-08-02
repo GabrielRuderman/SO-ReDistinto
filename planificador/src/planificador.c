@@ -7,6 +7,9 @@ int main(void) {
 	colaListos = queue_create();
 	listaFinalizados = list_create();
 	listaRecursos = list_create();
+	sem_init(&semContadorColaListos, 0, 0); //inicio semaforo de cola listos en 0
+	sem_init(&semPausarPlanificacion, 0, 1);
+	sem_init(&semComodinColaListos,0,1);
 
 	log_info(logPlanificador,"Arranca el proceso planificador");
 	configurar();
@@ -83,7 +86,7 @@ void configurar(){
 	puertoCoordinador = string_new();
 	ipPropia = string_new();
 	puertoPropio = string_new();
-	//sem_init(&contadorColaListos, NULL, 0); //inicio semaforo de cola listos en 0 todo
+
 
 	log_info(logPlanificador, "Leyendo archivo configuracion ");
 

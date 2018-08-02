@@ -13,16 +13,6 @@ void planificacionSJF(bool desalojo) {
 
 	while (1) {
 
-		while (queue_size(colaListos) == 0) { // todo
-
-			if (queue_size(colaListos) > 0) {
-				break;
-			}
-		}
-
-		while (pausearPlanificacion) { // todo
-		};
-
 		bool finalizar = false;
 
 		bool bloquear = false;
@@ -31,11 +21,20 @@ void planificacionSJF(bool desalojo) {
 
 		bool desalojar = false;
 
-		ESI * nuevo = queue_pop(colaListos);
+		ESI * nuevo;
 
+		sem_wait(&semComodinColaListos);
+		sem_wait(&semContadorColaListos);
+		pthread_mutex_lock(&mutexColaListos);
+
+		nuevo = queue_pop(colaListos);
 		claveActual = nuevo->id;
 
-		log_info(logPlanificador, "Clave actual ahora es : %d", nuevo->id);
+		pthread_mutex_unlock(&mutexColaListos);
+		sem_post(&semComodinColaListos);
+
+
+		log_trace(logPlanificador, "ID actual en planificacion es : %d", nuevo->id);
 
 		uint32_t operacion;
 		uint32_t tamanioRecurso;
@@ -44,8 +43,7 @@ void planificacionSJF(bool desalojo) {
 
 		while (!finalizar && !bloquear && permiso && !desalojar && !matarESI) {
 
-			while (pausearPlanificacion) {
-			} // ciclo hermoso que pausea la planificacion
+			sem_wait(&semPausarPlanificacion);
 
 			pthread_mutex_lock(&mutexComunicacion);
 
@@ -64,12 +62,16 @@ void planificacionSJF(bool desalojo) {
 					log_error(logPlanificador, "Conexion con ESI rota");
 					finalizar=true;
 					pthread_mutex_unlock(&mutexComunicacion);
+					sem_post(&semPausarPlanificacion);
+
 					break;
 				}
 				if(continuacion == 0){
 					log_error(logPlanificador, " El ESI de ID : %d se aborta por un motivo desconocido", nuevo->id);
 					finalizar = true;
 					pthread_mutex_unlock(&mutexComunicacion);
+					sem_post(&semPausarPlanificacion);
+
 					break;
 				}
 				int respuesta1 = recv(socketCoordinador, &operacion,
@@ -124,7 +126,7 @@ void planificacionSJF(bool desalojo) {
 
 					} else {
 
-						cargarValor(recursoPedido, valorRecurso);
+						cargarValor(nuevo->recursoPedido, valorRecurso);
 					}
 
 				}
@@ -185,6 +187,7 @@ void planificacionSJF(bool desalojo) {
 
 					log_error(logPlanificador, " Conexion rota con el ESI. Se lo finaliza ");
 					finalizar = true;
+					sem_post(&semPausarPlanificacion);
 					break;
 				}
 
@@ -193,6 +196,8 @@ void planificacionSJF(bool desalojo) {
 					liberarUnRecurso(nuevo);
 
 				}
+				pthread_mutex_lock(&mutexColaListos); // por las dudas que entre otro ESI justo en este momento (no lo tengo en cuenta)
+
 				if (respuesta != CONTINUAR) {
 					log_debug(logPlanificador, " El ESI me informa que va a finalizar ");
 
@@ -201,7 +206,6 @@ void planificacionSJF(bool desalojo) {
 				} else if (desalojo && queue_size(colaListos) > 0) // si hay desalojo activo
 						{
 
-					pthread_mutex_lock(&mutexColaListos); // por las dudas que entre otro ESI justo en este momento (no lo tengo en cuenta)
 
 					ESI* auxiliar = queue_peek(colaListos);
 
@@ -222,9 +226,9 @@ void planificacionSJF(bool desalojo) {
 							limpiarRecienLlegados(); // Si no es menor la estimacion, los recien llegados ya no tendrian validez, los actualizo
 						}
 					}
-					pthread_mutex_unlock(&mutexColaListos);
-
 				}
+				pthread_mutex_unlock(&mutexColaListos);
+
 
 				if (nuevo->id == claveParaBloquearESI) {
 					log_trace(logPlanificador, "Se pidio bloqueo del ESI mediante la consola");
@@ -264,6 +268,8 @@ void planificacionSJF(bool desalojo) {
 
 			}
 
+			sem_post(&semPausarPlanificacion);
+
 		}
 
 		log_trace(logPlanificador, " ESI ID : %d termino su quantum", nuevo->id);
@@ -292,6 +298,8 @@ void planificacionSJF(bool desalojo) {
 
 			pthread_mutex_unlock(&mutexAsesino);
 
+			printf("ESI de ID %d finalizado por consola", nuevo->id);
+
 		} else if (finalizar) { //aca con el mensaje del ESI, determino si se bloquea o se finaliza
 
 			claveActual = -1;
@@ -310,9 +318,10 @@ void planificacionSJF(bool desalojo) {
 			nuevo->estimacionAnterior = estimacion;
 			nuevo->rafagaAnterior = rafagas;
 			nuevo->rafagasRealizadas = 0;
-			bloquearRecurso(claveParaBloquearRecurso);
 			bloquearESI(claveParaBloquearRecurso, nuevo);
+			bloquearRecurso(claveParaBloquearRecurso);
 			bloquearESIActual = false;
+			printf("ESI de ID %d bloqueado", nuevo->id);
 
 
 		} else if (desalojar) {
@@ -324,7 +333,10 @@ void planificacionSJF(bool desalojo) {
 			nuevo->rafagaAnterior = rafagas;
 			nuevo->rafagasRealizadas = 0;
 			nuevo->recienDesalojado = true;
-			armarColaListos(nuevo); //aca no meto mutex porque si llega otro ESI que esté primero que el que genero el desalojo, lo desalojaria igual.
+			pthread_mutex_lock(&mutexColaListos);
+			armarColaListos(nuevo);
+			sem_post(&semContadorColaListos);
+			pthread_mutex_unlock(&mutexColaListos);
 			log_trace(logPlanificador, " ESI de ID %d desalojado", nuevo->id);
 
 		}
