@@ -33,7 +33,7 @@
 #include "../../biblioteca-El-Rejunte/src/misSockets.h"
 #include <readline/readline.h>
 #include <pthread.h>
-// #include <semaphore.h> todo
+#include <semaphore.h>
 
 
 
@@ -114,7 +114,9 @@ int socketCoordinador;
 extern pthread_mutex_t mutexColaListos;
 extern pthread_mutex_t mutexAsesino;
 extern pthread_mutex_t mutexComunicacion;
-// sem_t contadorColaListos; todo
+sem_t semContadorColaListos;
+sem_t semPausarPlanificacion;
+sem_t semComodinColaListos;
 extern bool pausearPlanificacion;
 extern bool matarESI;
 extern int claveMatar;
@@ -178,7 +180,7 @@ extern void desbloquearRecurso(char * claveRecurso);
 extern bool validarPedido (char * recurso, ESI * esi);
 extern bool recursoEnLista(ESI * esi);
 extern void limpiarRecienLlegados();
-extern ESI * buscarESI(int clave);
+extern void buscarYBloquearESI(int esi, char * clave);
 extern void planificacionSJF(bool desalojo);
 extern void estimarTiempos();
 extern void armarColaListos(ESI * esi);
