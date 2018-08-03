@@ -539,9 +539,9 @@ void lanzarConsola(){
 		{
 			log_info(logPlanificador, "Comando ingresado por consola : Reanudar planificacion", linea);
 			if(pausearPlanificacion){
-				pthread_mutex_unlock(&mutexPauseo);
 				pausearPlanificacion = false;
 				printf("Planificacion reanudada");
+				pthread_mutex_unlock(&mutexPauseo);
 				sem_post(&semPausarPlanificacion);
 			} else printf("La planificacion no estaba pausada!");
 			free(linea);
