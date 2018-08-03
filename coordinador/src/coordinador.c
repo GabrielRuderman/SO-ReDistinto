@@ -436,7 +436,6 @@ void atenderESI(int socketESI) {
 				if (resultado == -1) { // Hay que abortar el ESI
 					log_error(logger, "Se aborta el ESI %d", esi_ID);
 					send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
-					finalizarSocket(socketESI);
 					break;
 				}
 			}
@@ -448,10 +447,9 @@ void atenderESI(int socketESI) {
 		} else {
 			log_error(logger, "El Planificador me informa que el ESI %d se aborta", esi_ID);
 			send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
-			finalizarSocket(socketESI);
 			break;
 		}
-
+		finalizarSocket(socketESI);
 		destruirPaquete(paquete);
 		destruirInstruccion(instruccion);
 	}
