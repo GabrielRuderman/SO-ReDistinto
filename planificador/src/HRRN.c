@@ -375,12 +375,12 @@ estimarYCalcularTiempos (ESI * nuevo)
 
 void armarCola(ESI * esi){
 
-	estimarYCalcularTiempos(esi);
 
 	log_debug(logPlanificador, "ESI de ID %d quiere entrar en cola de listos. Tiene estimada su proxima rafaga en: %.6f UT y un tiempo de respuesta de %.6f", esi->id, esi->estimacionSiguiente, esi->tiempoRespuesta);
 
 	if(queue_size(colaListos) == 0){
 
+		estimarYCalcularTiempos(esi);
 		queue_push(colaListos, esi);
 		log_trace(logPlanificador, "ESI ID %d en cola, con tiempo de respuesta %.6f", esi->id, esi->tiempoRespuesta);
 
@@ -391,7 +391,10 @@ void armarCola(ESI * esi){
 		t_list * auxiliar = list_create();
 
 		while(!queue_is_empty(colaListos)){
+
 			ESI * esi1 = queue_pop(colaListos);
+			float tiempoEspera = (float) esi1->tiempoEspera;
+			esi1 -> tiempoRespuesta = calcularTiempoEspera(tiempoEspera,esi1->estimacionSiguiente);
 			list_add(auxiliar, esi1);
 		}
 
