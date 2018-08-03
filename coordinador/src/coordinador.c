@@ -533,7 +533,6 @@ void atenderConsola() {
 		int res1 = recv(socketConsola, &tam_clave, sizeof(uint32_t), 0);
 
 		pthread_mutex_lock(&mutexStatusClave);
-		log_debug(logger, "STATUS CLAVE");
 
 		free(clave_actual);
 		clave_actual = malloc(sizeof(char) * tam_clave);
@@ -545,7 +544,7 @@ void atenderConsola() {
 			break;
 		}
 
-		log_info(logger, "La clave solicitada es %s", clave_actual);
+		log_debug(logger, "STATUS CLAVE de %s", clave_actual);
 
 		t_instancia* instancia_posta = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave); // Instancia actual
 		if (!instancia_posta) {
