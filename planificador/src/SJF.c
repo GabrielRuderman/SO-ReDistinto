@@ -33,6 +33,7 @@ void planificacionSJF(bool desalojo) {
 
 		sem_wait(&semComodinColaListos);
 		sem_wait(&semContadorColaListos);
+		pthread_mutex_lock(&mutexColaListos);
 
 		nuevo = queue_pop(colaListos);
 		claveActual = nuevo->id;
