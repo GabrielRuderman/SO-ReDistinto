@@ -195,10 +195,10 @@ t_entrada* algoritmoBSU(t_list* tabla_entradas_atomicas) {
 	t_list* tabla_entradas_empatadas = list_filter(tabla_entradas_atomicas, igualAMayorTamanoAlmacenado);
 	if (list_size(tabla_entradas_empatadas) > 1) {
 		log_warning(logger, "Hubo empate, utilizo el algoritmo Circular");
-		return algoritmoCircular(tabla_entradas_empatadas);
+		entrada = algoritmoCircular(tabla_entradas_empatadas);
 	}
 
-	return list_get(tabla_entradas_atomicas, 0);
+	return entrada;
 }
 
 t_entrada* algoritmoLRU(t_list* tabla_entradas_atomicas) {
@@ -226,10 +226,10 @@ t_entrada* algoritmoLRU(t_list* tabla_entradas_atomicas) {
 	t_list* tabla_entradas_empatadas = list_filter(tabla_entradas_atomicas, igualAMayorReferencia);
 	if (list_size(tabla_entradas_empatadas) > 1) {
 		log_warning(logger, "Hubo empate, utilizo el algoritmo Circular");
-		return algoritmoCircular(tabla_entradas_empatadas);
+		entrada = algoritmoCircular(tabla_entradas_empatadas);
 	}
 
-	return list_get(tabla_entradas_atomicas, 0);
+	return entrada;
 }
 
 bool buscadorEntradaConPuntero(void* nodo) {
