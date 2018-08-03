@@ -11,7 +11,7 @@ void planificacionSJF(bool desalojo) {
 	log_info(logPlanificador, "Comienza algoritmo SJF");
 
 
-	while (salir) {
+	while (!salir) {
 
 		bool finalizar = false;
 

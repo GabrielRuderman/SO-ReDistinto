@@ -753,7 +753,7 @@ void escucharNuevosESIS(){
 
 	log_info(logPlanificador, "Inicio hilo de escucha de ESIS");
 
-	while(salir){
+	while(!salir){
 
 		uint32_t socketESINuevo = escucharCliente(logPlanificador,socketDeEscucha);
 
