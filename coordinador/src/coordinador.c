@@ -537,6 +537,10 @@ void atenderInstancia(int socketInstancia) {
 
 void atenderConsola() {
 	socketConsola = conectarComoCliente(logger, ip_planificador, port_planificador);
+	if (socketConsola < 0) {
+		log_error(logger, "No se puede atender la Consola");
+		return;
+	}
 	/*
 	 * Instancia actual en la cual se encuentra la clave. (En caso de que la clave no se encuentre en una instancia,
 	 * no se debe mostrar este valor)

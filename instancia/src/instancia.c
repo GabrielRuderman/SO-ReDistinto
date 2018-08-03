@@ -254,8 +254,7 @@ void quitarEntrada(t_entrada* entrada) {
 		return (strcmp(entrada->clave, entrada_a_reemplazar->clave) == 0);
 	}
 
-	list_remove_by_condition(tabla_entradas, comparadorClaveReemplazo);
-	list_remove_by_condition(tabla_entradas_atomicas, comparadorClaveReemplazo);
+	list_remove_and_destroy_by_condition(tabla_entradas, comparadorClaveReemplazo, destruirEntrada);
 }
 
 bool valorEsAtomico(void* nodo) {
@@ -289,7 +288,6 @@ void algoritmoDeReemplazo() {
 	liberarEntrada(entrada_a_reemplazar);
 	actualizarCantidadEntradasLibres();
 	log_warning(logger, "Se ha liberado la entrada %d de clave %s", entrada_a_reemplazar->entrada_asociada, entrada_a_reemplazar->clave);
-	quitarEntrada(entrada_a_reemplazar);
 	list_destroy(tabla_entradas_atomicas);
 }
 
@@ -317,7 +315,10 @@ int operacion_SET(t_instruccion* instruccion) {
 				log_error(logger, "No hay ningun valor atomico para reemplazar");
 				return -1;
 			}
-			list_add(reemplazos_recientes, entrada_a_reemplazar->clave);
+			char* clave_reemplazada = string_new();
+			string_append(&clave_reemplazada, entrada_a_reemplazar->clave);
+			list_add(reemplazos_recientes, clave_reemplazada);
+			quitarEntrada(entrada_a_reemplazar);
 		}
 		log_info(logger, "Hay %d entradas libres para almacenar el valor", entradas_a_ocupar);
 		// Entonces, pregunto si hay contiguas.
@@ -692,6 +693,7 @@ t_control_configuracion cargarConfiguracion() {
 
 void destruirEntrada(void* nodo) {
 	t_entrada* entrada = (t_entrada*) nodo;
+	if (!entrada) return;
 	if (entrada->clave != NULL) free(entrada->clave);
 	if (entrada->mapa_archivo != NULL) munmap(entrada->mapa_archivo, entrada->size_valor_almacenado);
 	free(entrada);
@@ -827,11 +829,9 @@ int main() {
 				log_debug(logger, "Soy la Instancia %d", id_instancia);
 				log_debug(logger, "BLOQUE DE MEMORIA: %s", bloque_instancia);
 				//if (list_size(tabla_entradas) > 0) imprimirTablaDeEntradas(tabla_entradas);
-
-
 			}
+			destruirInstruccion(instruccion);
 		}
-		destruirInstruccion(instruccion);
 		list_destroy_and_destroy_elements(reemplazos_recientes, free);
 	}
 	finalizar(EXIT_SUCCESS);

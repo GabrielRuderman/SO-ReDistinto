@@ -51,6 +51,7 @@ void planificacionSJF(bool desalojo) {
 
 		if(claveActual == idSalir){
 
+			ESI_destroy(nuevo);
 			log_trace(logPlanificador, "terminando planificacion HRRN");
 			break;
 

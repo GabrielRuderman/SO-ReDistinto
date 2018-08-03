@@ -51,6 +51,7 @@ planificacionHRRN (bool desalojo)
 
 	if(claveActual == idSalir){
 
+		ESI_destroy(nuevoESI);
 		log_trace(logPlanificador, "terminando planificacion HRRN");
 		break;
 

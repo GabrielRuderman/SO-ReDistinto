@@ -103,7 +103,7 @@ t_instruccion* desempaquetarInstruccion(char* buffer, t_log* logger) {
 void destruirVectorComponentesBuffer(char** vector_componentes_buffer) {
 	free(vector_componentes_buffer[0]);
 	free(vector_componentes_buffer[1]);
-	free(vector_componentes_buffer[2]);
+	if (vector_componentes_buffer[2] != NULL) free(vector_componentes_buffer[2]);
 	free(vector_componentes_buffer);
 }
 
