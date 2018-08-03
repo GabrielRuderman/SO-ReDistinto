@@ -38,7 +38,7 @@ int conectarComoServidor(t_log* logger, const char* ip, const char* puerto) {
 	hints.ai_flags = AI_PASSIVE;		// Asigna el address que le envia el proceso
 	hints.ai_socktype = SOCK_STREAM;	// Indica que usaremos el protocolo TCP
 
-	getaddrinfo(ip, puerto, &hints, &serverInfo);
+	getaddrinfo(NULL, puerto, &hints, &serverInfo);
 
 	/*
 	 * 	Descubiertos los misterios de la vida (por lo menos, para la conexion de red actual), necesito enterarme de alguna forma
