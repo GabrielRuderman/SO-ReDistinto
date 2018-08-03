@@ -12,7 +12,7 @@ planificacionHRRN (bool desalojo)
 
   log_info (logPlanificador, "Arraca HRRN");
 
-  while (1)
+  while (!salir)
     {
 
 	bool finalizar = false;
@@ -49,6 +49,12 @@ planificacionHRRN (bool desalojo)
 	pthread_mutex_unlock(&mutexColaListos);
 	sem_post(&semComodinColaListos);
 
+	if(claveActual == idSalir){
+
+		log_trace(logPlanificador, "terminando planificacion HRRN");
+		break;
+
+	}
 
 	log_trace (logPlanificador, "ID actual en planificacion es : %d", nuevoESI->id);
 
@@ -108,8 +114,10 @@ planificacionHRRN (bool desalojo)
 
 	  if(respuesta1 <= 0 || respuesta2 <= 0 || respuesta3 <= 0){
 		  log_info(logPlanificador, "Conexion con el coordinador rota. Me cierro");
-		  liberarGlobales();
-		  exit(-1);
+		  pthread_cancel(hiloEscuchaESI);
+		  salir = true;
+		  break;
+
 	  } else {
 		  log_info(logPlanificador, "Se carga recurso pedido : %s", recursoPedido);
 		  nuevoESI->recursoPedido = string_new();
@@ -138,8 +146,9 @@ planificacionHRRN (bool desalojo)
 		  if(resp <= 0 || resp2 <= 0){
 
 			  log_info(logPlanificador, "Conexion con el coordinador rota");
-			  liberarGlobales();
-			  exit(-1);
+			  pthread_cancel(hiloEscuchaESI);
+			  salir = true;
+			  break;
 
 		  } else {
 			  cargarValor(nuevoESI->recursoPedido,valorRecurso);
@@ -353,6 +362,8 @@ planificacionHRRN (bool desalojo)
 
     }
 
+  sem_post(&semSalir);
+
 }
 
 
@@ -375,12 +386,11 @@ estimarYCalcularTiempos (ESI * nuevo)
 
 void armarCola(ESI * esi){
 
-
+	estimarYCalcularTiempos(esi);
 	log_debug(logPlanificador, "ESI de ID %d quiere entrar en cola de listos. Tiene estimada su proxima rafaga en: %.6f UT y un tiempo de respuesta de %.6f", esi->id, esi->estimacionSiguiente, esi->tiempoRespuesta);
 
 	if(queue_size(colaListos) == 0){
 
-		estimarYCalcularTiempos(esi);
 		queue_push(colaListos, esi);
 		log_trace(logPlanificador, "ESI ID %d en cola, con tiempo de respuesta %.6f", esi->id, esi->tiempoRespuesta);
 

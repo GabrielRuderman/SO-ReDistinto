@@ -10,6 +10,7 @@ int main(void) {
 	sem_init(&semContadorColaListos, 0, 0); //inicio semaforo de cola listos en 0
 	sem_init(&semPausarPlanificacion, 0, 1);
 	sem_init(&semComodinColaListos,0,1);
+	sem_init(&semSalir,0,0);
 
 	log_info(logPlanificador,"Arranca el proceso planificador");
 	configurar();

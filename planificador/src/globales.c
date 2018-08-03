@@ -53,6 +53,7 @@ char* KILL_ESI = "kill_esi";
 char* STATUS_CLAVE = "status_clave";
 char* COMPROBAR_DEADLOCK = "comprobar_deadlock";
 char* LISTAR_FINALIZADOS = "listar_finalizados";
+int idSalir = -50;
 
 
 // --------------------------- SEMAFOROS --------------------------------- //
@@ -510,7 +511,7 @@ void lanzarConsola(){
 
 	char* linea;
 
-	while(1){
+	while(!salir){
 
 		printf("¿Que operacion desea hacer?\n");
 		printf("1. Pausear_planificacion \n");
@@ -667,8 +668,36 @@ void lanzarConsola(){
 		{
 			printf("Cerrando planificador");
 			log_info(logPlanificador, "Comando ingresado por consola  : salir");
+			pthread_mutex_lock(&mutexColaListos);
+
 			salir = true;
+			ESI * ESISalir = crearESI(idSalir);
+
+			queue_destroy_and_destroy_elements(colaListos, (void *) ESI_destroy);
+			if(string_equals_ignore_case(algoritmoDePlanificacion, SJF) || string_equals_ignore_case(algoritmoDePlanificacion, SJFConDesalojo)){
+
+				colaListos=queue_create();
+				armarColaListos(ESISalir);
+				sem_post(&semContadorColaListos);
+			} else if(string_equals_ignore_case(algoritmoDePlanificacion, HRRN) || string_equals_ignore_case(algoritmoDePlanificacion, HRRNConDesalojo)){
+
+				colaListos=queue_create();
+				armarColaListos(ESISalir);
+				sem_post(&semContadorColaListos);
+
+			}
+			pthread_mutex_unlock(&mutexColaListos);
+			pthread_cancel(hiloEscuchaESI);
+			if(pausearPlanificacion){
+
+				pausearPlanificacion = false;
+				printf("Planificacion reanudada");
+				pthread_mutex_unlock(&mutexPauseo);
+				sem_post(&semPausarPlanificacion);
+			}
+			sem_wait(&semSalir);
 			free(linea);
+
 			break;
 		}
 		else
@@ -679,6 +708,9 @@ void lanzarConsola(){
 		}
 
 	}
+
+	log_error(logPlanificador, " Cerrando consola ");
+
 }
 
 

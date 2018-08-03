@@ -49,6 +49,15 @@ void planificacionSJF(bool desalojo) {
 		char * recursoPedido;
 
 
+		if(claveActual == idSalir){
+
+			log_trace(logPlanificador, "terminando planificacion HRRN");
+			break;
+
+		}
+
+
+
 		while (!finalizar && !bloquear && permiso && !desalojar && !matarESI && !salir) {
 
 			pthread_mutex_lock(&mutexPauseo);
@@ -98,8 +107,9 @@ void planificacionSJF(bool desalojo) {
 				if (respuesta1 <= 0 || respuesta2 <= 0 || respuesta3 <= 0) {
 					log_error(logPlanificador,
 							"Conexion con el coordinador rota. Me cierro");
-					liberarGlobales();
-					exit(-1);
+					pthread_cancel(hiloEscuchaESI);
+					salir = true;
+					break;
 				} else {
 
 					nuevo->recursoPedido = string_new();
@@ -134,8 +144,9 @@ void planificacionSJF(bool desalojo) {
 
 						log_error(logPlanificador,
 								"Conexion con el coordinador rota. Me cierro");
-						liberarGlobales();
-						exit(-1);
+						pthread_cancel(hiloEscuchaESI);
+						salir = true;
+						break;
 
 					} else {
 
@@ -355,6 +366,8 @@ void planificacionSJF(bool desalojo) {
 		}
 
 	}
+
+	  sem_post(&semSalir);
 
 }
 

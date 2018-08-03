@@ -117,11 +117,13 @@ extern pthread_mutex_t mutexPauseo;
 sem_t semContadorColaListos;
 sem_t semPausarPlanificacion;
 sem_t semComodinColaListos;
+sem_t semSalir;
 extern bool pausearPlanificacion;
 extern bool matarESI;
 extern int claveMatar;
 extern bool bloquearESIActual;
 extern bool salir;
+extern int idSalir;
 
 
 // ------------------------------ ESTRUCTURAS -------------------------------//
