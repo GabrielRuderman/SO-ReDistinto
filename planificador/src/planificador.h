@@ -105,7 +105,6 @@ extern char * rutaLog;
 bool recursoGenericoEnUso;
 pthread_t  hiloEscuchaConsola;
 pthread_t hiloEscuchaESI;
-pthread_t * hiloPlanifica;
 int claveActual;
 t_list * deadlockeados;
 int claveParaBloquearESI;
@@ -122,6 +121,7 @@ extern bool pausearPlanificacion;
 extern bool matarESI;
 extern int claveMatar;
 extern bool bloquearESIActual;
+extern bool salir;
 
 
 // ------------------------------ ESTRUCTURAS -------------------------------//

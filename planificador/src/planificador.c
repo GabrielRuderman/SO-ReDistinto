@@ -71,6 +71,8 @@ int main(void) {
 
 		}
 
+	pthread_join(hiloEscuchaConsola,NULL);
+	pthread_join(hiloEscuchaESI, NULL);
 	liberarGlobales();
 
 	return EXIT_SUCCESS;

@@ -42,6 +42,7 @@ uint32_t GET = 0;
 bool pausearPlanificacion = false;
 bool matarESI=false;
 bool bloquearESIActual = false;
+bool salir = false;
 int claveMatar = -1;
 char * PAUSEAR_PLANIFICACION= "pausear_planificacion";
 char* REANUDAR_PLANIFICACION = "reanudar_planificacion";
@@ -666,9 +667,9 @@ void lanzarConsola(){
 		{
 			printf("Cerrando planificador");
 			log_info(logPlanificador, "Comando ingresado por consola  : salir");
-			liberarGlobales();
+			salir = true;
 			free(linea);
-			exit(-1);
+			break;
 		}
 		else
 		{
@@ -752,7 +753,7 @@ void escucharNuevosESIS(){
 
 	log_info(logPlanificador, "Inicio hilo de escucha de ESIS");
 
-	while(1){
+	while(salir){
 
 		uint32_t socketESINuevo = escucharCliente(logPlanificador,socketDeEscucha);
 
@@ -939,6 +940,7 @@ void desbloquearRecurso (char* claveRecurso) {
 
 			} else {
 				log_info(logPlanificador, " Se intento desbloquear un recurso no bloqueado. Se ignora");
+				encontrado = true;
 			}
 
 		}
@@ -1203,15 +1205,29 @@ void statusClave(char * clave){
 				printf("El coordinador no pudo definir la instancia a ocupar \n");
 
 			} else {
-				if (instanciaPosta_ID < 0) {
+				if (instanciaPosta_ID == -1) {
 					log_debug(logPlanificador, "La clave no esta asignada a ninguna Instancia");
 					printf("La clave ingresada no se encuentra en ninguna instancia \n");
+					if(instanciaSimulada_ID > -1){
+						log_debug(logPlanificador, "Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
+						printf("Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
+					} else {
+						printf("No se pudo obtener una instancia simulada");
+						log_debug(logPlanificador, " No se pudo obtener una instancia simulada (-1)");
+					}
+
 				} else {
 					log_debug(logPlanificador, "La clave esta asignada a la Instancia %d", instanciaPosta_ID);
 					printf("La clave esta asignada a la Instancia %d \n", instanciaPosta_ID);
+					if(instanciaSimulada_ID > -1){
+						log_debug(logPlanificador, "Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
+						printf("Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
+					} else {
+						printf("No se pudo obtener una instancia simulada");
+						log_debug(logPlanificador, " No se pudo obtener una instancia simulada (-1)");
+					}
 				}
-				log_debug(logPlanificador, "Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
-				printf("Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
+
 			}
 
 			listarBloqueados(clave);

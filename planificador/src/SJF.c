@@ -11,7 +11,7 @@ void planificacionSJF(bool desalojo) {
 	log_info(logPlanificador, "Comienza algoritmo SJF");
 
 
-	while (1) {
+	while (salir) {
 
 		bool finalizar = false;
 
@@ -32,6 +32,7 @@ void planificacionSJF(bool desalojo) {
 		}
 		pthread_mutex_unlock(&mutexPauseo);
 		pthread_mutex_lock(&mutexComunicacion);
+
 		sem_wait(&semComodinColaListos);
 		sem_wait(&semContadorColaListos);
 
@@ -49,7 +50,7 @@ void planificacionSJF(bool desalojo) {
 		char * recursoPedido;
 
 
-		while (!finalizar && !bloquear && permiso && !desalojar && !matarESI) {
+		while (!finalizar && !bloquear && permiso && !desalojar && !matarESI && !salir) {
 
 			pthread_mutex_lock(&mutexPauseo);
 			if(pausearPlanificacion){
