@@ -29,8 +29,18 @@ planificacionHRRN (bool desalojo)
 
 	ESI* nuevoESI;
 
+	pthread_mutex_lock(&mutexPauseo);
+
+	if(pausearPlanificacion){
+
+		sem_wait(&semPausarPlanificacion);
+	}
+
+	pthread_mutex_unlock(&mutexPauseo);
+
 	sem_wait(&semComodinColaListos);
 	sem_wait(&semContadorColaListos);
+
 	pthread_mutex_lock(&mutexColaListos);
 
 	nuevoESI = queue_pop (colaListos);
@@ -49,13 +59,13 @@ planificacionHRRN (bool desalojo)
 {
 
 	pthread_mutex_lock(&mutexPauseo);
+
 	if(pausearPlanificacion){
 
 		sem_wait(&semPausarPlanificacion);
 
 	}
 	pthread_mutex_unlock(&mutexPauseo);
-	pthread_mutex_lock(&mutexComunicacion);
 
   pthread_mutex_lock(&mutexComunicacion);
 
@@ -334,6 +344,7 @@ planificacionHRRN (bool desalojo)
     	  nuevoESI->recienDesalojado = true;
     	  pthread_mutex_lock(&mutexColaListos);
     	  armarCola(nuevoESI);
+    	  sem_post(&semContadorColaListos);
     	  pthread_mutex_unlock(&mutexColaListos);
     	  log_trace(logPlanificador," ESI de ID %d desalojado", nuevoESI->id);
 

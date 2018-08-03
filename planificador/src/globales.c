@@ -528,18 +528,22 @@ void lanzarConsola(){
 		if (string_equals_ignore_case(linea, PAUSEAR_PLANIFICACION) || string_equals_ignore_case(linea, "1"))  //Hermosa cadena de if que se viene
 		{
 			log_info(logPlanificador, "Comando ingresado por consola : Pausar planificacion", linea);
-			pthread_mutex_lock(&mutexPauseo);
-			pausearPlanificacion = true;
-			sem_wait(&semPausarPlanificacion);
+			if(!pausearPlanificacion){
+				pthread_mutex_lock(&mutexPauseo);
+				pausearPlanificacion = true;
+				sem_wait(&semPausarPlanificacion);
+			} else printf("La planificacion ya estaba pausada!");
 			free(linea);
 		}
 		else if (string_equals_ignore_case(linea,REANUDAR_PLANIFICACION)  || string_equals_ignore_case(linea, "2"))
 		{
 			log_info(logPlanificador, "Comando ingresado por consola : Reanudar planificacion", linea);
-
-			pthread_mutex_unlock(&mutexPauseo);
-			pausearPlanificacion = false;
-			sem_post(&semPausarPlanificacion);
+			if(pausearPlanificacion){
+				pthread_mutex_unlock(&mutexPauseo);
+				pausearPlanificacion = false;
+				printf("Planificacion reanudada");
+				sem_post(&semPausarPlanificacion);
+			} else printf("La planificacion no estaba pausada!");
 			free(linea);
 		}
 		else if (string_equals_ignore_case(linea, BLOQUEAR_ESI)  || string_equals_ignore_case(linea, "3"))
@@ -941,6 +945,11 @@ void desbloquearRecurso (char* claveRecurso) {
 		i++;
 	}
 
+	if(!encontrado){
+		log_error(logPlanificador, "Clave no reconocida");
+		printf("Clave no existente");
+	}
+
 }
 
 
@@ -1053,15 +1062,12 @@ void seekAndDestroyESI(int clave){
 
 	bool matar;
 
-	sem_wait(&semComodinColaListos);
 
 	pthread_mutex_lock(&mutexColaListos);
 
 	matar = buscarYMatarEnCola(clave);
 
 	pthread_mutex_unlock(&mutexColaListos);
-
-	sem_post(&semComodinColaListos);
 
 
 	if(!matar){
