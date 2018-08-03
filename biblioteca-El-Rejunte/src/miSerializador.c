@@ -56,7 +56,7 @@ char* empaquetarInstruccion(t_esi_operacion instruccion, t_log* logger) {
 	}
 
 	log_info(logger, "La instruccion fue empaquetada");
-	printf("El paquete a enviar es: %s\n", buffer);
+	log_debug(logger, "El paquete a enviar es: %s\n", buffer);
 
 	destruir_operacion(instruccion);
 	return buffer;

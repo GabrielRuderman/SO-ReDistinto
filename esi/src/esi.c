@@ -44,13 +44,9 @@ const uint32_t ABORTA_ESI = -2;
 t_esi_operacion parsearLineaScript(FILE* fp) {
 	char * line = NULL;
 	size_t len = 0;
-
 	getline(&line, &len, fp);
-	log_debug(logger, "%s", line);
 	t_esi_operacion parsed = parse(line);
-
 	if (line) free(line);
-
 	return parsed;
 }
 
@@ -125,6 +121,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 	if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que me detecto correctamente");
 
 	uint32_t orden;
+	char* paquete;
 
 	while (!feof(fp)) {
 		log_info(logger, "Espero a que el Planificador me ordene parsear una instruccion");
@@ -140,7 +137,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			/*
 			 * ENVIO PROXIMA INSTRUCCION
 			 */
-			log_info(logger, "El planificador me pide que parsee la siguiente instruccion:");
+			log_info(logger, "El planificador me pide que parsee una instruccion");
 			// Se parsea la instruccion que se le enviara al coordinador
 			t_esi_operacion instruccion = parsearLineaScript(fp);
 			if (!instruccion.valido) {
@@ -152,7 +149,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			log_info(logger, "La instruccion fue parseada, le aviso al Planificador");
 			send(socketPlanificador, &PAQUETE_OK, sizeof(uint32_t), 0);
 			// Se empaqueta la instruccion
-			char* paquete = empaquetarInstruccion(instruccion, logger);
+			paquete = empaquetarInstruccion(instruccion, logger);
 
 			log_info(logger, "Envio la instruccion al Cooordinador");
 			uint32_t tam_paquete = strlen(paquete) + 1;
@@ -161,12 +158,14 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 
 			if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
 				log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+				if (paquete != NULL) destruirPaquete(paquete);
 				finalizar(EXIT_FAILURE);
 			}
 			if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que el paquete llego correctamente");
 
 			if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 0) {
 				log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+				if (paquete != NULL) destruirPaquete(paquete);
 				finalizar(EXIT_FAILURE);
 			}
 
@@ -191,6 +190,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 
 				if (recv(socketPlanificador, &orden, sizeof(uint32_t), 0) < 0) {
 					log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Planificador, me aborto");
+					if (paquete != NULL) destruirPaquete(paquete);
 					finalizar(EXIT_FAILURE);
 				}
 				if (orden == SIGUIENTE_INSTRUCCION) {
@@ -206,6 +206,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 
 					if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 0) {
 						log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+						if (paquete != NULL) destruirPaquete(paquete);
 						finalizar(EXIT_FAILURE);
 					}
 					if (respuesta == PAQUETE_OK) {
@@ -224,6 +225,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 						log_error(logger, "El Coordinador informa que la instruccion no se pudo procesar");
 						log_error(logger, "Se aborta el ESI");
 						send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), MSG_DONTWAIT);
+						if (paquete != NULL) destruirPaquete(paquete);
 						finalizar(EXIT_FAILURE);
 					}
 
@@ -235,12 +237,14 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 				log_error(logger, "El Coordinador informa que la instruccion no se pudo procesar");
 				log_error(logger, "Se aborta el ESI");
 				send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), MSG_DONTWAIT);
+				if (paquete != NULL) destruirPaquete(paquete);
 				finalizar(EXIT_FAILURE);
 			}
 		} else {
 			log_error(logger, "El Planificador me informa que debo abortar");
 			break;
 		}
+		if (paquete != NULL) destruirPaquete(paquete);
 	}
 	finalizar(EXIT_SUCCESS);
 }
