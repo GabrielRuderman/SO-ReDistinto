@@ -181,6 +181,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 					log_warning(logger, "Le aviso al Planificador y al Coordinador que no tengo mas instrucciones para ejecutar");
 					send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), 0);
 					send(socketCoordinador, &TERMINA_ESI, sizeof(uint32_t), 0);
+					if (paquete != NULL) destruirPaquete(paquete);
 					break;
 				}
 
@@ -221,6 +222,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 							log_warning(logger, "Le aviso al Planificador y al Coordinador que no tengo mas instrucciones para ejecutar");
 							send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), 0);
 							send(socketCoordinador, &TERMINA_ESI, sizeof(uint32_t), 0);
+							if (paquete != NULL) destruirPaquete(paquete);
 							break;
 						}
 

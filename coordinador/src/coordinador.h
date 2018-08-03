@@ -54,7 +54,7 @@ bool instanciaTieneLaClave(void* nodo);
 bool claveEsLaActual(void* nodo);
 void loguearOperacion(uint32_t esi_ID, t_instruccion* instruccion);
 t_instancia* algoritmoDeDistribucion();
-t_instancia* algoritmoEL();
+t_instancia* algoritmoEL(t_list* tabla);
 t_instancia* algoritmoLSU();
 bool comparadorEntradasLibres(void* nodo1, void* nodo2);
 t_instancia* algoritmoKE();

@@ -36,6 +36,7 @@ char* port;
 char* port_planificador;
 char* algoritmo_distribucion;
 t_distribucion protocolo_distribucion;
+int masEntradasLibres;
 bool simulacion_activada;
 int retardo;
 uint32_t cant_entradas, tam_entradas;
@@ -72,7 +73,12 @@ int chequearEstadoInstancia(t_instancia* instancia) {
 bool comparadorEntradasLibres(void* nodo1, void* nodo2) {
 	t_instancia* instancia1 = (t_instancia*) nodo1;
 	t_instancia* instancia2 = (t_instancia*) nodo2;
-	return (instancia1->entradas_libres > instancia2->entradas_libres);
+	return instancia1->entradas_libres > instancia2->entradas_libres;
+}
+
+bool igualAMasEntradasLibres(void* nodo) {
+	t_instancia* instancia = (t_instancia*) nodo;
+	return instancia->entradas_libres == masEntradasLibres;
 }
 
 t_instancia* algoritmoLSU() {
@@ -89,6 +95,15 @@ t_instancia* algoritmoLSU() {
 		instancia->estado = chequearEstadoInstancia(instancia);
 		i++;
 	} while (instancia->estado == INACTIVA);
+
+	masEntradasLibres = instancia->entradas_libres;
+
+	t_list* tabla_instancias_empatadas = list_filter(tabla_instancias, igualAMasEntradasLibres);
+	if (list_size(tabla_instancias_empatadas) > 1) {
+		log_warning(logger, "Hubo empate, utilizo el algoritmo Equitative Load");
+		instancia = algoritmoEL(tabla_instancias_empatadas);
+	}
+
 	return instancia;
 }
 
@@ -147,16 +162,16 @@ t_instancia* algoritmoKE() {
 }
 
 
-t_instancia* algoritmoEL() {
+t_instancia* algoritmoEL(t_list* tabla) {
 	t_instancia* instancia;
 	int i = 0;
 	do {
 		if (simulacion_activada) {
-			instancia = list_get(tabla_instancias, i); // Si es simulacion por STATUS CLAVE no corro la Instancia de lugar
+			instancia = list_get(tabla, i); // Si es simulacion por STATUS CLAVE no corro la Instancia de lugar
 			i++;
 		} else {
-			instancia = list_remove(tabla_instancias, 0);
-			list_add_in_index(tabla_instancias, list_size(tabla_instancias), instancia);
+			instancia = list_remove(tabla, 0);
+			list_add_in_index(tabla, list_size(tabla_instancias), instancia);
 		}
 		/*int res = recv(instancia->socket, NULL, 0, MSG_DONTWAIT);
 		if (res < 1) { // Si se desconecto me manda basura
@@ -187,7 +202,7 @@ t_instancia* algoritmoDeDistribucion() {
 		return algoritmoKE();
 
 	default: // Equitative Load
-		return algoritmoEL();
+		return algoritmoEL(tabla_instancias);
 	}
 }
 
