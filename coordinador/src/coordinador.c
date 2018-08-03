@@ -47,6 +47,7 @@ char* clave_reemplazada;
 char* clave_inaccesible;
 uint32_t instancia_ID;
 pthread_mutex_t mutexNuevaInstancia = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutexStatusClave = PTHREAD_MUTEX_INITIALIZER;
 
 const int TAM_MAXIMO_CLAVE = 40;
 
@@ -287,7 +288,6 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			clave_inaccesible = string_new();
 			string_append(&clave_inaccesible, instruccion->clave);
 			list_remove_by_condition(instancia->claves_asignadas, claveEsLaInaccesible);
-			// En claves_cargadas se mantiene registrada para una posterior reconexion
 			free(clave_inaccesible);
 
 			log_error(logger, "Error de Clave Inaccesible");
@@ -412,7 +412,11 @@ void atenderESI(int socketESI) {
 		if (respuesta_permiso == SE_EJECUTA_ESI) {
 			log_info(logger, "El Planificador me autoriza a que el ESI %d pueda utilizar el recurso", esi_ID);
 			if (instruccion->operacion != opGET) {
-				if (procesarPaquete(paquete, instruccion, esi_ID) == -1) { // Hay que abortar el ESI
+				pthread_mutex_lock(&mutexStatusClave);
+				int resultado = procesarPaquete(paquete, instruccion, esi_ID);
+				pthread_mutex_unlock(&mutexStatusClave);
+
+				if (resultado == -1) { // Hay que abortar el ESI
 					log_error(logger, "Se aborta el ESI %d", esi_ID);
 					send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
 					finalizarSocket(socketESI);
@@ -536,14 +540,18 @@ void atenderConsola() {
 			break;
 		}
 
+		pthread_mutex_lock(&mutexStatusClave);
 		log_debug(logger, "STATUS CLAVE %s", clave_solicitada);
 
+		free(clave_actual);
+		clave_actual = string_new();
+		string_append(&clave_actual, clave_solicitada);
 		t_instancia* instancia_posta = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave); // Instancia actual
 		if (!instancia_posta) {
 			log_info(logger, "La clave %s no tiene una Instancia asignada", clave_solicitada);
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {
-			log_info(logger, "La clave corresponde a la Instancia %d", clave_solicitada, instancia_posta->id);
+			log_info(logger, "La clave %s corresponde a la Instancia %d", clave_solicitada, instancia_posta->id);
 			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
 		}
 		simulacion_activada = true;
@@ -552,11 +560,12 @@ void atenderConsola() {
 			log_warning(logger, "No hay Instancias conectadas");
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {
-			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_solicitada, instancia_posta->id);
+			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_solicitada, instancia_simulada->id);
 			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
 		}
 		simulacion_activada = false;
 		send(socketConsola, &(instancia_simulada->id), sizeof(uint32_t), 0);
+		pthread_mutex_unlock(&mutexStatusClave);
 	}
 }
 
@@ -636,14 +645,19 @@ t_control_configuracion cargarConfiguracion() {
 
 void finalizar(int cod) {
 	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
+	if (socketPlanificador > 0) finalizarSocket(socketPlanificador);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);
 	exit(cod);
 }
 
+void signalHandler(int senal) {
+	finalizar(EXIT_FAILURE);
+}
+
 int main() { // ip y puerto son char* porque en la biblioteca se los necesita de ese tipo
-	error_config = false;
+	signal(SIGINT, signalHandler);
 	simulacion_activada = false;
 
 	/*
@@ -669,6 +683,6 @@ int main() { // ip y puerto son char* porque en la biblioteca se los necesita de
 		pthread_create(&unHilo, NULL, (void*) establecerConexion, (void*) &socketCliente);
 	}
 
-	return EXIT_SUCCESS;
+	finalizar(EXIT_SUCCESS);
 }
 

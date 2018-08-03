@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdbool.h>
+#include <signal.h>
 #include <commons/log.h>
 #include <commons/config.h>
 #include <parsi/parser.h>
@@ -26,6 +27,7 @@
 
 t_control_configuracion cargarConfiguracion();
 t_esi_operacion parsearLineaScript(FILE* fp);
+void signalHandler(int senal);
 void finalizar(int cod);
 
 #endif /* ESI_H_ */

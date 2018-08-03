@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <signal.h>
 #include <commons/log.h>
 #include <commons/config.h>
 #include <commons/collections/list.h>
@@ -58,6 +59,7 @@ t_instancia* algoritmoLSU();
 bool comparadorEntradasLibres(void* nodo1, void* nodo2);
 t_instancia* algoritmoKE();
 bool buscadorDeRango(void* nodo);
+void signalHandler(int senal);
 void finalizar(int cod);
 
 #endif /* COORDINADOR_H_ */

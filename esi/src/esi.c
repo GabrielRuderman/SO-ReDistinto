@@ -79,7 +79,12 @@ void finalizar(int cod) {
 	exit(cod);
 }
 
+void signalHandler(int senal) {
+	finalizar(EXIT_FAILURE);
+}
+
 int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda en arv[1]
+	signal(SIGINT, signalHandler);
 	logger = log_create("esi.log", "ESI", true, LOG_LEVEL_DEBUG);
 
 	if (cargarConfiguracion() == CONFIGURACION_ERROR) {
