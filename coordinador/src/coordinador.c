@@ -287,7 +287,6 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 			clave_inaccesible = string_new();
 			string_append(&clave_inaccesible, instruccion->clave);
 			list_remove_by_condition(instancia->claves_asignadas, claveEsLaInaccesible);
-			// En claves_cargadas se mantiene registrada para una posterior reconexion
 			free(clave_inaccesible);
 
 			log_error(logger, "Error de Clave Inaccesible");
@@ -538,12 +537,15 @@ void atenderConsola() {
 
 		log_debug(logger, "STATUS CLAVE %s", clave_solicitada);
 
+		free(clave_actual);
+		clave_actual = string_new();
+		string_append(&clave_actual, clave_solicitada);
 		t_instancia* instancia_posta = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave); // Instancia actual
 		if (!instancia_posta) {
 			log_info(logger, "La clave %s no tiene una Instancia asignada", clave_solicitada);
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {
-			log_info(logger, "La clave corresponde a la Instancia %d", clave_solicitada, instancia_posta->id);
+			log_info(logger, "La clave %s corresponde a la Instancia %d", clave_solicitada, instancia_posta->id);
 			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
 		}
 		simulacion_activada = true;
@@ -552,7 +554,7 @@ void atenderConsola() {
 			log_warning(logger, "No hay Instancias conectadas");
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {
-			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_solicitada, instancia_posta->id);
+			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_solicitada, instancia_simulada->id);
 			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
 		}
 		simulacion_activada = false;
