@@ -245,12 +245,14 @@ bool instanciaTieneLaClave(void* nodo) {
 	return list_any_satisfy(instancia->claves_asignadas, claveEsLaActual);
 }
 
-void solicitarCompactacionAInstancias() {
+void solicitarCompactacionAInstancias(int id_actual) {
 	for (int i = 0; i < list_size(tabla_instancias); i++) {
 		t_instancia* instancia = list_get(tabla_instancias, i);
-		instancia->estado = chequearEstadoInstancia(instancia);
-		if (instancia->estado == ACTIVA) {
-			send(instancia->socket, &PEDIDO_COMPACTACION, sizeof(uint32_t), 0);
+		if (instancia->id != id_actual) {
+			instancia->estado = chequearEstadoInstancia(instancia);
+			if (instancia->estado == ACTIVA) {
+				send(instancia->socket, &PEDIDO_COMPACTACION, sizeof(uint32_t), 0);
+			}
 		}
 	}
 }
@@ -318,7 +320,9 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 		log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
 		return -1;
 	} else if (cant_claves_reemplazadas == PEDIDO_COMPACTACION) {
-		solicitarCompactacionAInstancias();
+		log_warning(logger, "La Instancia me solicita compactar, se indica a todas que lo hagan");
+		send(instancia->socket, &PAQUETE_OK, sizeof(uint32_t), 0);
+		solicitarCompactacionAInstancias(instancia->id);
 		recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
 	}
 	if (cant_claves_reemplazadas > 0) {

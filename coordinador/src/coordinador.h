@@ -45,7 +45,7 @@ void establecerProtocoloDistribucion();
 void atenderConsola();
 void establecerConexion(void* parametros);
 void atenderInstancia(int socketInstancia);
-void solicitarCompactacionAInstancias();
+void solicitarCompactacionAInstancias(int id_actual);
 bool existeInstanciaID(void* nodo);
 bool instanciaEstaActiva(void* nodo);
 void atenderESI(int socketESI);

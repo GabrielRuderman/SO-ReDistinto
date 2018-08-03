@@ -257,6 +257,7 @@ void algoritmoDeReemplazo() {
 }
 
 int solicitarCompactacion() {
+	log_info(logger, "Se solicita al Coordinador permiso para compactar");
 	send(socketCoordinador, &PEDIDO_COMPACTACION, sizeof(uint32_t), 0);
 	uint32_t respuesta;
 	recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
@@ -264,7 +265,7 @@ int solicitarCompactacion() {
 		compactarAlmacenamiento();
 		return 1;
 	} else {
-		log_error(logger, "El Coordinador no me autoriza a compactar el almacenamiento");
+		log_error(logger, "Permiso denegado");
 		return -1;
 	}
 }
