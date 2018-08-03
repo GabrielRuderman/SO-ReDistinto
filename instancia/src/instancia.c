@@ -42,6 +42,8 @@ char* bloque_instancia;
 int puntero_circular;
 int pos_a_pisar;
 t_entrada* entrada_a_reemplazar;
+int mayorTamano;
+int mayorReferencia;
 t_list* reemplazos_recientes;
 t_instruccion* instruccion; // es la instruccion actual
 int referencia_actual = 0;
@@ -168,28 +170,64 @@ int operacion_SET_reemplazo(t_entrada* entrada, char* valor) {
 }
 
 t_entrada* algoritmoBSU(t_list* tabla_entradas_atomicas) {
-	bool mayorValorAlmacenado(void* nodo1, void* nodo2) {
+	/*
+	 * Por último, el algoritmo BSU lleva registro del tamaño dentro de la entrada atomica que está siendo ocupado,
+	 * y en el momento de un reemplazo, escoge aquél que ocupa más espacio dentro de una entrada.
+	 */
+
+	bool mayorTamanoAlmacenado(void* nodo1, void* nodo2) {
 		t_entrada* entrada1 = (t_entrada*) nodo1;
 		t_entrada* entrada2 = (t_entrada*) nodo2;
 		log_trace(logger, "comparacion valores: %d > %d", entrada1->size_valor_almacenado, entrada2->size_valor_almacenado);
 		return entrada1->size_valor_almacenado > entrada2->size_valor_almacenado;
 	}
-	log_trace(logger, "tam lista: %d", list_size(tabla_entradas_atomicas));
-	list_sort(tabla_entradas_atomicas, mayorValorAlmacenado); // TODO: CHEQUEAR SI SON TODOS NO ATOMICAS
+
+	bool igualAMayorTamanoAlmacenado(void* nodo) {
+		t_entrada* entrada = (t_entrada*) nodo;
+		return entrada->size_valor_almacenado == mayorTamano;
+	}
+
+	list_sort(tabla_entradas_atomicas, mayorTamanoAlmacenado); // TODO: CHEQUEAR SI SON TODOS NO ATOMICAS
+
+	// Busco si hay empate
+	t_entrada* entrada = list_get(tabla_entradas_atomicas, 0);
+	mayorTamano = entrada->size_valor_almacenado;
+	t_list* tabla_entradas_empatadas = list_filter(tabla_entradas_atomicas, igualAMayorTamanoAlmacenado);
+	if (list_size(tabla_entradas_empatadas) > 1) {
+		log_warning(logger, "Hubo empate, utilizo el algoritmo Circular");
+		return algoritmoCircular(tabla_entradas_empatadas);
+	}
+
 	return list_get(tabla_entradas_atomicas, 0);
 }
 
 t_entrada* algoritmoLRU(t_list* tabla_entradas_atomicas) {
+	/*
+	 * El algoritmo LRU se basa en llevar registro de hace cuánto fue referenciada cada entrada.
+	 * Llegado el momento de reemplazar una entrada, se selecciona aquella entrada que ha sido referenciada hace mayor tiempo.
+	 */
+
 	bool masTiempoReferenciada(void* nodo1, void* nodo2) {
 		t_entrada* entrada1 = (t_entrada*) nodo1;
 		t_entrada* entrada2 = (t_entrada*) nodo2;
 		return entrada1->ultima_referencia < entrada2->ultima_referencia;
 	}
 
+	bool igualAMayorReferencia(void* nodo) {
+		t_entrada* entrada = (t_entrada*) nodo;
+		return entrada->ultima_referencia == mayorReferencia;
+	}
+
 	list_sort(tabla_entradas_atomicas, masTiempoReferenciada);
 
-	//printf("\n--------- TABLA DE ENTRADAS ATOMICAS ORDENADA POR ULTIMA REFERENCIA ---------");
-	//imprimirTablaDeEntradas(tabla_entradas_atomicas);
+	// Busco si hay empate
+	t_entrada* entrada = list_get(tabla_entradas_atomicas, 0);
+	mayorReferencia = entrada->ultima_referencia;
+	t_list* tabla_entradas_empatadas = list_filter(tabla_entradas_atomicas, igualAMayorReferencia);
+	if (list_size(tabla_entradas_empatadas) > 1) {
+		log_warning(logger, "Hubo empate, utilizo el algoritmo Circular");
+		return algoritmoCircular(tabla_entradas_empatadas);
+	}
 
 	return list_get(tabla_entradas_atomicas, 0);
 }
