@@ -306,6 +306,7 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 
 	if (cant_claves_reemplazadas == PAQUETE_ERROR) {
 		log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
+		list_remove_by_condition(instancia->claves_asignadas, claveEsLaActual);
 		return -1;
 	} else if (cant_claves_reemplazadas > 0) {
 		for (int i = 0; i < cant_claves_reemplazadas; i++) {
