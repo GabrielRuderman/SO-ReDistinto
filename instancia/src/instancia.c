@@ -629,6 +629,8 @@ void establecerProtocoloReemplazo() {
 }
 
 t_control_configuracion cargarConfiguracion() {
+	error_config = false;
+
 	// Importo los datos del archivo de configuracion
 	config = conectarAlArchivo(logger, "/home/utnso/workspace/tp-2018-1c-El-Rejunte/instancia/config_instancia.cfg", &error_config);
 
@@ -653,6 +655,7 @@ t_control_configuracion cargarConfiguracion() {
 void destruirEntrada(void* nodo) {
 	t_entrada* entrada = (t_entrada*) nodo;
 	if (entrada->clave != NULL) free(entrada->clave);
+	if (entrada->mapa_archivo != NULL) munmap(entrada->mapa_archivo, entrada->size_valor_almacenado);
 	free(entrada);
 }
 
@@ -673,8 +676,6 @@ void signalHandler(int senal) {
 }
 
 int main() {
-	error_config = false;
-
 	signal(SIGINT, signalHandler);
 
 	// Creo el logger

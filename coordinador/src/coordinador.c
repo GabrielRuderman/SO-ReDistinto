@@ -636,14 +636,19 @@ t_control_configuracion cargarConfiguracion() {
 
 void finalizar(int cod) {
 	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
+	if (socketPlanificador > 0) finalizarSocket(socketDeEscucha);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);
 	exit(cod);
 }
 
+void signalHandler(int senal) {
+	finalizar(EXIT_FAILURE);
+}
+
 int main() { // ip y puerto son char* porque en la biblioteca se los necesita de ese tipo
-	error_config = false;
+	signal(SIGINT, signalHandler);
 	simulacion_activada = false;
 
 	/*
@@ -669,6 +674,6 @@ int main() { // ip y puerto son char* porque en la biblioteca se los necesita de
 		pthread_create(&unHilo, NULL, (void*) establecerConexion, (void*) &socketCliente);
 	}
 
-	return EXIT_SUCCESS;
+	finalizar(EXIT_SUCCESS);
 }
 
