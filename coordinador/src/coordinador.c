@@ -47,6 +47,7 @@ char* clave_reemplazada;
 char* clave_inaccesible;
 uint32_t instancia_ID;
 pthread_mutex_t mutexNuevaInstancia = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutexStatusClave = PTHREAD_MUTEX_INITIALIZER;
 
 const int TAM_MAXIMO_CLAVE = 40;
 
@@ -411,7 +412,11 @@ void atenderESI(int socketESI) {
 		if (respuesta_permiso == SE_EJECUTA_ESI) {
 			log_info(logger, "El Planificador me autoriza a que el ESI %d pueda utilizar el recurso", esi_ID);
 			if (instruccion->operacion != opGET) {
-				if (procesarPaquete(paquete, instruccion, esi_ID) == -1) { // Hay que abortar el ESI
+				pthread_mutex_lock(&mutexStatusClave);
+				int resultado = procesarPaquete(paquete, instruccion, esi_ID);
+				pthread_mutex_unlock(&mutexStatusClave);
+
+				if (resultado == -1) { // Hay que abortar el ESI
 					log_error(logger, "Se aborta el ESI %d", esi_ID);
 					send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
 					finalizarSocket(socketESI);
@@ -535,6 +540,7 @@ void atenderConsola() {
 			break;
 		}
 
+		pthread_mutex_lock(&mutexStatusClave);
 		log_debug(logger, "STATUS CLAVE %s", clave_solicitada);
 
 		free(clave_actual);
@@ -559,6 +565,7 @@ void atenderConsola() {
 		}
 		simulacion_activada = false;
 		send(socketConsola, &(instancia_simulada->id), sizeof(uint32_t), 0);
+		pthread_mutex_unlock(&mutexStatusClave);
 	}
 }
 
