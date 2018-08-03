@@ -422,28 +422,11 @@ bool ordenarESISHRRN(void* nodo1, void* nodo2){
 
 	log_info (logPlanificador, "ESI id : %d de tiempo de respuesta %.6f contra ESI a comparar de id: %d y tiempo de respuesta %.6f ", e1->id, e1->tiempoRespuesta, e2->id, e2->tiempoRespuesta);
 
-	if (e1->tiempoRespuesta > e2->tiempoRespuesta){
+	if (e1->tiempoRespuesta > e2->tiempoRespuesta || e1->tiempoRespuesta == e2->tiempoRespuesta){
 
-		return false;
+		return true;
 
-	} else if (e1->tiempoRespuesta == e2->tiempoRespuesta) //Ante empate de estimaciones
-
-	{
-		if( !e2->recienDesalojado && e1->recienDesalojado){ //si no es recien llegado, tiene prioridad porque ya estaba en disco
-
-			return false;
-
-		} else if( !e2->recienDesalojado && !e1->recienDesalojado && e2->recienDesbloqueadoPorRecurso && !e1->recienDesbloqueadoPorRecurso ){ // si se da que ninguno de los dos recien fue creado, me fijo si alguno se desbloqueo recien de un recurso
-
-			return false;
-
-		} else if ( e2->recienDesalojado && e1->recienDesalojado && e2->recienDesbloqueadoPorRecurso && !e1->recienDesbloqueadoPorRecurso ){ //si los dos recien llegan, me fijo si el auxiliar recien llego de desbloquearse
-
-			return false;
-
-		} else return true;
-
-		} else return true;
+	} else return false;
 
 }
 
