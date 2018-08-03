@@ -1292,6 +1292,10 @@ void limpiarRecienLlegados(){
 
 
 void liberarGlobales (){
+	finalizarSocket(socketDeEscucha);
+	finalizarSocket(socketCoordinador);
+	finalizarSocket(socketClienteCoordinador);
+
 
 	log_info(logPlanificador, "Liberando espacio");
 	free(algoritmoDePlanificacion);

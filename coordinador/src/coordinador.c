@@ -42,6 +42,7 @@ uint32_t cant_entradas, tam_entradas;
 t_list* tabla_instancias;
 int socketDeEscucha;
 int socketPlanificador;
+int socketConsola;
 char* clave_actual;
 char* clave_reemplazada;
 char* clave_inaccesible;
@@ -519,7 +520,7 @@ void atenderInstancia(int socketInstancia) {
 }
 
 void atenderConsola() {
-	int socketConsola = conectarComoCliente(logger, ip_planificador, port_planificador);
+	socketConsola = conectarComoCliente(logger, ip_planificador, port_planificador);
 	/*
 	 * Instancia actual en la cual se encuentra la clave. (En caso de que la clave no se encuentre en una instancia,
 	 * no se debe mostrar este valor)
@@ -530,28 +531,28 @@ void atenderConsola() {
 	while (1) {
 		uint32_t tam_clave;
 		int res1 = recv(socketConsola, &tam_clave, sizeof(uint32_t), 0);
-		char* clave_solicitada = malloc(sizeof(char) * tam_clave);
-		int res2 = recv(socketConsola, clave_solicitada, sizeof(char) * tam_clave, 0);
+
+		pthread_mutex_lock(&mutexStatusClave);
+		log_debug(logger, "STATUS CLAVE");
+
+		free(clave_actual);
+		clave_actual = malloc(sizeof(char) * tam_clave);
+		int res2 = recv(socketConsola, clave_actual, sizeof(char) * tam_clave, 0);
 
 		if (res1 < 1 || res2 < 1) {
 			log_error(logger, "Error de Comunicacion: conexion con el Planificador rota");
 			finalizarSocket(socketConsola);
-			finalizarSocket(socketPlanificador);
 			break;
 		}
 
-		pthread_mutex_lock(&mutexStatusClave);
-		log_debug(logger, "STATUS CLAVE %s", clave_solicitada);
+		log_info(logger, "La clave solicitada es %s", clave_actual);
 
-		free(clave_actual);
-		clave_actual = string_new();
-		string_append(&clave_actual, clave_solicitada);
 		t_instancia* instancia_posta = (t_instancia*) list_find(tabla_instancias, instanciaTieneLaClave); // Instancia actual
 		if (!instancia_posta) {
-			log_info(logger, "La clave %s no tiene una Instancia asignada", clave_solicitada);
+			log_info(logger, "La clave %s no tiene una Instancia asignada", clave_actual);
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {
-			log_info(logger, "La clave %s corresponde a la Instancia %d", clave_solicitada, instancia_posta->id);
+			log_info(logger, "La clave %s corresponde a la Instancia %d", clave_actual, instancia_posta->id);
 			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
 		}
 		simulacion_activada = true;
@@ -560,13 +561,14 @@ void atenderConsola() {
 			log_warning(logger, "No hay Instancias conectadas");
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {
-			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_solicitada, instancia_simulada->id);
+			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_actual, instancia_simulada->id);
 			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
 		}
 		simulacion_activada = false;
 		send(socketConsola, &(instancia_simulada->id), sizeof(uint32_t), 0);
 		pthread_mutex_unlock(&mutexStatusClave);
 	}
+	pthread_mutex_unlock(&mutexStatusClave);
 }
 
 void establecerConexion(void* socketCliente) {
@@ -646,6 +648,7 @@ t_control_configuracion cargarConfiguracion() {
 void finalizar(int cod) {
 	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
 	if (socketPlanificador > 0) finalizarSocket(socketPlanificador);
+	if (socketConsola > 0) finalizarSocket(socketConsola);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);
