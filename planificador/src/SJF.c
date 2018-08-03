@@ -23,6 +23,15 @@ void planificacionSJF(bool desalojo) {
 
 		ESI * nuevo;
 
+		pthread_mutex_lock(&mutexPauseo);
+
+		if(pausearPlanificacion){
+
+			sem_wait(&semPausarPlanificacion);
+
+		}
+		pthread_mutex_unlock(&mutexPauseo);
+		pthread_mutex_lock(&mutexComunicacion);
 		sem_wait(&semComodinColaListos);
 		sem_wait(&semContadorColaListos);
 		pthread_mutex_lock(&mutexColaListos);
