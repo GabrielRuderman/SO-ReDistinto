@@ -69,7 +69,10 @@ int solicitarCompactacion() {
 	log_info(logger, "Se solicita al Coordinador permiso para compactar");
 	send(socketCoordinador, &PEDIDO_COMPACTACION, sizeof(uint32_t), 0);
 	uint32_t respuesta;
-	recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+	if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+		finalizar(EXIT_FAILURE);
+	}
 	if (respuesta == PAQUETE_OK) {
 		compactarAlmacenamiento();
 		return 1;
@@ -665,7 +668,10 @@ t_instruccion* recibirInstruccion(int socketCoordinador) {
 	}
 
 	char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
-	recv(socketCoordinador, paquete, tam_paquete, 0);
+	if (recv(socketCoordinador, paquete, tam_paquete, 0) < 1) {
+		log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+		finalizar(EXIT_FAILURE);
+	}
 
 	log_info(logger, "Recibi un paquete que me envia el Coordinador");
 	log_debug(logger, "%s", paquete);
@@ -766,7 +772,7 @@ int main() {
 	int resp2 = recv(socketCoordinador, &tam_entrada, sizeof(uint32_t), 0);
 	if (resp1 < 1 || resp2 < 1) {
 		log_error(logger, "El Coordinador no me permite conectarme");
-		return EXIT_FAILURE;
+		finalizar(EXIT_FAILURE);
 	}
 
 	log_info(logger, "Se recibio la cantidad y tamaño de las entradas correctamente");
@@ -782,13 +788,22 @@ int main() {
 	}
 
 	uint32_t cant_claves_cargadas;
-	recv(socketCoordinador, &cant_claves_cargadas, sizeof(uint32_t), 0);
+	if (recv(socketCoordinador, &cant_claves_cargadas, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+		finalizar(EXIT_FAILURE);
+	}
 	log_info(logger, "El Coordinador me informa que tenia %d claves cargadas", cant_claves_cargadas);
 	for (int i = 0; i < cant_claves_cargadas; i++) {
 		uint32_t tam_clave_cargada;
-		recv(socketCoordinador, &tam_clave_cargada, sizeof(uint32_t), 0);
+		if (recv(socketCoordinador, &tam_clave_cargada, sizeof(uint32_t), 0) < 1) {
+			log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+			finalizar(EXIT_FAILURE);
+		}
 		char* clave_cargada = malloc(sizeof(char) * tam_clave_cargada);
-		recv(socketCoordinador, clave_cargada, tam_clave_cargada, 0);
+		if (recv(socketCoordinador, clave_cargada, tam_clave_cargada, 0) < 1) {
+			log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
+			finalizar(EXIT_FAILURE);;
+		}
 		char* archivo = string_new();
 		string_append(&archivo, clave_cargada);
 		free(clave_cargada);

@@ -330,36 +330,49 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 	send(instancia->socket, paquete, tam_paquete, MSG_NOSIGNAL);
 
 	uint32_t cant_claves_reemplazadas;
-	recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
+	if (recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de comunicacion: Instancia %d desconectada", instancia->id);
+		return -1;
+	}
 
 	if (cant_claves_reemplazadas == PAQUETE_ERROR) {
 		log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
-		list_remove_by_condition(instancia->claves_asignadas, claveEsLaActual);
+		list_remove_and_destroy_by_condition(instancia->claves_asignadas, claveEsLaActual, free);
 		return -1;
 	} else if (cant_claves_reemplazadas == PEDIDO_COMPACTACION) {
 		log_warning(logger, "La Instancia me solicita compactar, se indica a todas que lo hagan");
 		send(instancia->socket, &PAQUETE_OK, sizeof(uint32_t), 0);
 		solicitarCompactacionAInstancias(instancia->id);
-		recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0);
+		if (recv(instancia->socket, &cant_claves_reemplazadas, sizeof(uint32_t), 0) < 1) {
+			log_error(logger, "Error de comunicacion: Instancia %d desconectada", instancia->id);
+			return -1;
+		}
 	}
 
 	if (cant_claves_reemplazadas > 0) {
 		for (int i = 0; i < cant_claves_reemplazadas; i++) {
 			uint32_t tam_clave_reemplazada;
-			recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0);
+			if (recv(instancia->socket, &tam_clave_reemplazada, sizeof(uint32_t), 0) < 1) {
+				log_error(logger, "Error de comunicacion: Instancia %d desconectada", instancia->id);
+				return -1;
+			}
 			clave_reemplazada = malloc(sizeof(char) * tam_clave_reemplazada);
-			recv(instancia->socket, clave_reemplazada, tam_clave_reemplazada, 0);
+			if (recv(instancia->socket, clave_reemplazada, tam_clave_reemplazada, 0) < 1) {
+				log_error(logger, "Error de comunicacion: Instancia %d desconectada", instancia->id);
+				return -1;
+			}
 			log_warning(logger, "Se informa reemplazo de la clave: %s", clave_reemplazada);
 
-			list_remove_by_condition(instancia->claves_asignadas, claveEsLaReemplazada);
-
-			free(clave_reemplazada);
+			list_remove_and_destroy_by_condition(instancia->claves_asignadas, claveEsLaReemplazada, free);
 		}
 	}
 
 	// La Instancia me devuelve la cantidad de entradas libres que tiene
 	uint32_t entradas_libres;
-	recv(instancia->socket, &entradas_libres, sizeof(uint32_t), 0);
+	if (recv(instancia->socket, &entradas_libres, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de comunicacion: Instancia %d desconectada", instancia->id);
+		return -1;
+	}
 
 	if (entradas_libres == PAQUETE_ERROR) {
 		log_error(logger, "La Instancia me avisa que no pudo procesar la instruccion");
@@ -386,17 +399,20 @@ void atenderESI(int socketESI) {
 	uint32_t esi_ID;
 	if (recv(socketESI, &esi_ID, sizeof(uint32_t), 0) < 1) {
 		log_error(logger, "El ESI no tiene permiso de conexion");
+		finalizarSocket(socketESI);
 		return;
 	}
 	log_info(logger, "Se ha conectado un ESI con ID: %d", esi_ID);
 	send(socketESI, &PAQUETE_OK, sizeof(uint32_t), 0);
 
+	char* paquete;
+	t_instruccion* instruccion;
 	while (1) {
 		bool recien_desbloqueado = false;
 		uint32_t tam_paquete;
 		if (recv(socketESI, &tam_paquete, sizeof(uint32_t), 0) < 1) {
 			log_error(logger, "Error de Comunicacion: conexion rota con el ESI %d", esi_ID);
-			return;
+			break;
 		}
 
 		if (tam_paquete == DESBLOQUEA_ESI) {
@@ -407,9 +423,18 @@ void atenderESI(int socketESI) {
 			break;
 		}
 
-		if (recien_desbloqueado) recv(socketESI, &tam_paquete, sizeof(uint32_t), 0);
-		char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
-		recv(socketESI, paquete, tam_paquete, 0);
+		if (recien_desbloqueado) {
+			if (recv(socketESI, &tam_paquete, sizeof(uint32_t), 0) < 1) {
+				log_error(logger, "Error de comunicacion: ESI %d desconectado", esi_ID);
+				break;
+			}
+		}
+		paquete = (char*) malloc(sizeof(char) * tam_paquete);
+		if (recv(socketESI, paquete, tam_paquete, 0) < 1) {
+			log_warning(logger, "Error de comunicacion: ESI %d desconectado", esi_ID);
+			destruirPaquete(paquete);
+			break;
+		}
 		log_info(logger, "El ESI %d me envia un paquete", esi_ID);
 		log_debug(logger, "%s", paquete);
 
@@ -422,7 +447,7 @@ void atenderESI(int socketESI) {
 		// Aca el Coordinador le va a mandar el paquete al Planificador
 		// Esto es para consultar si puede utilizar los recursos que pide
 
-		t_instruccion* instruccion = desempaquetarInstruccion(paquete, logger);
+		instruccion = desempaquetarInstruccion(paquete, logger);
 
 		uint32_t respuesta_permiso;
 		if (!recien_desbloqueado) {
@@ -441,7 +466,13 @@ void atenderESI(int socketESI) {
 				send(socketPlanificador, instruccion->valor, tam_valor, 0);
 			}
 
-			recv(socketPlanificador, &respuesta_permiso, sizeof(uint32_t), 0);
+			if (recv(socketPlanificador, &respuesta_permiso, sizeof(uint32_t), 0) < 1) {
+				log_error(logger, "Error de Comunicacion: conexion con el Planificador rota");
+				finalizarSocket(socketConsola);
+				finalizarSocket(socketPlanificador);
+				send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
+				break;
+			}
 		} else {
 			respuesta_permiso = SE_EJECUTA_ESI;
 		}
@@ -456,6 +487,8 @@ void atenderESI(int socketESI) {
 				if (resultado == -1) { // Hay que abortar el ESI
 					log_error(logger, "Se aborta el ESI %d", esi_ID);
 					send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
+					destruirPaquete(paquete);
+					destruirInstruccion(instruccion);
 					break;
 				}
 			}
@@ -467,6 +500,8 @@ void atenderESI(int socketESI) {
 		} else {
 			log_error(logger, "El Planificador me informa que el ESI %d se aborta", esi_ID);
 			send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
+			destruirPaquete(paquete);
+			destruirInstruccion(instruccion);
 			break;
 		}
 		destruirPaquete(paquete);
@@ -503,7 +538,11 @@ void atenderInstancia(int socketInstancia) {
 	// Recibo la ID
 	pthread_mutex_lock(&mutexNuevaInstancia);
 
-	recv(socketInstancia, &instancia_ID, sizeof(uint32_t), 0);
+	if (recv(socketInstancia, &instancia_ID, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de comunicacion: Instacia desconectada");
+		return;
+	}
+
 	log_info(logger, "Es la Instancia %d", instancia_ID);
 
 	log_info(logger, "Busco si ya fue creada en la Tabla de Instancias");
@@ -579,6 +618,8 @@ void atenderConsola() {
 		if (res1 < 1 || res2 < 1) {
 			log_error(logger, "Error de Comunicacion: conexion con el Planificador rota");
 			finalizarSocket(socketConsola);
+			finalizarSocket(socketPlanificador);
+			free(clave_actual);
 			break;
 		}
 
@@ -620,7 +661,10 @@ void establecerConexion(void* socketCliente) {
 	 */
 
 	uint32_t handshake;
-	recv(*(int*) socketCliente, &handshake, sizeof(uint32_t), 0);
+	if (recv(*(int*) socketCliente, &handshake, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de comunicacion: no se pudo detectar cliente");
+		return;
+	}
 	if (handshake == ESI) {
 		log_info(logger, "El cliente es ESI");
 		atenderESI(*(int*) socketCliente);
@@ -686,14 +730,15 @@ void destruirInstancia(void* nodo) {
 	t_instancia* instancia = (t_instancia*) nodo;
 	list_destroy_and_destroy_elements(instancia->claves_asignadas, free);
 	finalizarSocket(instancia->socket);
+	free(instancia);
 }
 
 void finalizar(int cod) {
+	log_error(logger, "Se ha finalizado el Coordinador");
 	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
 	if (socketPlanificador > 0) finalizarSocket(socketPlanificador);
 	if (socketConsola > 0) finalizarSocket(socketConsola);
 	list_destroy_and_destroy_elements(tabla_instancias, destruirInstancia);
-	if (clave_actual != NULL) free(clave_actual);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);
@@ -731,6 +776,7 @@ int main() { // ip y puerto son char* porque en la biblioteca se los necesita de
 		pthread_create(&unHilo, NULL, (void*) establecerConexion, (void*) &socketCliente);
 	}
 
+	log_error(logger, "LOCURA");
 	finalizar(EXIT_SUCCESS);
 }
 

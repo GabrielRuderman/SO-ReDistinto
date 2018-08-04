@@ -116,13 +116,19 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 	}
 
 	// El planificador me asigna mi ID
-	recv(socketPlanificador, &miID, sizeof(uint32_t), 0);
+	if (recv(socketPlanificador, &miID, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de comunicacion: conexion con el Planificador rota, me aborto");
+		finalizar(EXIT_FAILURE);
+	}
 	log_info(logger, "El Planificador me asigno mi ID: %d", miID);
 
 	log_info(logger, "Le aviso al Coordinador que soy el ESI %d", miID);
 	send(socketCoordinador, &miID, sizeof(uint32_t), 0);
 
-	recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+	if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
+		log_error(logger, "Error de comunicacion: conexion con el Coordinador rota, me aborto");
+		finalizar(EXIT_FAILURE);
+	}
 	if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que me detecto correctamente");
 
 	uint32_t orden;
@@ -168,7 +174,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 			}
 			if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que el paquete llego correctamente");
 
-			if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 0) {
+			if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
 				log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
 				if (paquete != NULL) destruirPaquete(paquete);
 				finalizar(EXIT_FAILURE);
@@ -195,7 +201,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 				log_warning(logger, "El Coordinador informa que la instruccion no se pudo procesar");
 				log_warning(logger, "Se bloquea el ESI");
 
-				if (recv(socketPlanificador, &orden, sizeof(uint32_t), 0) < 0) {
+				if (recv(socketPlanificador, &orden, sizeof(uint32_t), 0) < 1) {
 					log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Planificador, me aborto");
 					if (paquete != NULL) destruirPaquete(paquete);
 					finalizar(EXIT_FAILURE);
@@ -208,10 +214,14 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 					send(socketCoordinador, &DESBLOQUEA_ESI, sizeof(uint32_t), 0);
 					send(socketCoordinador, &tam_paquete, sizeof(uint32_t), 0); // Envio el header
 					send(socketCoordinador, paquete, tam_paquete, 0); // Envio el paquete
-					recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+					if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
+						log_error(logger, "Error de comunicacion: conexion con el Coordinador rota, me aborto");
+						if (paquete != NULL) destruirPaquete(paquete);
+						finalizar(EXIT_FAILURE);
+					}
 					if (respuesta == PAQUETE_OK) log_info(logger, "El Coordinador informa que el paquete llego correctamente");
 
-					if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 0) {
+					if (recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0) < 1) {
 						log_error(logger, "Error de Comunicacion: se ha roto la conexion con el Coordinador, me aborto");
 						if (paquete != NULL) destruirPaquete(paquete);
 						finalizar(EXIT_FAILURE);
