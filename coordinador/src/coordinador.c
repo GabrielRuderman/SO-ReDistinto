@@ -570,6 +570,12 @@ void atenderConsola() {
 		uint32_t tam_clave;
 		int res1 = recv(socketConsola, &tam_clave, sizeof(uint32_t), 0);
 
+		if (tam_clave == -20) {
+			log_error(logger, "Error de Comunicacion: se cerro la Consola");
+			log_error(logger, "resp finalizar consola: %d", finalizarSocket(socketConsola));
+			perror("ERROR");
+		}
+
 		pthread_mutex_lock(&mutexStatusClave);
 
 		free(clave_actual);
@@ -689,9 +695,21 @@ void destruirInstancia(void* nodo) {
 }
 
 void finalizar(int cod) {
-	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
-	if (socketPlanificador > 0) finalizarSocket(socketPlanificador);
-	if (socketConsola > 0) finalizarSocket(socketConsola);
+	if (socketConsola > 0) {
+		int resp = finalizarSocket(socketConsola);
+		log_error(logger, "close socket consola: %d", resp);
+		perror("Error: ");
+	}
+	if (socketPlanificador > 0) {
+		int resp = finalizarSocket(socketPlanificador);
+		log_error(logger, "close socket planificador: %d", resp);
+		perror("Error: ");
+	}
+	if (socketDeEscucha > 0) {
+		int resp = finalizarSocket(socketDeEscucha);
+		log_error(logger, "close socket escucha: %d", resp);
+		perror("Error: ");
+	}
 	list_destroy_and_destroy_elements(tabla_instancias, destruirInstancia);
 	if (clave_actual != NULL) free(clave_actual);
 	log_destroy(logger_operaciones);

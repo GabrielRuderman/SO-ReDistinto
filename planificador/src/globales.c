@@ -1320,10 +1320,19 @@ void limpiarRecienLlegados(){
 
 
 void liberarGlobales (){
-	finalizarSocket(socketDeEscucha);
-	finalizarSocket(socketCoordinador);
-	finalizarSocket(socketClienteCoordinador);
-
+	int resp = finalizarSocket(socketCoordinador);
+	log_error(logPlanificador, "close socket coordinador: %d", resp);
+	perror("Error: ");
+	uint32_t cierre = -20;
+	send(socketClienteCoordinador, &cierre, sizeof(uint32_t), 0);
+	uint32_t respuesta;
+	recv(socketClienteCoordinador, &respuesta, sizeof(uint32_t), 0);
+	resp = finalizarSocket(socketClienteCoordinador);
+	log_error(logPlanificador, "close socket cliente coordinador: %d", resp);
+	perror("Error: ");
+	resp = finalizarSocket(socketDeEscucha);
+	log_error(logPlanificador, "close socket escucha: %d", resp);
+	perror("Error: ");
 
 	log_info(logPlanificador, "Liberando espacio");
 	free(algoritmoDePlanificacion);

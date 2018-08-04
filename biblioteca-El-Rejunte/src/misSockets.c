@@ -38,7 +38,7 @@ int conectarComoServidor(t_log* logger, const char* ip, const char* puerto) {
 	hints.ai_flags = AI_PASSIVE;		// Asigna el address que le envia el proceso
 	hints.ai_socktype = SOCK_STREAM;	// Indica que usaremos el protocolo TCP
 
-	getaddrinfo(NULL, puerto, &hints, &serverInfo);
+	getaddrinfo(ip, puerto, &hints, &serverInfo);
 
 	/*
 	 * 	Descubiertos los misterios de la vida (por lo menos, para la conexion de red actual), necesito enterarme de alguna forma
@@ -57,7 +57,7 @@ int conectarComoServidor(t_log* logger, const char* ip, const char* puerto) {
 	int yes = 1;
 	// lose the pesky "Address already in use" error message
 	if (setsockopt(listenningSocket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
-	    perror("Error");
+	    perror("Error:");
 	    exit(1);
 	}
 
@@ -69,7 +69,7 @@ int conectarComoServidor(t_log* logger, const char* ip, const char* puerto) {
 	 * 				OJO! Todavia no estoy escuchando las conexiones entrantes!
 	 *
 	 */
-	if (bind(listenningSocket, serverInfo->ai_addr, serverInfo->ai_addrlen) < 0) perror("Error");
+	if (bind(listenningSocket, serverInfo->ai_addr, serverInfo->ai_addrlen) < 0) perror("Error BIND:");
 	freeaddrinfo(serverInfo); // Ya no lo vamos a necesitar
 
 	/*
