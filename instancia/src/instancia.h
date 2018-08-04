@@ -50,6 +50,7 @@ void inicializarBloqueInstancia();
 int iniciarDirectorio();
 void llenarAlmacenamiento(t_entrada* entrada);
 t_entrada* crearEntradaDesdeArchivo(char* archivo);
+int solicitarCompactacion();
 void compactarAlmacenamiento();
 void actualizarEntradaAsociada(void* nodo);
 void dumpAutomatico();

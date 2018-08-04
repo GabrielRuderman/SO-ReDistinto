@@ -54,6 +54,7 @@ pthread_mutex_t mutexDumpeo = PTHREAD_MUTEX_INITIALIZER;
 const uint32_t PAQUETE_OK = 1;
 const uint32_t PAQUETE_ERROR = -1;
 const uint32_t CHEQUEO_INSTANCIA_ACTIVA = 0;
+const uint32_t PEDIDO_COMPACTACION = -5;
 
 void imprimirTablaDeEntradas(t_list* tabla) {
 	printf("\n_______TABLA DE ENTRADAS_______\n");
@@ -62,6 +63,20 @@ void imprimirTablaDeEntradas(t_list* tabla) {
 		printf("%s - %d (%d) - %d\n", entrada->clave, entrada->entrada_asociada, entrada->size_valor_almacenado, entrada->ultima_referencia);
 	}
 	printf("CANTIDAD DE CLAVES: %d\n", list_size(tabla));
+}
+
+int solicitarCompactacion() {
+	log_info(logger, "Se solicita al Coordinador permiso para compactar");
+	send(socketCoordinador, &PEDIDO_COMPACTACION, sizeof(uint32_t), 0);
+	uint32_t respuesta;
+	recv(socketCoordinador, &respuesta, sizeof(uint32_t), 0);
+	if (respuesta == PAQUETE_OK) {
+		compactarAlmacenamiento();
+		return 1;
+	} else {
+		log_error(logger, "Permiso denegado");
+		return -1;
+	}
 }
 
 int obtenerEntradasAOcupar(char* valor) {
@@ -303,7 +318,7 @@ int operacion_SET(t_instruccion* instruccion) {
 			log_info(logger, "Hay %d entradas contiguas", entradas_a_ocupar);
 		} else {
 			log_info(logger, "No hay %d entradas contiguas para almacenar el valor", entradas_a_ocupar);
-			compactarAlmacenamiento();
+			if (solicitarCompactacion() < 0) return -1;
 		}
 	} else {
 		// Devuelve la entrada a reemplazar
@@ -326,7 +341,7 @@ int operacion_SET(t_instruccion* instruccion) {
 			log_info(logger, "Hay %d entradas contiguas", entradas_a_ocupar);
 		} else {
 			log_info(logger, "No hay %d entradas contiguas para almacenar el valor", entradas_a_ocupar);
-			compactarAlmacenamiento();
+			if (solicitarCompactacion() < 0) return -1;
 		}
 	}
 
@@ -408,6 +423,7 @@ void compactarAlmacenamiento() {
 		}
 	}
 	log_info(logger, "Se compactaron todas las entradas");
+	log_debug(logger, "%s", bloque_instancia);
 }
 
 int dumpearClave(t_entrada* entrada) {
@@ -641,6 +657,10 @@ t_instruccion* recibirInstruccion(int socketCoordinador) {
 	if (tam_paquete == CHEQUEO_INSTANCIA_ACTIVA) {
 		send(socketCoordinador, &CHEQUEO_INSTANCIA_ACTIVA, sizeof(uint32_t), 0);
 		return NULL; // Esto lo usa el Coordinador para saber si estoy activa
+	} else if (tam_paquete == PEDIDO_COMPACTACION) {
+		log_info(logger, "El Coordinador me informa que debo compactar");
+		compactarAlmacenamiento();
+		return NULL;
 	}
 
 	char* paquete = (char*) malloc(sizeof(char) * tam_paquete);
