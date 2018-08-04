@@ -32,14 +32,24 @@ void planificacionSJF(bool desalojo) {
 		pthread_mutex_unlock(&mutexPauseo);
 
 		sem_wait(&semComodinColaListos);
+		printf("HOLA1\n");
 		sem_wait(&semContadorColaListos);
+		printf("HOLA2\n");
 		pthread_mutex_lock(&mutexColaListos);
+		printf("HOLA3\n");
 
 		nuevo = queue_pop(colaListos);
-		claveActual = nuevo->id;
+		if (nuevo != NULL) {
+			claveActual = nuevo->id;
+		} else {
+			salir = true;
+			break;
+		}
 
 		pthread_mutex_unlock(&mutexColaListos);
+		printf("HOLA4\n");
 		sem_post(&semComodinColaListos);
+		printf("HOLA5\n");
 
 
 		log_trace(logPlanificador, "ID actual en planificacion es : %d", nuevo->id);

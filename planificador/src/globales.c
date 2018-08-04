@@ -1334,13 +1334,14 @@ void liberarGlobales (){
 
 
 	int i = 0;
-	while(clavesBloqueadas[i]!=NULL)
-	{
-		free(clavesBloqueadas[i]);
-		i++;
+	if (clavesBloqueadas != NULL) {
+		while(clavesBloqueadas[i]!=NULL)
+		{
+			free(clavesBloqueadas[i]);
+			i++;
+		}
+		free(clavesBloqueadas);
 	}
-	free(clavesBloqueadas);
-
 	if(list_size(listaFinalizados)>0){
 		list_destroy_and_destroy_elements(listaFinalizados, (void*) ESI_destroy);
 	} else {
@@ -1367,17 +1368,38 @@ void liberarGlobales (){
 }
 
 void signalHandler(int senal) {
+	pthread_cancel(hiloEscuchaConsola);
+	pthread_cancel(hiloEscuchaESI);
+	printf("Cerrando planificador");
+		log_info(logPlanificador, "Comando ingresado por consola  : salir");
 
-	log_error(logPlanificador, "cerrando planificador");
-	liberarGlobales();
-	salir=true;
-	sem_destroy(&semComodinColaListos);
-	sem_destroy(&semContadorColaListos);
-	sem_destroy(&semPausarPlanificacion);
-	sem_destroy(&semSalir);
-	pthread_join(hiloEscuchaConsola, NULL);
-	pthread_join(hiloEscuchaESI, NULL);
-	exit(-1);
+		salir = true;
+		ESI * ESISalir = crearESI(idSalir);
+
+		queue_destroy_and_destroy_elements(colaListos, (void *) ESI_destroy);
+		if(string_equals_ignore_case(algoritmoDePlanificacion, SJF) || string_equals_ignore_case(algoritmoDePlanificacion, SJFConDesalojo)){
+
+			colaListos=queue_create();
+			armarColaListos(ESISalir);
+			sem_post(&semContadorColaListos);
+		} else if(string_equals_ignore_case(algoritmoDePlanificacion, HRRN) || string_equals_ignore_case(algoritmoDePlanificacion, HRRNConDesalojo)){
+
+			colaListos=queue_create();
+			armarColaListos(ESISalir);
+			sem_post(&semContadorColaListos);
+
+		}
+		pthread_cancel(hiloEscuchaESI);
+		if(pausearPlanificacion){
+
+			pausearPlanificacion = false;
+			printf("Planificacion reanudada");
+			pthread_mutex_unlock(&mutexPauseo);
+			sem_post(&semPausarPlanificacion);
+		}
+		pthread_mutex_unlock(&mutexColaListos);
+		liberarGlobales();
+		exit(-1);
 
 }
 
