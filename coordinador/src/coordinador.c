@@ -635,7 +635,7 @@ void atenderConsola() {
 		}
 		simulacion_activada = true;
 		t_instancia* instancia_simulada = algoritmoDeDistribucion(); // Instancia simulada
-		if (!instancia_posta) {
+		if (!instancia_simulada) {
 			log_warning(logger, "No hay Instancias conectadas");
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {

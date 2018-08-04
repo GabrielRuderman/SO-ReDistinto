@@ -101,8 +101,6 @@ void comprobarDeadlock(){
 
 		t_recurso * recursoAnalizar = list_get(listaRecursos, contador);
 
-		log_debug(logPlanificador,"Analizando desde clave %s", recursoAnalizar->clave);
-
 		int contador2 = 0;
 
 		t_list * listaColaRecurso = list_create();
