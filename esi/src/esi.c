@@ -182,6 +182,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 					send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), 0);
 					send(socketCoordinador, &TERMINA_ESI, sizeof(uint32_t), 0);
 					if (paquete != NULL) destruirPaquete(paquete);
+					log_debug(logger, "SOY EL ESI %d", miID);
 					break;
 				}
 
@@ -223,6 +224,7 @@ int main(int argc, char* argv[]) { // Recibe por parametro el path que se guarda
 							send(socketPlanificador, &TERMINA_ESI, sizeof(uint32_t), 0);
 							send(socketCoordinador, &TERMINA_ESI, sizeof(uint32_t), 0);
 							if (paquete != NULL) destruirPaquete(paquete);
+							log_debug(logger, "SOY EL ESI %d", miID);
 							break;
 						}
 
