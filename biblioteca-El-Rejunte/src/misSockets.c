@@ -69,7 +69,7 @@ int conectarComoServidor(t_log* logger, const char* ip, const char* puerto) {
 	 * 				OJO! Todavia no estoy escuchando las conexiones entrantes!
 	 *
 	 */
-	if (bind(listenningSocket, serverInfo->ai_addr, serverInfo->ai_addrlen) < 0) perror("Error");
+	bind(listenningSocket, serverInfo->ai_addr, serverInfo->ai_addrlen);
 	freeaddrinfo(serverInfo); // Ya no lo vamos a necesitar
 
 	/*
