@@ -166,7 +166,7 @@ planificacionHRRN (bool desalojo)
 
 	  }
 
-	  bloquearRecurso(recursoPedido);
+	  bloquearRecurso(nuevoESI->recursoPedido);
 
 	  nuevoESI->recienLlegado = false;
 	  nuevoESI->recienDesbloqueadoPorRecurso = false;
