@@ -579,7 +579,7 @@ void atenderConsola() {
 			send(socketConsola, &PAQUETE_ERROR, sizeof(uint32_t), 0);
 		} else {
 			log_info(logger, "Si se simula el algoritmo %s, la clave %s seria asignada a la Instancia %d", algoritmo_distribucion, clave_actual, instancia_simulada->id);
-			send(socketConsola, &(instancia_posta->id), sizeof(uint32_t), 0);
+			send(socketConsola, &(instancia_simulada->id), sizeof(uint32_t), 0);
 		}
 		simulacion_activada = false;
 		send(socketConsola, &(instancia_simulada->id), sizeof(uint32_t), 0);
