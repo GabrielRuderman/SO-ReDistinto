@@ -316,7 +316,7 @@ int procesarPaquete(char* paquete, t_instruccion* instruccion, uint32_t esi_ID) 
 
 			clave_inaccesible = string_new();
 			string_append(&clave_inaccesible, instruccion->clave);
-			list_remove_by_condition(instancia->claves_asignadas, claveEsLaInaccesible);
+			list_remove_and_destroy_by_condition(instancia->claves_asignadas, claveEsLaInaccesible, free);
 			free(clave_inaccesible);
 
 			log_error(logger, "Error de Clave Inaccesible");
@@ -682,10 +682,18 @@ t_control_configuracion cargarConfiguracion() {
 	return CONFIGURACION_OK;
 }
 
+void destruirInstancia(void* nodo) {
+	t_instancia* instancia = (t_instancia*) nodo;
+	list_destroy_and_destroy_elements(instancia->claves_asignadas, free);
+	finalizarSocket(instancia->socket);
+}
+
 void finalizar(int cod) {
 	if (socketDeEscucha > 0) finalizarSocket(socketDeEscucha);
 	if (socketPlanificador > 0) finalizarSocket(socketPlanificador);
 	if (socketConsola > 0) finalizarSocket(socketConsola);
+	list_destroy_and_destroy_elements(tabla_instancias, destruirInstancia);
+	if (clave_actual != NULL) free(clave_actual);
 	log_destroy(logger_operaciones);
 	log_destroy(logger);
 	finalizarConexionArchivo(config);

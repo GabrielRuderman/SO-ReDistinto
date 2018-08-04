@@ -281,6 +281,7 @@ void algoritmoDeReemplazo() {
 	tabla_entradas_atomicas = list_filter(tabla_entradas, valorEsAtomico); // Solo evaluo los valores atomicos
 
 	if (list_size(tabla_entradas_atomicas) == 0) {
+		list_destroy(tabla_entradas_atomicas);
 		entrada_a_reemplazar = NULL;
 		return;
 	}
