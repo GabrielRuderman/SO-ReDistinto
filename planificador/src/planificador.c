@@ -3,6 +3,7 @@
 
 int main(void) {
 
+	signal(SIGINT, signalHandler);
 	logPlanificador = log_create("planificador.log", "Planificador" , true, LOG_LEVEL_TRACE);
 	colaListos = queue_create();
 	listaFinalizados = list_create();
@@ -72,8 +73,14 @@ int main(void) {
 
 		}
 
+
+	sem_destroy(&semComodinColaListos);
+	sem_destroy(&semContadorColaListos);
+	sem_destroy(&semPausarPlanificacion);
+	sem_destroy(&semSalir);
 	pthread_join(hiloEscuchaConsola,NULL);
 	pthread_join(hiloEscuchaESI, NULL);
+
 	liberarGlobales();
 
 	return EXIT_SUCCESS;
