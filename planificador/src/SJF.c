@@ -397,10 +397,9 @@ void armarColaListos(ESI * esi) {
 
 		list_sort(auxiliar, ordenarESIS);
 
-		int i = 0;
 		while (!list_is_empty(auxiliar)) {
 
-			ESI * hola = list_remove(auxiliar, i);
+			ESI * hola = list_remove(auxiliar, 0);
 			log_trace(logPlanificador, "En cola ESI id : %d con estimacion: %.6f", hola->id, hola->estimacionSiguiente);
 			queue_push(colaListos, hola);
 

@@ -397,12 +397,9 @@ void buscarYBloquearESI(int clave, char * recurso){
 
 	}
 
-	int x = 0;
-
 	while(!list_is_empty(colaAuxiliar)){
 
-		queue_push(colaListos, list_remove(colaAuxiliar, x));
-		x++;
+		queue_push(colaListos, list_remove(colaAuxiliar, 0));
 
 	}
 
@@ -487,11 +484,9 @@ bool buscarEnBloqueados (int clave){
 			r++;
 
 		}
-		int x = 0;
 		while(!list_is_empty(listaAux)){
-			ESI * auxiliar = list_remove(listaAux,x);
+			ESI * auxiliar = list_remove(listaAux,0);
 			queue_push(recu->ESIEncolados,auxiliar);
-			x++;
 		}
 
 		i++;
@@ -1166,12 +1161,10 @@ bool buscarYMatarEnCola(int clave){
 
 	}
 
-	int x = 0;
 
 	while(!list_is_empty(colaAuxiliar)){
 
-		queue_push(colaListos, list_remove(colaAuxiliar, x));
-		x++;
+		queue_push(colaListos, list_remove(colaAuxiliar, 0));
 
 	}
 
@@ -1237,10 +1230,10 @@ void statusClave(char * clave){
 				printf("El coordinador no pudo definir la instancia a ocupar \n");
 
 			} else {
-				if (instanciaPosta_ID == -1) {
+				if (instanciaPosta_ID != -1) {
 					log_debug(logPlanificador, "La clave no esta asignada a ninguna Instancia");
 					printf("La clave ingresada no se encuentra en ninguna instancia \n");
-					if(instanciaSimulada_ID > -1){
+					if(instanciaSimulada_ID != -1){
 						log_debug(logPlanificador, "Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
 						printf("Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
 					} else {
@@ -1251,7 +1244,7 @@ void statusClave(char * clave){
 				} else {
 					log_debug(logPlanificador, "La clave esta asignada a la Instancia %d", instanciaPosta_ID);
 					printf("La clave esta asignada a la Instancia %d \n", instanciaPosta_ID);
-					if(instanciaSimulada_ID > -1){
+					if(instanciaSimulada_ID != -1){
 						log_debug(logPlanificador, "Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
 						printf("Si la clave se asignara nuevamente se haria en la Instancia %d ", instanciaSimulada_ID);
 					} else {
