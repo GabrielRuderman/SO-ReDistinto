@@ -784,6 +784,9 @@ void escucharNuevosESIS(){
 
 		uint32_t socketESINuevo = escucharCliente(logPlanificador,socketDeEscucha);
 
+		if(salir){
+			break;
+		}
 		log_info(logPlanificador, "se escucho un nuevo ESI");
 
 		send(socketESINuevo,&socketESINuevo,sizeof(uint32_t),0);
@@ -1327,6 +1330,7 @@ void liberarGlobales (){
 	free(puertoPropio);
 	free(ipPropia);
 	free(ipCoordinador);
+	free(puertoCoordinador);
 
 
 	int i = 0;
@@ -1335,6 +1339,7 @@ void liberarGlobales (){
 		free(clavesBloqueadas[i]);
 		i++;
 	}
+	free(clavesBloqueadas);
 
 	if(list_size(listaFinalizados)>0){
 		list_destroy_and_destroy_elements(listaFinalizados, (void*) ESI_destroy);
@@ -1359,5 +1364,20 @@ void liberarGlobales (){
 
 	log_trace(logPlanificador," Memoria liberada. Cerrando log ");
 	log_destroy(logPlanificador);
+}
+
+void signalHandler(int senal) {
+
+	log_error(logPlanificador, "cerrando planificador");
+	liberarGlobales();
+	salir=true;
+	sem_destroy(&semComodinColaListos);
+	sem_destroy(&semContadorColaListos);
+	sem_destroy(&semPausarPlanificacion);
+	sem_destroy(&semSalir);
+	pthread_join(hiloEscuchaConsola, NULL);
+	pthread_join(hiloEscuchaESI, NULL);
+	exit(-1);
+
 }
 

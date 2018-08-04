@@ -34,6 +34,7 @@
 #include <readline/readline.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <signal.h>
 
 
 
@@ -206,5 +207,6 @@ bool idEnLista(t_list * lista, ESI * id);
 bool ordenarESIS(void* nodo1, void* nodo2);
 bool ordenarESISHRRN(void* nodo1, void* nodo2);
 void liberarUnRecurso ( ESI * esi );
+void signalHandler (int signal);
 
 #endif /* PLANIFICADOR_H_ */
