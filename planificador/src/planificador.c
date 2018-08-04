@@ -40,7 +40,7 @@ int main(void) {
 		exit(-1);
 	}
 
-	socketDeEscucha = conectarComoServidor(logPlanificador, ipPropia, puertoPropio);
+	socketDeEscucha = conectarComoServidor(logPlanificador, NULL , puertoPropio);
 
 	socketClienteCoordinador = escucharCliente(logPlanificador, socketDeEscucha);
 
@@ -94,7 +94,6 @@ void configurar(){
 	algoritmoDePlanificacion = string_new();
 	ipCoordinador = string_new();
 	puertoCoordinador = string_new();
-	ipPropia = string_new();
 	puertoPropio = string_new();
 
 
@@ -119,10 +118,6 @@ void configurar(){
 	string_append(&puertoCoordinador,config_get_string_value(archivoConfiguracion, KEY_PUERTO_COORDINADOR));
 
 	log_debug(logPlanificador, " puerto coordinador leido = %s", puertoCoordinador);
-
-	string_append(&ipPropia,config_get_string_value(archivoConfiguracion, KEY_IP_PROPIA));
-
-	log_debug(logPlanificador, " ip propia leida = %s", ipPropia);
 
 	string_append(&puertoPropio,config_get_string_value(archivoConfiguracion, KEY_PUERTO_PROPIO));
 

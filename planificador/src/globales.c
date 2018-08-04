@@ -14,7 +14,6 @@ char * KEY_IP = "IP";
 char * KEY_PUERTO = "PUERTO";
 char * KEY_CLAVES_BLOQUEADAS = "CLAVES_BLOQUEADAS";
 char * KEY_CONSTANTE_ESTIMACION = "CONSTANTE_ESTIMACION";
-char * KEY_IP_PROPIA = "IP";
 char * KEY_PUERTO_PROPIO = "PUERTO";
 char * RUTA_CONFIGURACION = "/home/utnso/workspace/tp-2018-1c-El-Rejunte/planificador/config_planificador.cfg";
 char * SJF = "SJF";
@@ -1060,7 +1059,7 @@ void listarBloqueados(char * clave){
 
 		if(x == 0){
 
-			log_debug(logPlanificador, "La clave no tiene recursos encolados.");
+			log_debug(logPlanificador, "La clave no tiene ESI encolados.");
 
 			printf("La clave no tiene ESI en cola  \n");
 
@@ -1328,7 +1327,6 @@ void liberarGlobales (){
 	log_info(logPlanificador, "Liberando espacio");
 	free(algoritmoDePlanificacion);
 	free(puertoPropio);
-	free(ipPropia);
 	free(ipCoordinador);
 	free(puertoCoordinador);
 

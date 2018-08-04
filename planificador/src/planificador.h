@@ -76,7 +76,6 @@ extern char* LISTAR_FINALIZADOS;
 
 
 extern int socketDeEscucha;
-char * ipPropia;
 char * puertoPropio;
 int socketClienteCoordinador;
 extern int backlog;
