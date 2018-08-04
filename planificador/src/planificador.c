@@ -4,7 +4,7 @@
 int main(void) {
 
 	signal(SIGINT, signalHandler);
-	logPlanificador = log_create("planificador.log", "Planificador" , true, LOG_LEVEL_TRACE);
+	logPlanificador = log_create("planificador.log", "Planificador" , false, LOG_LEVEL_TRACE);
 	colaListos = queue_create();
 	listaFinalizados = list_create();
 	listaRecursos = list_create();

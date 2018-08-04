@@ -152,8 +152,8 @@ int conectarComoCliente(t_log* logger, const char* ip, const char* puerto) {
 	freeaddrinfo(serverInfo);	// Libera porque no lo necesitamos mas
 
 	if (res < 0) {
-		log_error(logger, "No me pude conectar al servidor %s", ip);
-		perror("Error");
+		log_info(logger, "No me pude conectar al servidor %s", ip);
+		//perror("Error");
 		return res;
 	} else {
 		/*

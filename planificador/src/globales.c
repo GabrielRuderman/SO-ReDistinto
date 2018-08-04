@@ -960,7 +960,6 @@ void desbloquearRecurso (char* claveRecurso) {
 
 				} else {
 					log_info(logPlanificador, " La clave no tenia ESIS encolados");
-					log_error(logPlanificador, " OJO si la liberacion fue hecha por consola, puede estarse liberando una clave tomada por algun ESI");
 					nuevoRecurso->estado = 0;
 				}
 
@@ -1232,7 +1231,7 @@ void statusClave(char * clave){
 				printf("El coordinador no pudo definir la instancia a ocupar \n");
 
 			} else {
-				if (instanciaPosta_ID != -1) {
+				if (instanciaPosta_ID == -1) {
 					log_debug(logPlanificador, "La clave no esta asignada a ninguna Instancia");
 					printf("La clave ingresada no se encuentra en ninguna instancia \n");
 					if(instanciaSimulada_ID != -1){
