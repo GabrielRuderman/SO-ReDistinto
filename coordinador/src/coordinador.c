@@ -449,10 +449,10 @@ void atenderESI(int socketESI) {
 			send(socketESI, &ABORTA_ESI, sizeof(uint32_t), 0);
 			break;
 		}
-		finalizarSocket(socketESI);
 		destruirPaquete(paquete);
 		destruirInstruccion(instruccion);
 	}
+	finalizarSocket(socketESI);
 }
 
 bool instanciaEstaActiva(void* nodo) {
