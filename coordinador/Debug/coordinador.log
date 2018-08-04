@@ -3802,3 +3802,1817 @@
 [INFO] 15:57:19:420 Coordinador/(11787:11787): Se crea la Tabla de Instancias
 [INFO] 15:57:19:477 Coordinador/(11787:11787): Servidor conectado.
 [INFO] 15:57:19:478 Coordinador/(11787:11787): Listo para escuchar a cualquier Cliente...
+[INFO] 06:19:36:557 Coordinador/(2972:2972): Se crea la Tabla de Instancias
+[INFO] 06:19:36:576 Coordinador/(2972:2972): Servidor conectado
+[INFO] 06:19:36:577 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:19:41:995 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:19:41:998 Coordinador/(2972:3032): Cliente conectado
+[INFO] 06:19:41:999 Coordinador/(2972:3032): El cliente es el Planificador
+[INFO] 06:19:42:20 Coordinador/(2972:3033): Cliente conectado al servidor 127.0.0.2
+[INFO] 06:20:13:870 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:20:13:874 Coordinador/(2972:3077): Cliente conectado
+[INFO] 06:20:13:875 Coordinador/(2972:3077): El cliente es una Instancia
+[INFO] 06:20:13:876 Coordinador/(2972:3077): Es la Instancia 1
+[INFO] 06:20:13:877 Coordinador/(2972:3077): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 06:20:13:878 Coordinador/(2972:3077): Instancia 1 agregada a la Tabla de Instancias
+[INFO] 06:20:13:879 Coordinador/(2972:3077): Envio a la Instancia su cantidad de entradas
+[INFO] 06:20:13:888 Coordinador/(2972:3077): Envio a la Instancia el tamaño de las entradas
+[DEBUG] 06:20:13:891 Coordinador/(2972:3077): La cantidad de instancias actual es 1
+[INFO] 06:20:37:6 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:20:38:8 Coordinador/(2972:3119): Cliente conectado
+[INFO] 06:20:38:11 Coordinador/(2972:3119): El cliente es ESI
+[INFO] 06:20:38:19 Coordinador/(2972:3119): Se ha conectado un ESI con ID: 8
+[INFO] 06:20:38:89 Coordinador/(2972:3119): El ESI 8 me envia un paquete
+[DEBUG] 06:20:38:89 Coordinador/(2972:3119): 1-consola:ps4
+[INFO] 06:20:38:89 Coordinador/(2972:3119): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:20:38:91 Coordinador/(2972:3119): Desempaqueto la instruccion
+[INFO] 06:20:38:94 Coordinador/(2972:3119): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:20:38:98 Coordinador/(2972:3119): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:20:38:99 Coordinador/(2972:3119): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:20:38:192 Coordinador/(2972:3119): El ESI 8 me envia un paquete
+[DEBUG] 06:20:38:192 Coordinador/(2972:3119): 2-consola:ps4-Fifa
+[INFO] 06:20:38:192 Coordinador/(2972:3119): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:20:38:193 Coordinador/(2972:3119): Desempaqueto la instruccion
+[INFO] 06:20:38:195 Coordinador/(2972:3119): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:20:38:238 Coordinador/(2972:3119): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:20:38:238 Coordinador/(2972:3119): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:20:38:238 Coordinador/(2972:3119): La clave consola:ps4 no esta en ninguna Instancia
+[INFO] 06:20:38:238 Coordinador/(2972:3119): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:20:38:238 Coordinador/(2972:3119): Aguarde mientras se busca una Instancia
+[INFO] 06:20:38:239 Coordinador/(2972:3119): La Instancia sera la 1
+[INFO] 06:20:38:239 Coordinador/(2972:3119): La clave consola:ps4 fue asignada a la Instancia 1
+[INFO] 06:20:38:239 Coordinador/(2972:3119): Le envio a Instancia 1 el paquete
+[INFO] 06:20:38:363 Coordinador/(2972:3119): La Instancia 1 me informa que le quedan 7 entradas libres
+[INFO] 06:20:38:365 Coordinador/(2972:3119): Logueo la operacion en el Log de Operaciones
+[INFO] 06:20:38:427 Coordinador/(2972:3119): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:20:38:475 Coordinador/(2972:3119): El ESI 8 me envia un paquete
+[DEBUG] 06:20:38:476 Coordinador/(2972:3119): 1-consola:xboxone
+[INFO] 06:20:38:476 Coordinador/(2972:3119): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:20:38:476 Coordinador/(2972:3119): Desempaqueto la instruccion
+[INFO] 06:20:38:476 Coordinador/(2972:3119): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:20:38:518 Coordinador/(2972:3119): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:20:38:518 Coordinador/(2972:3119): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:20:38:564 Coordinador/(2972:3119): El ESI 8 me envia un paquete
+[DEBUG] 06:20:38:565 Coordinador/(2972:3119): 2-consola:xboxone-Halo
+[INFO] 06:20:38:566 Coordinador/(2972:3119): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:20:38:566 Coordinador/(2972:3119): Desempaqueto la instruccion
+[INFO] 06:20:38:567 Coordinador/(2972:3119): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:20:38:609 Coordinador/(2972:3119): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:20:38:609 Coordinador/(2972:3119): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:20:38:609 Coordinador/(2972:3119): La clave consola:xboxone no esta en ninguna Instancia
+[INFO] 06:20:38:609 Coordinador/(2972:3119): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:20:38:609 Coordinador/(2972:3119): Aguarde mientras se busca una Instancia
+[INFO] 06:20:38:610 Coordinador/(2972:3119): La Instancia sera la 1
+[INFO] 06:20:38:610 Coordinador/(2972:3119): La clave consola:xboxone fue asignada a la Instancia 1
+[INFO] 06:20:38:610 Coordinador/(2972:3119): Le envio a Instancia 1 el paquete
+[INFO] 06:20:38:689 Coordinador/(2972:3119): La Instancia 1 me informa que le quedan 6 entradas libres
+[INFO] 06:20:38:689 Coordinador/(2972:3119): Logueo la operacion en el Log de Operaciones
+[INFO] 06:20:38:689 Coordinador/(2972:3119): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:20:38:735 Coordinador/(2972:3119): El ESI 8 me envia un paquete
+[DEBUG] 06:20:38:736 Coordinador/(2972:3119): 3-consola:xboxone
+[INFO] 06:20:38:736 Coordinador/(2972:3119): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:20:38:736 Coordinador/(2972:3119): Desempaqueto la instruccion
+[INFO] 06:20:38:736 Coordinador/(2972:3119): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:20:38:776 Coordinador/(2972:3119): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:20:38:776 Coordinador/(2972:3119): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:20:38:776 Coordinador/(2972:3119): La clave consola:xboxone esta asignada a Instancia 1
+[INFO] 06:20:38:777 Coordinador/(2972:3119): Le envio a Instancia 1 el paquete
+[INFO] 06:20:38:855 Coordinador/(2972:3119): La Instancia 1 me informa que le quedan 6 entradas libres
+[INFO] 06:20:38:856 Coordinador/(2972:3119): Logueo la operacion en el Log de Operaciones
+[INFO] 06:20:38:856 Coordinador/(2972:3119): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:20:38:903 Coordinador/(2972:3119): El ESI 8 me envia un paquete
+[DEBUG] 06:20:38:904 Coordinador/(2972:3119): 2-consola:xboxone-Forza
+[INFO] 06:20:38:904 Coordinador/(2972:3119): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:20:38:904 Coordinador/(2972:3119): Desempaqueto la instruccion
+[INFO] 06:20:38:904 Coordinador/(2972:3119): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[ERROR] 06:20:38:949 Coordinador/(2972:3119): El Planificador me informa que el ESI 8 se aborta
+[INFO] 06:21:04:36 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:21:04:51 Coordinador/(2972:3201): Cliente conectado
+[INFO] 06:21:04:60 Coordinador/(2972:3201): El cliente es ESI
+[INFO] 06:21:04:61 Coordinador/(2972:3201): Se ha conectado un ESI con ID: 9
+[INFO] 06:21:04:163 Coordinador/(2972:3201): El ESI 9 me envia un paquete
+[DEBUG] 06:21:04:164 Coordinador/(2972:3201): 1-consola:ps4
+[INFO] 06:21:04:164 Coordinador/(2972:3201): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:21:04:165 Coordinador/(2972:3201): Desempaqueto la instruccion
+[INFO] 06:21:04:167 Coordinador/(2972:3201): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[ERROR] 06:21:04:168 Coordinador/(2972:3201): El Planificador me informa que el ESI 9 se aborta
+[INFO] 06:22:56:477 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:22:56:505 Coordinador/(2972:3640): Cliente conectado
+[INFO] 06:22:56:521 Coordinador/(2972:3640): El cliente es ESI
+[INFO] 06:22:56:528 Coordinador/(2972:3640): Se ha conectado un ESI con ID: 10
+[INFO] 06:22:58:856 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:22:58:867 Coordinador/(2972:3643): Cliente conectado
+[INFO] 06:22:58:877 Coordinador/(2972:3643): El cliente es ESI
+[INFO] 06:22:58:885 Coordinador/(2972:3643): Se ha conectado un ESI con ID: 11
+[INFO] 06:22:59:733 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:22:59:750 Coordinador/(2972:3645): Cliente conectado
+[INFO] 06:22:59:752 Coordinador/(2972:3645): El cliente es ESI
+[INFO] 06:22:59:753 Coordinador/(2972:3645): Se ha conectado un ESI con ID: 12
+[INFO] 06:23:05:700 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:05:700 Coordinador/(2972:3640): 1-sandwich:bondiola:simple
+[INFO] 06:23:05:701 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:05:701 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:05:701 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:05:702 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:05:702 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:05:763 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:05:765 Coordinador/(2972:3640): 1-sandwich:bondiola:jyq
+[INFO] 06:23:05:765 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:05:773 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:05:773 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:05:776 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:05:776 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:05:864 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:05:865 Coordinador/(2972:3640): 1-sandwich:bondiola:completo
+[INFO] 06:23:05:866 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:05:868 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:05:868 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:05:869 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:05:869 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:05:960 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:05:968 Coordinador/(2972:3640): 1-sandwich:lomo:simple
+[INFO] 06:23:05:969 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:05:969 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:05:970 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:05:970 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:05:971 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:64 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:64 Coordinador/(2972:3640): 1-sandwich:lomo:jyq
+[INFO] 06:23:06:65 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:68 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:69 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:75 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:77 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:163 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:164 Coordinador/(2972:3640): 1-sandwich:lomo:completo
+[INFO] 06:23:06:164 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:164 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:164 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:165 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:165 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:260 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:261 Coordinador/(2972:3640): 1-sandwich:vacio:simple
+[INFO] 06:23:06:262 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:262 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:263 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:264 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:264 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:341 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:341 Coordinador/(2972:3640): 1-sandwich:vacio:jyq
+[INFO] 06:23:06:342 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:343 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:344 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:345 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:345 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:407 Coordinador/(2972:2972): Listo para escuchar a cualquier Cliente...
+[INFO] 06:23:06:438 Coordinador/(2972:3652): Cliente conectado
+[INFO] 06:23:06:439 Coordinador/(2972:3652): El cliente es ESI
+[INFO] 06:23:06:439 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:444 Coordinador/(2972:3640): 1-sandwich:vacio:completo
+[INFO] 06:23:06:444 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:445 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:446 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:446 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:446 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:453 Coordinador/(2972:3652): Se ha conectado un ESI con ID: 13
+[INFO] 06:23:06:543 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:544 Coordinador/(2972:3640): 1-sandwich:choripan
+[INFO] 06:23:06:544 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:544 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:544 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:544 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:545 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:639 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:640 Coordinador/(2972:3640): 1-sandwich:morcipan
+[INFO] 06:23:06:640 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:640 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:640 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:640 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:640 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:728 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:728 Coordinador/(2972:3640): 1-parrilla:chinchulines
+[INFO] 06:23:06:728 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:729 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:729 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:729 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:729 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:819 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:820 Coordinador/(2972:3640): 1-parrilla:rinion
+[INFO] 06:23:06:821 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:822 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:824 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:825 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:826 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:06:936 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:06:938 Coordinador/(2972:3640): 1-parrilla:tiraasado
+[INFO] 06:23:06:941 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:06:943 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:06:944 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:06:945 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:06:948 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:31 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:31 Coordinador/(2972:3640): 1-parrilla:vacio
+[INFO] 06:23:07:32 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:32 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:32 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:32 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:32 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:119 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:120 Coordinador/(2972:3640): 1-parrilla:entrania
+[INFO] 06:23:07:120 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:120 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:120 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:121 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:121 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:215 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:217 Coordinador/(2972:3640): 1-parrilla:bifedelomo
+[INFO] 06:23:07:217 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:218 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:219 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:219 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:220 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:316 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:318 Coordinador/(2972:3640): 1-parrilla:matambre:simple
+[INFO] 06:23:07:320 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:323 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:325 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:326 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:327 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:416 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:417 Coordinador/(2972:3640): 1-parrilla:matambre:alapizza
+[INFO] 06:23:07:417 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:418 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:419 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:419 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:420 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:513 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:514 Coordinador/(2972:3640): 1-parrilla:ojodebife
+[INFO] 06:23:07:515 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:520 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:521 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:522 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:530 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:608 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:608 Coordinador/(2972:3640): 1-parrilla:molleja
+[INFO] 06:23:07:608 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:610 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:611 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:612 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:612 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:687 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:688 Coordinador/(2972:3640): 1-parrilla:pareja
+[INFO] 06:23:07:689 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:689 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:689 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:689 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:689 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:776 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:776 Coordinador/(2972:3640): 1-cocina:papasfritas
+[INFO] 06:23:07:777 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:787 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:789 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:789 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:790 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:863 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:864 Coordinador/(2972:3640): 1-cocina:batatasfritas
+[INFO] 06:23:07:864 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:864 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:864 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:864 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:864 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:07:955 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:07:957 Coordinador/(2972:3640): 1-cocina:tallarines
+[INFO] 06:23:07:958 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:07:958 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:07:959 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:07:960 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:07:961 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:52 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:53 Coordinador/(2972:3640): 1-cocina:ravioles
+[INFO] 06:23:08:54 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:62 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:62 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:63 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:69 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:172 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:172 Coordinador/(2972:3640): 1-cocina:nioquis
+[INFO] 06:23:08:173 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:175 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:177 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:177 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:178 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:259 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:260 Coordinador/(2972:3640): 1-cocina:suprema
+[INFO] 06:23:08:261 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:261 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:261 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:261 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:261 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:351 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:352 Coordinador/(2972:3640): 1-cocina:milanesa:carne
+[INFO] 06:23:08:353 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:354 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:355 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:355 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:356 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:431 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:432 Coordinador/(2972:3640): 1-cocina:milanesa:pollo
+[INFO] 06:23:08:432 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:432 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:432 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:433 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:433 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:520 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:521 Coordinador/(2972:3640): 2-sandwich:bondiola:simple-panbondiola
+[INFO] 06:23:08:521 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:522 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:522 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:522 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:522 Coordinador/(2972:3640): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:23:08:522 Coordinador/(2972:3640): La clave sandwich:bondiola:simple no esta en ninguna Instancia
+[INFO] 06:23:08:522 Coordinador/(2972:3640): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:23:08:522 Coordinador/(2972:3640): Aguarde mientras se busca una Instancia
+[INFO] 06:23:08:524 Coordinador/(2972:3640): La Instancia sera la 1
+[INFO] 06:23:08:525 Coordinador/(2972:3640): La clave sandwich:bondiola:simple fue asignada a la Instancia 1
+[INFO] 06:23:08:526 Coordinador/(2972:3640): Le envio a Instancia 1 el paquete
+[INFO] 06:23:08:631 Coordinador/(2972:3640): La Instancia 1 me informa que le quedan 4 entradas libres
+[INFO] 06:23:08:632 Coordinador/(2972:3640): Logueo la operacion en el Log de Operaciones
+[INFO] 06:23:08:633 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:692 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:693 Coordinador/(2972:3640): 2-sandwich:bondiola:jyq-panjamonquesobondiola
+[INFO] 06:23:08:694 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:695 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:699 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:701 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:709 Coordinador/(2972:3640): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:23:08:716 Coordinador/(2972:3640): La clave sandwich:bondiola:jyq no esta en ninguna Instancia
+[INFO] 06:23:08:716 Coordinador/(2972:3640): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:23:08:717 Coordinador/(2972:3640): Aguarde mientras se busca una Instancia
+[INFO] 06:23:08:717 Coordinador/(2972:3640): La Instancia sera la 1
+[INFO] 06:23:08:729 Coordinador/(2972:3640): La clave sandwich:bondiola:jyq fue asignada a la Instancia 1
+[INFO] 06:23:08:729 Coordinador/(2972:3640): Le envio a Instancia 1 el paquete
+[INFO] 06:23:08:828 Coordinador/(2972:3640): La Instancia 1 me informa que le quedan 1 entradas libres
+[INFO] 06:23:08:828 Coordinador/(2972:3640): Logueo la operacion en el Log de Operaciones
+[INFO] 06:23:08:828 Coordinador/(2972:3640): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:23:08:875 Coordinador/(2972:3640): El ESI 10 me envia un paquete
+[DEBUG] 06:23:08:876 Coordinador/(2972:3640): 2-sandwich:bondiola:completo-panjamonquesolechugatomatebondiola
+[INFO] 06:23:08:876 Coordinador/(2972:3640): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:23:08:876 Coordinador/(2972:3640): Desempaqueto la instruccion
+[INFO] 06:23:08:876 Coordinador/(2972:3640): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:23:08:876 Coordinador/(2972:3640): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:23:08:876 Coordinador/(2972:3640): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:23:08:877 Coordinador/(2972:3640): La clave sandwich:bondiola:completo no esta en ninguna Instancia
+[INFO] 06:23:08:877 Coordinador/(2972:3640): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:23:08:877 Coordinador/(2972:3640): Aguarde mientras se busca una Instancia
+[INFO] 06:23:08:878 Coordinador/(2972:3640): La Instancia sera la 1
+[INFO] 06:23:08:879 Coordinador/(2972:3640): La clave sandwich:bondiola:completo fue asignada a la Instancia 1
+[INFO] 06:23:08:880 Coordinador/(2972:3640): Le envio a Instancia 1 el paquete
+[ERROR] 06:23:08:921 Coordinador/(2972:3640): La Instancia me avisa que no pudo procesar la instruccion
+[ERROR] 06:23:08:921 Coordinador/(2972:3640): Se aborta el ESI 10
+[INFO] 06:23:09:116 Coordinador/(2972:3643): El ESI 11 me envia un paquete
+[DEBUG] 06:23:09:116 Coordinador/(2972:3643): 1-consola:ps4
+[INFO] 06:23:09:118 Coordinador/(2972:3643): Le informo al ESI 11 que el paquete llego correctamente
+[INFO] 06:23:09:125 Coordinador/(2972:3643): Desempaqueto la instruccion
+[INFO] 06:23:09:127 Coordinador/(2972:3643): Le consulto al Planificador si ESI 11 puede hacer uso del recurso
+[ERROR] 06:23:09:127 Coordinador/(2972:3643): El Planificador me informa que el ESI 11 se aborta
+[INFO] 06:23:09:150 Coordinador/(2972:3645): El ESI 12 me envia un paquete
+[DEBUG] 06:23:09:151 Coordinador/(2972:3645): 1-consola:ps4
+[INFO] 06:23:09:151 Coordinador/(2972:3645): Le informo al ESI 12 que el paquete llego correctamente
+[INFO] 06:23:09:152 Coordinador/(2972:3645): Desempaqueto la instruccion
+[INFO] 06:23:09:152 Coordinador/(2972:3645): Le consulto al Planificador si ESI 12 puede hacer uso del recurso
+[ERROR] 06:30:58:234 Coordinador/(2972:2972): Se ha finalizado el Coordinador
+[INFO] 06:40:04:27 Coordinador/(4300:4300): Se crea la Tabla de Instancias
+[INFO] 06:40:04:29 Coordinador/(4300:4300): Servidor conectado
+[INFO] 06:40:04:30 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:08:228 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:08:232 Coordinador/(4300:4302): Cliente conectado
+[INFO] 06:40:08:241 Coordinador/(4300:4302): El cliente es una Instancia
+[INFO] 06:40:08:242 Coordinador/(4300:4302): Es la Instancia 1
+[INFO] 06:40:08:245 Coordinador/(4300:4302): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 06:40:08:246 Coordinador/(4300:4302): Instancia 1 agregada a la Tabla de Instancias
+[INFO] 06:40:08:248 Coordinador/(4300:4302): Envio a la Instancia su cantidad de entradas
+[INFO] 06:40:08:249 Coordinador/(4300:4302): Envio a la Instancia el tamaño de las entradas
+[DEBUG] 06:40:08:262 Coordinador/(4300:4302): La cantidad de instancias actual es 1
+[INFO] 06:40:11:962 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:11:976 Coordinador/(4300:4306): Cliente conectado
+[INFO] 06:40:11:982 Coordinador/(4300:4306): El cliente es el Planificador
+[INFO] 06:40:12:8 Coordinador/(4300:4308): Cliente conectado al servidor 127.0.0.2
+[INFO] 06:40:20:727 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:20:766 Coordinador/(4300:4313): Cliente conectado
+[INFO] 06:40:20:768 Coordinador/(4300:4313): El cliente es ESI
+[INFO] 06:40:20:769 Coordinador/(4300:4313): Se ha conectado un ESI con ID: 8
+[INFO] 06:40:22:128 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:22:130 Coordinador/(4300:4316): Cliente conectado
+[INFO] 06:40:22:131 Coordinador/(4300:4316): El cliente es ESI
+[INFO] 06:40:22:132 Coordinador/(4300:4316): Se ha conectado un ESI con ID: 9
+[ERROR] 06:40:35:720 Coordinador/(4300:4313): Error de Comunicacion: conexion rota con el ESI 8
+[INFO] 06:40:40:932 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:40:958 Coordinador/(4300:4319): Cliente conectado
+[INFO] 06:40:40:960 Coordinador/(4300:4319): El cliente es ESI
+[INFO] 06:40:40:977 Coordinador/(4300:4319): Se ha conectado un ESI con ID: 10
+[INFO] 06:40:44:359 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:44:392 Coordinador/(4300:4328): Cliente conectado
+[INFO] 06:40:44:402 Coordinador/(4300:4328): El cliente es ESI
+[INFO] 06:40:44:410 Coordinador/(4300:4328): Se ha conectado un ESI con ID: 11
+[INFO] 06:40:46:769 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:40:46:820 Coordinador/(4300:4331): Cliente conectado
+[INFO] 06:40:46:830 Coordinador/(4300:4331): El cliente es ESI
+[INFO] 06:40:46:831 Coordinador/(4300:4331): Se ha conectado un ESI con ID: 12
+[ERROR] 06:41:18:740 Coordinador/(4300:4308): Error de Comunicacion: conexion con el Planificador rota
+[ERROR] 06:41:18:753 Coordinador/(4300:4331): Error de Comunicacion: conexion rota con el ESI 12
+[ERROR] 06:41:18:783 Coordinador/(4300:4328): Error de Comunicacion: conexion rota con el ESI 11
+[ERROR] 06:41:18:787 Coordinador/(4300:4319): Error de Comunicacion: conexion rota con el ESI 10
+[ERROR] 06:41:18:815 Coordinador/(4300:4316): Error de Comunicacion: conexion rota con el ESI 9
+[INFO] 06:41:22:655 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:41:22:665 Coordinador/(4300:4351): Cliente conectado
+[INFO] 06:41:22:666 Coordinador/(4300:4351): El cliente es el Planificador
+[INFO] 06:41:22:675 Coordinador/(4300:4352): Cliente conectado al servidor 127.0.0.2
+[INFO] 06:41:31:74 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:41:31:108 Coordinador/(4300:4357): Cliente conectado
+[INFO] 06:41:31:117 Coordinador/(4300:4357): El cliente es ESI
+[INFO] 06:41:31:118 Coordinador/(4300:4357): Se ha conectado un ESI con ID: 8
+[INFO] 06:41:34:673 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:41:34:687 Coordinador/(4300:4360): Cliente conectado
+[INFO] 06:41:34:695 Coordinador/(4300:4360): El cliente es ESI
+[INFO] 06:41:34:698 Coordinador/(4300:4360): Se ha conectado un ESI con ID: 9
+[INFO] 06:41:38:520 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:41:38:563 Coordinador/(4300:4363): Cliente conectado
+[INFO] 06:41:38:565 Coordinador/(4300:4363): El cliente es ESI
+[INFO] 06:41:38:573 Coordinador/(4300:4363): Se ha conectado un ESI con ID: 10
+[INFO] 06:41:42:453 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:41:42:475 Coordinador/(4300:4366): Cliente conectado
+[INFO] 06:41:42:478 Coordinador/(4300:4366): El cliente es ESI
+[INFO] 06:41:42:479 Coordinador/(4300:4366): Se ha conectado un ESI con ID: 11
+[ERROR] 06:41:46:702 Coordinador/(4300:4357): Error de Comunicacion: conexion rota con el ESI 8
+[INFO] 06:41:49:218 Coordinador/(4300:4300): Listo para escuchar a cualquier Cliente...
+[INFO] 06:41:49:261 Coordinador/(4300:4370): Cliente conectado
+[INFO] 06:41:49:262 Coordinador/(4300:4370): El cliente es ESI
+[INFO] 06:41:49:264 Coordinador/(4300:4370): Se ha conectado un ESI con ID: 12
+[ERROR] 06:42:40:306 Coordinador/(4300:4370): Error de Comunicacion: conexion rota con el ESI 12
+[ERROR] 06:42:40:339 Coordinador/(4300:4366): Error de Comunicacion: conexion rota con el ESI 11
+[ERROR] 06:42:40:351 Coordinador/(4300:4363): Error de Comunicacion: conexion rota con el ESI 10
+[ERROR] 06:42:40:378 Coordinador/(4300:4360): Error de Comunicacion: conexion rota con el ESI 9
+[INFO] 06:43:22:381 Coordinador/(4525:4525): Se crea la Tabla de Instancias
+[INFO] 06:43:22:383 Coordinador/(4525:4525): Servidor conectado
+[INFO] 06:43:22:385 Coordinador/(4525:4525): Listo para escuchar a cualquier Cliente...
+[INFO] 06:43:27:252 Coordinador/(4525:4525): Listo para escuchar a cualquier Cliente...
+[INFO] 06:43:27:266 Coordinador/(4525:4528): Cliente conectado
+[INFO] 06:43:27:269 Coordinador/(4525:4528): El cliente es el Planificador
+[INFO] 06:43:27:283 Coordinador/(4525:4530): Cliente conectado al servidor 127.0.0.2
+[INFO] 06:43:32:752 Coordinador/(4525:4525): Listo para escuchar a cualquier Cliente...
+[INFO] 06:43:32:769 Coordinador/(4525:4535): Cliente conectado
+[INFO] 06:43:32:770 Coordinador/(4525:4535): El cliente es ESI
+[INFO] 06:43:32:771 Coordinador/(4525:4535): Se ha conectado un ESI con ID: 8
+[INFO] 06:43:36:216 Coordinador/(4525:4525): Listo para escuchar a cualquier Cliente...
+[INFO] 06:43:36:236 Coordinador/(4525:4537): Cliente conectado
+[INFO] 06:43:36:237 Coordinador/(4525:4537): El cliente es ESI
+[INFO] 06:43:36:238 Coordinador/(4525:4537): Se ha conectado un ESI con ID: 9
+[INFO] 06:43:39:184 Coordinador/(4525:4525): Listo para escuchar a cualquier Cliente...
+[INFO] 06:43:39:205 Coordinador/(4525:4540): Cliente conectado
+[INFO] 06:43:39:206 Coordinador/(4525:4540): El cliente es ESI
+[INFO] 06:43:39:207 Coordinador/(4525:4540): Se ha conectado un ESI con ID: 10
+[INFO] 06:43:43:216 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:218 Coordinador/(4525:4535): 1-sandwich:bondiola:simple
+[INFO] 06:43:43:219 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:219 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:221 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:224 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:225 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:271 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:272 Coordinador/(4525:4535): 1-sandwich:bondiola:jyq
+[INFO] 06:43:43:272 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:273 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:273 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:316 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:316 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:359 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:360 Coordinador/(4525:4535): 1-sandwich:bondiola:completo
+[INFO] 06:43:43:360 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:361 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:361 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:403 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:404 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:448 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:448 Coordinador/(4525:4535): 1-sandwich:lomo:simple
+[INFO] 06:43:43:448 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:449 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:449 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:491 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:491 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:535 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:536 Coordinador/(4525:4535): 1-sandwich:lomo:jyq
+[INFO] 06:43:43:536 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:538 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:538 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:579 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:579 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:624 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:624 Coordinador/(4525:4535): 1-sandwich:lomo:completo
+[INFO] 06:43:43:624 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:625 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:625 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:669 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:670 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:719 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:720 Coordinador/(4525:4535): 1-sandwich:vacio:simple
+[INFO] 06:43:43:721 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:722 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:723 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:767 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:767 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:811 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:812 Coordinador/(4525:4535): 1-sandwich:vacio:jyq
+[INFO] 06:43:43:812 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:813 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:813 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:855 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:855 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:900 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:900 Coordinador/(4525:4535): 1-sandwich:vacio:completo
+[INFO] 06:43:43:900 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:900 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:900 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:43:942 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:43:943 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:43:984 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:43:984 Coordinador/(4525:4535): 1-sandwich:choripan
+[INFO] 06:43:43:985 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:43:985 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:43:986 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:25 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:25 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:68 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:69 Coordinador/(4525:4535): 1-sandwich:morcipan
+[INFO] 06:43:44:69 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:70 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:71 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:115 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:116 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:160 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:160 Coordinador/(4525:4535): 1-parrilla:chinchulines
+[INFO] 06:43:44:160 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:161 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:161 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:203 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:203 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:247 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:248 Coordinador/(4525:4535): 1-parrilla:rinion
+[INFO] 06:43:44:248 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:249 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:250 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:291 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:291 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:336 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:336 Coordinador/(4525:4535): 1-parrilla:tiraasado
+[INFO] 06:43:44:337 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:337 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:337 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:377 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:377 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:420 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:420 Coordinador/(4525:4535): 1-parrilla:vacio
+[INFO] 06:43:44:420 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:421 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:421 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:463 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:463 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:509 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:509 Coordinador/(4525:4535): 1-parrilla:entrania
+[INFO] 06:43:44:510 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:510 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:511 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:555 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:555 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:600 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:600 Coordinador/(4525:4535): 1-parrilla:bifedelomo
+[INFO] 06:43:44:603 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:604 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:604 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:646 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:646 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:691 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:692 Coordinador/(4525:4535): 1-parrilla:matambre:simple
+[INFO] 06:43:44:692 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:693 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:693 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:735 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:735 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:779 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:780 Coordinador/(4525:4535): 1-parrilla:matambre:alapizza
+[INFO] 06:43:44:780 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:781 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:781 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:823 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:823 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:867 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:868 Coordinador/(4525:4535): 1-parrilla:ojodebife
+[INFO] 06:43:44:868 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:869 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:869 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:914 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:914 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:44:959 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:44:960 Coordinador/(4525:4535): 1-parrilla:molleja
+[INFO] 06:43:44:961 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:44:961 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:44:961 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:44:2 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:44:2 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:43 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:44 Coordinador/(4525:4535): 1-parrilla:pareja
+[INFO] 06:43:45:44 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:45 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:45 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:86 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:86 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:128 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:128 Coordinador/(4525:4535): 1-cocina:papasfritas
+[INFO] 06:43:45:128 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:129 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:129 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:171 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:171 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:217 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:217 Coordinador/(4525:4535): 1-cocina:batatasfritas
+[INFO] 06:43:45:217 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:218 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:218 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:259 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:259 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:304 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:304 Coordinador/(4525:4535): 1-cocina:tallarines
+[INFO] 06:43:45:305 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:305 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:306 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:348 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:348 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:395 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:396 Coordinador/(4525:4535): 1-cocina:ravioles
+[INFO] 06:43:45:396 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:397 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:397 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:438 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:438 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:479 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:480 Coordinador/(4525:4535): 1-cocina:nioquis
+[INFO] 06:43:45:480 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:480 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:480 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:525 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:525 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:583 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:585 Coordinador/(4525:4535): 1-cocina:suprema
+[INFO] 06:43:45:587 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:589 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:589 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:629 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:630 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:675 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:676 Coordinador/(4525:4535): 1-cocina:milanesa:carne
+[INFO] 06:43:45:676 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:676 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:678 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:718 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:718 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:763 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:764 Coordinador/(4525:4535): 1-cocina:milanesa:pollo
+[INFO] 06:43:45:765 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:765 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:766 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:804 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:805 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:45:847 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:45:849 Coordinador/(4525:4535): 2-sandwich:bondiola:simple-panbondiola
+[INFO] 06:43:45:850 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:45:851 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:45:852 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:45:895 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:45:895 Coordinador/(4525:4535): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:45:895 Coordinador/(4525:4535): La clave sandwich:bondiola:simple no esta en ninguna Instancia
+[INFO] 06:43:45:896 Coordinador/(4525:4535): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:45:896 Coordinador/(4525:4535): Aguarde mientras se busca una Instancia
+[WARNING] 06:43:45:896 Coordinador/(4525:4535): No hay Instancias disponibles. Reintentando...
+[INFO] 06:43:48:101 Coordinador/(4525:4525): Listo para escuchar a cualquier Cliente...
+[INFO] 06:43:48:123 Coordinador/(4525:4550): Cliente conectado
+[INFO] 06:43:48:124 Coordinador/(4525:4550): El cliente es ESI
+[INFO] 06:43:48:125 Coordinador/(4525:4550): Se ha conectado un ESI con ID: 11
+[WARNING] 06:43:49:898 Coordinador/(4525:4535): No hay Instancias disponibles. Reintentando...
+[WARNING] 06:43:53:901 Coordinador/(4525:4535): No hay Instancias disponibles. Reintentando...
+[INFO] 06:43:55:462 Coordinador/(4525:4525): Listo para escuchar a cualquier Cliente...
+[INFO] 06:43:55:469 Coordinador/(4525:4554): Cliente conectado
+[INFO] 06:43:55:470 Coordinador/(4525:4554): El cliente es una Instancia
+[INFO] 06:43:55:471 Coordinador/(4525:4554): Es la Instancia 1
+[INFO] 06:43:55:472 Coordinador/(4525:4554): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 06:43:55:474 Coordinador/(4525:4554): Instancia 1 agregada a la Tabla de Instancias
+[INFO] 06:43:55:475 Coordinador/(4525:4554): Envio a la Instancia su cantidad de entradas
+[INFO] 06:43:55:477 Coordinador/(4525:4554): Envio a la Instancia el tamaño de las entradas
+[DEBUG] 06:43:55:482 Coordinador/(4525:4554): La cantidad de instancias actual es 1
+[INFO] 06:43:57:904 Coordinador/(4525:4535): La Instancia sera la 1
+[INFO] 06:43:57:905 Coordinador/(4525:4535): La clave sandwich:bondiola:simple fue asignada a la Instancia 1
+[INFO] 06:43:57:907 Coordinador/(4525:4535): Le envio a Instancia 1 el paquete
+[INFO] 06:43:57:987 Coordinador/(4525:4535): La Instancia 1 me informa que le quedan 6 entradas libres
+[INFO] 06:43:57:988 Coordinador/(4525:4535): Logueo la operacion en el Log de Operaciones
+[INFO] 06:43:57:989 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:58:43 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:58:44 Coordinador/(4525:4535): 2-sandwich:bondiola:jyq-panjamonquesobondiola
+[INFO] 06:43:58:44 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:58:45 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:58:49 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:58:100 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:58:100 Coordinador/(4525:4535): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:58:100 Coordinador/(4525:4535): La clave sandwich:bondiola:jyq no esta en ninguna Instancia
+[INFO] 06:43:58:101 Coordinador/(4525:4535): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:58:101 Coordinador/(4525:4535): Aguarde mientras se busca una Instancia
+[INFO] 06:43:58:101 Coordinador/(4525:4535): La Instancia sera la 1
+[INFO] 06:43:58:102 Coordinador/(4525:4535): La clave sandwich:bondiola:jyq fue asignada a la Instancia 1
+[INFO] 06:43:58:102 Coordinador/(4525:4535): Le envio a Instancia 1 el paquete
+[INFO] 06:43:58:193 Coordinador/(4525:4535): La Instancia 1 me informa que le quedan 3 entradas libres
+[INFO] 06:43:58:194 Coordinador/(4525:4535): Logueo la operacion en el Log de Operaciones
+[INFO] 06:43:58:195 Coordinador/(4525:4535): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:58:239 Coordinador/(4525:4535): El ESI 8 me envia un paquete
+[DEBUG] 06:43:58:240 Coordinador/(4525:4535): 2-sandwich:bondiola:completo-panjamonquesolechugatomatebondiola
+[INFO] 06:43:58:241 Coordinador/(4525:4535): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:43:58:241 Coordinador/(4525:4535): Desempaqueto la instruccion
+[INFO] 06:43:58:242 Coordinador/(4525:4535): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[INFO] 06:43:58:282 Coordinador/(4525:4535): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:43:58:282 Coordinador/(4525:4535): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:58:282 Coordinador/(4525:4535): La clave sandwich:bondiola:completo no esta en ninguna Instancia
+[INFO] 06:43:58:282 Coordinador/(4525:4535): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:58:283 Coordinador/(4525:4535): Aguarde mientras se busca una Instancia
+[INFO] 06:43:58:283 Coordinador/(4525:4535): La Instancia sera la 1
+[INFO] 06:43:58:284 Coordinador/(4525:4535): La clave sandwich:bondiola:completo fue asignada a la Instancia 1
+[INFO] 06:43:58:284 Coordinador/(4525:4535): Le envio a Instancia 1 el paquete
+[ERROR] 06:43:58:329 Coordinador/(4525:4535): La Instancia me avisa que no pudo procesar la instruccion
+[ERROR] 06:43:58:329 Coordinador/(4525:4535): Se aborta el ESI 8
+[INFO] 06:43:58:524 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:58:525 Coordinador/(4525:4537): 1-platoprincipal:ingrediente5
+[INFO] 06:43:58:525 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:58:525 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:58:527 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:58:571 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:58:571 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:58:611 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:58:612 Coordinador/(4525:4537): 1-platoprincipal:ingrediente4
+[INFO] 06:43:58:612 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:58:613 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:58:614 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:58:655 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:58:656 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:58:707 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:58:709 Coordinador/(4525:4537): 1-platoprincipal:ingrediente3
+[INFO] 06:43:58:710 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:58:711 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:58:712 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:58:754 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:58:754 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:58:795 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:58:796 Coordinador/(4525:4537): 1-platoprincipal:ingrediente2
+[INFO] 06:43:58:796 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:58:797 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:58:797 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:58:841 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:58:841 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:58:884 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:58:884 Coordinador/(4525:4537): 1-platoprincipal:ingrediente1
+[INFO] 06:43:58:885 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:58:886 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:58:886 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:58:932 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:58:933 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:58:975 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:58:976 Coordinador/(4525:4537): 2-platoprincipal:ingrediente1-milanesadecarne
+[INFO] 06:43:58:976 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:58:977 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:58:978 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:59:20 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:59:20 Coordinador/(4525:4537): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:59:21 Coordinador/(4525:4537): La clave platoprincipal:ingrediente1 no esta en ninguna Instancia
+[INFO] 06:43:59:21 Coordinador/(4525:4537): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:59:21 Coordinador/(4525:4537): Aguarde mientras se busca una Instancia
+[INFO] 06:43:59:22 Coordinador/(4525:4537): La Instancia sera la 1
+[INFO] 06:43:59:22 Coordinador/(4525:4537): La clave platoprincipal:ingrediente1 fue asignada a la Instancia 1
+[INFO] 06:43:59:23 Coordinador/(4525:4537): Le envio a Instancia 1 el paquete
+[INFO] 06:43:59:108 Coordinador/(4525:4537): La Instancia 1 me informa que le quedan 1 entradas libres
+[INFO] 06:43:59:109 Coordinador/(4525:4537): Logueo la operacion en el Log de Operaciones
+[INFO] 06:43:59:111 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:59:156 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:59:156 Coordinador/(4525:4537): 2-platoprincipal:ingrediente2-queso
+[INFO] 06:43:59:157 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:59:158 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:59:158 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:59:202 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:59:202 Coordinador/(4525:4537): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:59:202 Coordinador/(4525:4537): La clave platoprincipal:ingrediente2 no esta en ninguna Instancia
+[INFO] 06:43:59:202 Coordinador/(4525:4537): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:59:202 Coordinador/(4525:4537): Aguarde mientras se busca una Instancia
+[INFO] 06:43:59:203 Coordinador/(4525:4537): La Instancia sera la 1
+[INFO] 06:43:59:203 Coordinador/(4525:4537): La clave platoprincipal:ingrediente2 fue asignada a la Instancia 1
+[INFO] 06:43:59:204 Coordinador/(4525:4537): Le envio a Instancia 1 el paquete
+[INFO] 06:43:59:288 Coordinador/(4525:4537): La Instancia 1 me informa que le quedan 0 entradas libres
+[INFO] 06:43:59:290 Coordinador/(4525:4537): Logueo la operacion en el Log de Operaciones
+[INFO] 06:43:59:290 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:59:339 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:59:340 Coordinador/(4525:4537): 2-platoprincipal:ingrediente3-jamon
+[INFO] 06:43:59:340 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:59:341 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:59:341 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:59:384 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:59:384 Coordinador/(4525:4537): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:59:384 Coordinador/(4525:4537): La clave platoprincipal:ingrediente3 no esta en ninguna Instancia
+[INFO] 06:43:59:384 Coordinador/(4525:4537): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:59:385 Coordinador/(4525:4537): Aguarde mientras se busca una Instancia
+[INFO] 06:43:59:385 Coordinador/(4525:4537): La Instancia sera la 1
+[INFO] 06:43:59:385 Coordinador/(4525:4537): La clave platoprincipal:ingrediente3 fue asignada a la Instancia 1
+[INFO] 06:43:59:386 Coordinador/(4525:4537): Le envio a Instancia 1 el paquete
+[WARNING] 06:43:59:471 Coordinador/(4525:4537): Se informa reemplazo de la clave: platoprincipal:ingrediente2
+[INFO] 06:43:59:473 Coordinador/(4525:4537): La Instancia 1 me informa que le quedan 0 entradas libres
+[INFO] 06:43:59:473 Coordinador/(4525:4537): Logueo la operacion en el Log de Operaciones
+[INFO] 06:43:59:474 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:59:524 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:59:524 Coordinador/(4525:4537): 2-platoprincipal:ingrediente4-lechuga
+[INFO] 06:43:59:524 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:59:525 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:59:525 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:59:565 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:59:566 Coordinador/(4525:4537): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:59:566 Coordinador/(4525:4537): La clave platoprincipal:ingrediente4 no esta en ninguna Instancia
+[INFO] 06:43:59:566 Coordinador/(4525:4537): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:59:567 Coordinador/(4525:4537): Aguarde mientras se busca una Instancia
+[INFO] 06:43:59:568 Coordinador/(4525:4537): La Instancia sera la 1
+[INFO] 06:43:59:569 Coordinador/(4525:4537): La clave platoprincipal:ingrediente4 fue asignada a la Instancia 1
+[INFO] 06:43:59:570 Coordinador/(4525:4537): Le envio a Instancia 1 el paquete
+[WARNING] 06:43:59:655 Coordinador/(4525:4537): Se informa reemplazo de la clave: platoprincipal:ingrediente3
+[INFO] 06:43:59:656 Coordinador/(4525:4537): La Instancia 1 me informa que le quedan 0 entradas libres
+[INFO] 06:43:59:657 Coordinador/(4525:4537): Logueo la operacion en el Log de Operaciones
+[INFO] 06:43:59:658 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:59:703 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:59:704 Coordinador/(4525:4537): 2-platoprincipal:ingrediente5-tomate
+[INFO] 06:43:59:704 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:59:704 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:59:705 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:59:748 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:59:748 Coordinador/(4525:4537): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:59:748 Coordinador/(4525:4537): La clave platoprincipal:ingrediente5 no esta en ninguna Instancia
+[INFO] 06:43:59:748 Coordinador/(4525:4537): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:43:59:748 Coordinador/(4525:4537): Aguarde mientras se busca una Instancia
+[INFO] 06:43:59:749 Coordinador/(4525:4537): La Instancia sera la 1
+[INFO] 06:43:59:750 Coordinador/(4525:4537): La clave platoprincipal:ingrediente5 fue asignada a la Instancia 1
+[INFO] 06:43:59:750 Coordinador/(4525:4537): Le envio a Instancia 1 el paquete
+[WARNING] 06:43:59:835 Coordinador/(4525:4537): Se informa reemplazo de la clave: platoprincipal:ingrediente4
+[INFO] 06:43:59:836 Coordinador/(4525:4537): La Instancia 1 me informa que le quedan 0 entradas libres
+[INFO] 06:43:59:837 Coordinador/(4525:4537): Logueo la operacion en el Log de Operaciones
+[INFO] 06:43:59:838 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:43:59:884 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:43:59:884 Coordinador/(4525:4537): 3-platoprincipal:ingrediente1
+[INFO] 06:43:59:885 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:43:59:885 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:43:59:886 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:43:59:927 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:43:59:927 Coordinador/(4525:4537): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:43:59:928 Coordinador/(4525:4537): La clave platoprincipal:ingrediente1 esta asignada a Instancia 1
+[INFO] 06:43:59:928 Coordinador/(4525:4537): Le envio a Instancia 1 el paquete
+[INFO] 06:44:00:12 Coordinador/(4525:4537): La Instancia 1 me informa que le quedan 0 entradas libres
+[INFO] 06:44:00:13 Coordinador/(4525:4537): Logueo la operacion en el Log de Operaciones
+[INFO] 06:44:00:15 Coordinador/(4525:4537): Le aviso al ESI 9 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:44:00:69 Coordinador/(4525:4537): El ESI 9 me envia un paquete
+[DEBUG] 06:44:00:69 Coordinador/(4525:4537): 3-platoprincipal:ingrediente2
+[INFO] 06:44:00:69 Coordinador/(4525:4537): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:44:00:69 Coordinador/(4525:4537): Desempaqueto la instruccion
+[INFO] 06:44:00:70 Coordinador/(4525:4537): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[INFO] 06:44:00:111 Coordinador/(4525:4537): El Planificador me autoriza a que el ESI 9 pueda utilizar el recurso
+[INFO] 06:44:00:111 Coordinador/(4525:4537): El Coordinador esta chequeando si la clave ya existe...
+[ERROR] 06:44:00:111 Coordinador/(4525:4537): Error de Clave Inaccesible
+[ERROR] 06:44:00:112 Coordinador/(4525:4537): Se aborta el ESI 9
+[INFO] 06:44:00:207 Coordinador/(4525:4540): El ESI 10 me envia un paquete
+[DEBUG] 06:44:00:209 Coordinador/(4525:4540): 1-consola:ps4
+[INFO] 06:44:00:209 Coordinador/(4525:4540): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:44:00:211 Coordinador/(4525:4540): Desempaqueto la instruccion
+[INFO] 06:44:00:211 Coordinador/(4525:4540): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:44:00:254 Coordinador/(4525:4540): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:44:00:254 Coordinador/(4525:4540): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:44:00:295 Coordinador/(4525:4540): El ESI 10 me envia un paquete
+[DEBUG] 06:44:00:296 Coordinador/(4525:4540): 2-consola:ps4-Fifa
+[INFO] 06:44:00:296 Coordinador/(4525:4540): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:44:00:297 Coordinador/(4525:4540): Desempaqueto la instruccion
+[INFO] 06:44:00:297 Coordinador/(4525:4540): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[INFO] 06:44:00:338 Coordinador/(4525:4540): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:44:00:339 Coordinador/(4525:4540): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:44:00:339 Coordinador/(4525:4540): La clave consola:ps4 no esta en ninguna Instancia
+[INFO] 06:44:00:339 Coordinador/(4525:4540): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:44:00:339 Coordinador/(4525:4540): Aguarde mientras se busca una Instancia
+[INFO] 06:44:00:340 Coordinador/(4525:4540): La Instancia sera la 1
+[INFO] 06:44:00:340 Coordinador/(4525:4540): La clave consola:ps4 fue asignada a la Instancia 1
+[INFO] 06:44:00:340 Coordinador/(4525:4540): Le envio a Instancia 1 el paquete
+[WARNING] 06:44:00:423 Coordinador/(4525:4540): Se informa reemplazo de la clave: platoprincipal:ingrediente5
+[INFO] 06:44:00:424 Coordinador/(4525:4540): La Instancia 1 me informa que le quedan 0 entradas libres
+[INFO] 06:44:00:425 Coordinador/(4525:4540): Logueo la operacion en el Log de Operaciones
+[INFO] 06:44:00:426 Coordinador/(4525:4540): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:44:00:472 Coordinador/(4525:4540): El ESI 10 me envia un paquete
+[DEBUG] 06:44:00:473 Coordinador/(4525:4540): 2-consola:xbox360-Halo
+[INFO] 06:44:00:474 Coordinador/(4525:4540): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:44:00:476 Coordinador/(4525:4540): Desempaqueto la instruccion
+[INFO] 06:44:00:477 Coordinador/(4525:4540): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:44:00:521 Coordinador/(4525:4540): El Planificador me informa que el ESI 10 se aborta
+[INFO] 06:44:00:568 Coordinador/(4525:4550): El ESI 11 me envia un paquete
+[DEBUG] 06:44:00:568 Coordinador/(4525:4550): 1-consola:ps4
+[INFO] 06:44:00:568 Coordinador/(4525:4550): Le informo al ESI 11 que el paquete llego correctamente
+[INFO] 06:44:00:568 Coordinador/(4525:4550): Desempaqueto la instruccion
+[INFO] 06:44:00:568 Coordinador/(4525:4550): Le consulto al Planificador si ESI 11 puede hacer uso del recurso
+[ERROR] 06:44:00:569 Coordinador/(4525:4550): El Planificador me informa que el ESI 11 se aborta
+[ERROR] 06:52:47:519 Coordinador/(4525:4525): Se ha finalizado el Coordinador
+[INFO] 06:53:37:169 Coordinador/(4961:4961): Se crea la Tabla de Instancias
+[INFO] 06:53:37:171 Coordinador/(4961:4961): Servidor conectado
+[INFO] 06:53:37:180 Coordinador/(4961:4961): Listo para escuchar a cualquier Cliente...
+[INFO] 06:53:45:661 Coordinador/(4961:4961): Listo para escuchar a cualquier Cliente...
+[INFO] 06:53:45:668 Coordinador/(4961:4982): Cliente conectado
+[INFO] 06:53:45:671 Coordinador/(4961:4982): El cliente es el Planificador
+[INFO] 06:53:45:680 Coordinador/(4961:4983): Cliente conectado al servidor 127.0.0.2
+[INFO] 06:53:49:550 Coordinador/(4961:4961): Listo para escuchar a cualquier Cliente...
+[INFO] 06:53:49:552 Coordinador/(4961:4988): Cliente conectado
+[INFO] 06:53:49:553 Coordinador/(4961:4988): El cliente es una Instancia
+[INFO] 06:53:49:554 Coordinador/(4961:4988): Es la Instancia 1
+[INFO] 06:53:49:564 Coordinador/(4961:4988): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 06:53:49:565 Coordinador/(4961:4988): Instancia 1 agregada a la Tabla de Instancias
+[INFO] 06:53:49:566 Coordinador/(4961:4988): Envio a la Instancia su cantidad de entradas
+[INFO] 06:53:49:567 Coordinador/(4961:4988): Envio a la Instancia el tamaño de las entradas
+[DEBUG] 06:53:49:576 Coordinador/(4961:4988): La cantidad de instancias actual es 1
+[INFO] 06:54:01:86 Coordinador/(4961:4961): Listo para escuchar a cualquier Cliente...
+[INFO] 06:54:01:99 Coordinador/(4961:4996): Cliente conectado
+[INFO] 06:54:01:107 Coordinador/(4961:4996): El cliente es ESI
+[INFO] 06:54:01:115 Coordinador/(4961:4996): Se ha conectado un ESI con ID: 8
+[INFO] 06:54:02:460 Coordinador/(4961:4961): Listo para escuchar a cualquier Cliente...
+[INFO] 06:54:02:496 Coordinador/(4961:4998): Cliente conectado
+[INFO] 06:54:02:501 Coordinador/(4961:4998): El cliente es ESI
+[INFO] 06:54:02:512 Coordinador/(4961:4998): Se ha conectado un ESI con ID: 9
+[INFO] 06:54:04:540 Coordinador/(4961:4961): Listo para escuchar a cualquier Cliente...
+[INFO] 06:54:04:559 Coordinador/(4961:5000): Cliente conectado
+[INFO] 06:54:04:560 Coordinador/(4961:5000): El cliente es ESI
+[INFO] 06:54:04:561 Coordinador/(4961:5000): Se ha conectado un ESI con ID: 10
+[INFO] 06:54:06:128 Coordinador/(4961:4961): Listo para escuchar a cualquier Cliente...
+[INFO] 06:54:06:153 Coordinador/(4961:5003): Cliente conectado
+[INFO] 06:54:06:154 Coordinador/(4961:5003): El cliente es ESI
+[INFO] 06:54:06:160 Coordinador/(4961:5003): Se ha conectado un ESI con ID: 11
+[INFO] 06:54:19:0 Coordinador/(4961:4996): El ESI 8 me envia un paquete
+[DEBUG] 06:54:19:0 Coordinador/(4961:4996): 1-consola:ps4
+[INFO] 06:54:19:0 Coordinador/(4961:4996): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:54:19:2 Coordinador/(4961:4996): Desempaqueto la instruccion
+[INFO] 06:54:20:7 Coordinador/(4961:4996): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[ERROR] 06:54:20:24 Coordinador/(4961:4996): OPERACION 1
+[ERROR] 06:54:20:25 Coordinador/(4961:4996): TAM RECURSO PEDIDO. 11
+[ERROR] 06:54:20:25 Coordinador/(4961:4996): RECURSO PEDIDO: consola:ps4
+[INFO] 06:54:20:25 Coordinador/(4961:4996): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:54:20:26 Coordinador/(4961:4996): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:76 Coordinador/(4961:4996): El ESI 8 me envia un paquete
+[DEBUG] 06:54:20:77 Coordinador/(4961:4996): 2-consola:ps4-Fifa
+[INFO] 06:54:20:77 Coordinador/(4961:4996): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:54:20:79 Coordinador/(4961:4996): Desempaqueto la instruccion
+[INFO] 06:54:20:85 Coordinador/(4961:4996): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[ERROR] 06:54:20:87 Coordinador/(4961:4996): OPERACION 2
+[ERROR] 06:54:20:90 Coordinador/(4961:4996): TAM RECURSO PEDIDO. 11
+[ERROR] 06:54:20:90 Coordinador/(4961:4996): RECURSO PEDIDO: consola:ps4
+[INFO] 06:54:20:135 Coordinador/(4961:4996): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:54:20:136 Coordinador/(4961:4996): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:54:20:136 Coordinador/(4961:4996): La clave consola:ps4 no esta en ninguna Instancia
+[INFO] 06:54:20:136 Coordinador/(4961:4996): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:54:20:136 Coordinador/(4961:4996): Aguarde mientras se busca una Instancia
+[INFO] 06:54:20:137 Coordinador/(4961:4996): La Instancia sera la 1
+[INFO] 06:54:20:139 Coordinador/(4961:4996): La clave consola:ps4 fue asignada a la Instancia 1
+[INFO] 06:54:20:139 Coordinador/(4961:4996): Le envio a Instancia 1 el paquete
+[INFO] 06:54:20:231 Coordinador/(4961:4996): La Instancia 1 me informa que le quedan 7 entradas libres
+[INFO] 06:54:20:232 Coordinador/(4961:4996): Logueo la operacion en el Log de Operaciones
+[INFO] 06:54:20:232 Coordinador/(4961:4996): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:275 Coordinador/(4961:4996): El ESI 8 me envia un paquete
+[DEBUG] 06:54:20:276 Coordinador/(4961:4996): 2-consola:xbox360-Halo
+[INFO] 06:54:20:276 Coordinador/(4961:4996): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:54:20:277 Coordinador/(4961:4996): Desempaqueto la instruccion
+[INFO] 06:54:20:277 Coordinador/(4961:4996): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[ERROR] 06:54:20:278 Coordinador/(4961:4996): OPERACION 2
+[ERROR] 06:54:20:283 Coordinador/(4961:4996): TAM RECURSO PEDIDO. 15
+[ERROR] 06:54:20:283 Coordinador/(4961:4996): RECURSO PEDIDO: consola:xbox360
+[ERROR] 06:54:20:322 Coordinador/(4961:4996): El Planificador me informa que el ESI 8 se aborta
+[INFO] 06:54:20:379 Coordinador/(4961:4998): El ESI 9 me envia un paquete
+[DEBUG] 06:54:20:381 Coordinador/(4961:4998): 1-platoprincipal:ingrediente5
+[INFO] 06:54:20:382 Coordinador/(4961:4998): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:54:20:382 Coordinador/(4961:4998): Desempaqueto la instruccion
+[INFO] 06:54:20:383 Coordinador/(4961:4998): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[ERROR] 06:54:20:383 Coordinador/(4961:4998): OPERACION 1
+[ERROR] 06:54:20:391 Coordinador/(4961:4998): TAM RECURSO PEDIDO. 27
+[ERROR] 06:54:20:392 Coordinador/(4961:4998): RECURSO PEDIDO: platoprincipal:ingrediente5
+[ERROR] 06:54:20:392 Coordinador/(4961:4998): El Planificador me informa que el ESI 9 se aborta
+[INFO] 06:54:20:424 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:20:425 Coordinador/(4961:5000): 1-sandwich:bondiola:simple
+[INFO] 06:54:20:425 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:20:426 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:20:433 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:20:434 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:20:440 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 24
+[ERROR] 06:54:20:441 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:bondiola:simple
+[INFO] 06:54:20:442 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:20:442 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:499 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:20:500 Coordinador/(4961:5000): 1-sandwich:bondiola:jyq
+[INFO] 06:54:20:500 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:20:500 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:20:501 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:20:502 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:20:509 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 21
+[ERROR] 06:54:20:509 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:bondiola:jyq
+[INFO] 06:54:20:509 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:20:509 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:596 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:20:596 Coordinador/(4961:5000): 1-sandwich:bondiola:completo
+[INFO] 06:54:20:597 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:20:597 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:20:598 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:20:598 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:20:598 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 26
+[ERROR] 06:54:20:599 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:bondiola:completo
+[INFO] 06:54:20:599 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:20:599 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:683 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:20:684 Coordinador/(4961:5000): 1-sandwich:lomo:simple
+[INFO] 06:54:20:684 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:20:684 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:20:685 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:20:685 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:20:685 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 20
+[ERROR] 06:54:20:685 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:lomo:simple
+[INFO] 06:54:20:685 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:20:685 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:767 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:20:768 Coordinador/(4961:5000): 1-sandwich:lomo:jyq
+[INFO] 06:54:20:768 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:20:768 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:20:768 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:20:768 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:20:768 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 17
+[ERROR] 06:54:20:768 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:lomo:jyq
+[INFO] 06:54:20:768 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:20:768 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:857 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:20:857 Coordinador/(4961:5000): 1-sandwich:lomo:completo
+[INFO] 06:54:20:858 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:20:858 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:20:859 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:20:859 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:20:860 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 22
+[ERROR] 06:54:20:860 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:lomo:completo
+[INFO] 06:54:20:861 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:20:861 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:20:944 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:20:945 Coordinador/(4961:5000): 1-sandwich:vacio:simple
+[INFO] 06:54:20:946 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:20:947 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:20:951 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:20:952 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:20:953 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 21
+[ERROR] 06:54:20:959 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:vacio:simple
+[INFO] 06:54:20:960 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:20:960 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:35 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:36 Coordinador/(4961:5000): 1-sandwich:vacio:jyq
+[INFO] 06:54:21:36 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:37 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:37 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:37 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:37 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 18
+[ERROR] 06:54:21:37 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:vacio:jyq
+[INFO] 06:54:21:38 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:38 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:119 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:120 Coordinador/(4961:5000): 1-sandwich:vacio:completo
+[INFO] 06:54:21:120 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:121 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:121 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:122 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:122 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 23
+[ERROR] 06:54:21:122 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:vacio:completo
+[INFO] 06:54:21:123 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:123 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:207 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:208 Coordinador/(4961:5000): 1-sandwich:choripan
+[INFO] 06:54:21:208 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:208 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:208 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:208 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:208 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 17
+[ERROR] 06:54:21:208 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:choripan
+[INFO] 06:54:21:208 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:209 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:296 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:300 Coordinador/(4961:5000): 1-sandwich:morcipan
+[INFO] 06:54:21:302 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:304 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:305 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:312 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:312 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 17
+[ERROR] 06:54:21:313 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:morcipan
+[INFO] 06:54:21:313 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:313 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:398 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:398 Coordinador/(4961:5000): 1-parrilla:chinchulines
+[INFO] 06:54:21:399 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:400 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:401 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:403 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:411 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 21
+[ERROR] 06:54:21:418 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:chinchulines
+[INFO] 06:54:21:420 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:420 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:508 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:508 Coordinador/(4961:5000): 1-parrilla:rinion
+[INFO] 06:54:21:509 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:509 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:509 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:510 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:510 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 15
+[ERROR] 06:54:21:510 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:rinion
+[INFO] 06:54:21:512 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:513 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:599 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:599 Coordinador/(4961:5000): 1-parrilla:tiraasado
+[INFO] 06:54:21:600 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:600 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:600 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:601 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:602 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 18
+[ERROR] 06:54:21:602 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:tiraasado
+[INFO] 06:54:21:603 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:604 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:688 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:690 Coordinador/(4961:5000): 1-parrilla:vacio
+[INFO] 06:54:21:690 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:691 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:692 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:692 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:693 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 14
+[ERROR] 06:54:21:695 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:vacio
+[INFO] 06:54:21:695 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:696 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:768 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:768 Coordinador/(4961:5000): 1-parrilla:entrania
+[INFO] 06:54:21:768 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:768 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:768 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:769 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:769 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 17
+[ERROR] 06:54:21:769 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:entrania
+[INFO] 06:54:21:769 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:769 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:860 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:860 Coordinador/(4961:5000): 1-parrilla:bifedelomo
+[INFO] 06:54:21:862 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:864 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:868 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:870 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:871 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 19
+[ERROR] 06:54:21:874 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:bifedelomo
+[INFO] 06:54:21:875 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:875 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:21:959 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:21:960 Coordinador/(4961:5000): 1-parrilla:matambre:simple
+[INFO] 06:54:21:960 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:21:962 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:21:968 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:21:968 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:21:969 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 24
+[ERROR] 06:54:21:969 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:matambre:simple
+[INFO] 06:54:21:969 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:21:970 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:60 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:62 Coordinador/(4961:5000): 1-parrilla:matambre:alapizza
+[INFO] 06:54:22:63 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:65 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:65 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:66 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:66 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 26
+[ERROR] 06:54:22:67 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:matambre:alapizza
+[INFO] 06:54:22:67 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:68 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:148 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:148 Coordinador/(4961:5000): 1-parrilla:ojodebife
+[INFO] 06:54:22:148 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:149 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:149 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:149 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:149 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 18
+[ERROR] 06:54:22:149 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:ojodebife
+[INFO] 06:54:22:149 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:149 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:232 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:232 Coordinador/(4961:5000): 1-parrilla:molleja
+[INFO] 06:54:22:232 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:232 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:232 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:233 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:233 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 16
+[ERROR] 06:54:22:233 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:molleja
+[INFO] 06:54:22:233 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:233 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:315 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:316 Coordinador/(4961:5000): 1-parrilla:pareja
+[INFO] 06:54:22:316 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:316 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:316 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:316 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:316 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 15
+[ERROR] 06:54:22:316 Coordinador/(4961:5000): RECURSO PEDIDO: parrilla:pareja
+[INFO] 06:54:22:316 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:316 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:399 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:400 Coordinador/(4961:5000): 1-cocina:papasfritas
+[INFO] 06:54:22:401 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:402 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:408 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:409 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:410 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 18
+[ERROR] 06:54:22:411 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:papasfritas
+[INFO] 06:54:22:411 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:411 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:503 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:504 Coordinador/(4961:5000): 1-cocina:batatasfritas
+[INFO] 06:54:22:504 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:504 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:505 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:505 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:505 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 20
+[ERROR] 06:54:22:505 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:batatasfritas
+[INFO] 06:54:22:505 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:505 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:595 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:596 Coordinador/(4961:5000): 1-cocina:tallarines
+[INFO] 06:54:22:596 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:597 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:597 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:597 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:597 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 17
+[ERROR] 06:54:22:597 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:tallarines
+[INFO] 06:54:22:597 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:597 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:683 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:685 Coordinador/(4961:5000): 1-cocina:ravioles
+[INFO] 06:54:22:686 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:686 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:688 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:688 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:689 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 15
+[ERROR] 06:54:22:689 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:ravioles
+[INFO] 06:54:22:690 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:690 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:775 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:775 Coordinador/(4961:5000): 1-cocina:nioquis
+[INFO] 06:54:22:776 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:778 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:779 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:780 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:781 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 14
+[ERROR] 06:54:22:788 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:nioquis
+[INFO] 06:54:22:789 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:789 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:883 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:884 Coordinador/(4961:5000): 1-cocina:suprema
+[INFO] 06:54:22:885 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:886 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:887 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:888 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:888 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 14
+[ERROR] 06:54:22:889 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:suprema
+[INFO] 06:54:22:889 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:889 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:22:983 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:22:984 Coordinador/(4961:5000): 1-cocina:milanesa:carne
+[INFO] 06:54:22:984 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:22:984 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:22:984 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:22:985 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:22:985 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 21
+[ERROR] 06:54:22:985 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:milanesa:carne
+[INFO] 06:54:22:985 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:22:985 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:23:71 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:23:71 Coordinador/(4961:5000): 1-cocina:milanesa:pollo
+[INFO] 06:54:23:72 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:23:72 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:23:72 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:23:73 Coordinador/(4961:5000): OPERACION 1
+[ERROR] 06:54:23:73 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 21
+[ERROR] 06:54:23:73 Coordinador/(4961:5000): RECURSO PEDIDO: cocina:milanesa:pollo
+[INFO] 06:54:23:73 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:23:73 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:23:167 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:23:168 Coordinador/(4961:5000): 2-sandwich:bondiola:simple-panbondiola
+[INFO] 06:54:23:168 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:23:168 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:23:168 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:23:168 Coordinador/(4961:5000): OPERACION 2
+[ERROR] 06:54:23:169 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 24
+[ERROR] 06:54:23:169 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:bondiola:simple
+[INFO] 06:54:23:169 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:23:169 Coordinador/(4961:5000): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:54:23:169 Coordinador/(4961:5000): La clave sandwich:bondiola:simple no esta en ninguna Instancia
+[INFO] 06:54:23:169 Coordinador/(4961:5000): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:54:23:169 Coordinador/(4961:5000): Aguarde mientras se busca una Instancia
+[INFO] 06:54:23:170 Coordinador/(4961:5000): La Instancia sera la 1
+[INFO] 06:54:23:175 Coordinador/(4961:5000): La clave sandwich:bondiola:simple fue asignada a la Instancia 1
+[INFO] 06:54:23:177 Coordinador/(4961:5000): Le envio a Instancia 1 el paquete
+[INFO] 06:54:23:255 Coordinador/(4961:5000): La Instancia 1 me informa que le quedan 5 entradas libres
+[INFO] 06:54:23:255 Coordinador/(4961:5000): Logueo la operacion en el Log de Operaciones
+[INFO] 06:54:23:256 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:23:304 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:23:308 Coordinador/(4961:5000): 2-sandwich:bondiola:jyq-panjamonquesobondiola
+[INFO] 06:54:23:310 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:23:312 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:23:312 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:23:313 Coordinador/(4961:5000): OPERACION 2
+[ERROR] 06:54:23:313 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 21
+[ERROR] 06:54:23:314 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:bondiola:jyq
+[INFO] 06:54:23:314 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:23:315 Coordinador/(4961:5000): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:54:23:315 Coordinador/(4961:5000): La clave sandwich:bondiola:jyq no esta en ninguna Instancia
+[INFO] 06:54:23:315 Coordinador/(4961:5000): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:54:23:316 Coordinador/(4961:5000): Aguarde mientras se busca una Instancia
+[INFO] 06:54:23:316 Coordinador/(4961:5000): La Instancia sera la 1
+[INFO] 06:54:23:321 Coordinador/(4961:5000): La clave sandwich:bondiola:jyq fue asignada a la Instancia 1
+[INFO] 06:54:23:327 Coordinador/(4961:5000): Le envio a Instancia 1 el paquete
+[INFO] 06:54:23:407 Coordinador/(4961:5000): La Instancia 1 me informa que le quedan 2 entradas libres
+[INFO] 06:54:23:407 Coordinador/(4961:5000): Logueo la operacion en el Log de Operaciones
+[INFO] 06:54:23:408 Coordinador/(4961:5000): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:54:23:468 Coordinador/(4961:5000): El ESI 10 me envia un paquete
+[DEBUG] 06:54:23:469 Coordinador/(4961:5000): 2-sandwich:bondiola:completo-panjamonquesolechugatomatebondiola
+[INFO] 06:54:23:469 Coordinador/(4961:5000): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:54:23:469 Coordinador/(4961:5000): Desempaqueto la instruccion
+[INFO] 06:54:23:469 Coordinador/(4961:5000): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:54:23:469 Coordinador/(4961:5000): OPERACION 2
+[ERROR] 06:54:23:469 Coordinador/(4961:5000): TAM RECURSO PEDIDO. 26
+[ERROR] 06:54:23:469 Coordinador/(4961:5000): RECURSO PEDIDO: sandwich:bondiola:completo
+[INFO] 06:54:23:470 Coordinador/(4961:5000): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:54:23:470 Coordinador/(4961:5000): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:54:23:470 Coordinador/(4961:5000): La clave sandwich:bondiola:completo no esta en ninguna Instancia
+[INFO] 06:54:23:470 Coordinador/(4961:5000): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:54:23:470 Coordinador/(4961:5000): Aguarde mientras se busca una Instancia
+[INFO] 06:54:23:470 Coordinador/(4961:5000): La Instancia sera la 1
+[INFO] 06:54:23:471 Coordinador/(4961:5000): La clave sandwich:bondiola:completo fue asignada a la Instancia 1
+[INFO] 06:54:23:471 Coordinador/(4961:5000): Le envio a Instancia 1 el paquete
+[ERROR] 06:54:23:512 Coordinador/(4961:5000): La Instancia me avisa que no pudo procesar la instruccion
+[ERROR] 06:54:23:513 Coordinador/(4961:5000): Se aborta el ESI 10
+[INFO] 06:54:23:688 Coordinador/(4961:5003): El ESI 11 me envia un paquete
+[DEBUG] 06:54:23:688 Coordinador/(4961:5003): 1-consola:ps4
+[INFO] 06:54:23:688 Coordinador/(4961:5003): Le informo al ESI 11 que el paquete llego correctamente
+[INFO] 06:54:23:689 Coordinador/(4961:5003): Desempaqueto la instruccion
+[INFO] 06:54:23:695 Coordinador/(4961:5003): Le consulto al Planificador si ESI 11 puede hacer uso del recurso
+[ERROR] 06:54:23:696 Coordinador/(4961:5003): OPERACION 1
+[ERROR] 06:54:23:696 Coordinador/(4961:5003): TAM RECURSO PEDIDO. 11
+[ERROR] 06:54:23:697 Coordinador/(4961:5003): RECURSO PEDIDO: consola:ps4
+[ERROR] 06:54:23:697 Coordinador/(4961:5003): El Planificador me informa que el ESI 11 se aborta
+[ERROR] 06:54:59:474 Coordinador/(4961:4983): Error de Comunicacion: conexion con el Planificador rota
+[ERROR] 06:56:52:710 Coordinador/(4961:4961): Se ha finalizado el Coordinador
+[INFO] 06:56:54:709 Coordinador/(5078:5078): Se crea la Tabla de Instancias
+[INFO] 06:56:54:715 Coordinador/(5078:5078): Servidor conectado
+[INFO] 06:56:54:716 Coordinador/(5078:5078): Listo para escuchar a cualquier Cliente...
+[INFO] 06:56:59:232 Coordinador/(5078:5078): Listo para escuchar a cualquier Cliente...
+[INFO] 06:56:59:246 Coordinador/(5078:5083): Cliente conectado
+[INFO] 06:56:59:253 Coordinador/(5078:5083): El cliente es el Planificador
+[INFO] 06:56:59:283 Coordinador/(5078:5085): Cliente conectado al servidor 127.0.0.2
+[INFO] 06:57:01:616 Coordinador/(5078:5078): Listo para escuchar a cualquier Cliente...
+[INFO] 06:57:01:621 Coordinador/(5078:5089): Cliente conectado
+[INFO] 06:57:01:622 Coordinador/(5078:5089): El cliente es una Instancia
+[INFO] 06:57:01:624 Coordinador/(5078:5089): Es la Instancia 1
+[INFO] 06:57:01:633 Coordinador/(5078:5089): Busco si ya fue creada en la Tabla de Instancias
+[INFO] 06:57:01:636 Coordinador/(5078:5089): Instancia 1 agregada a la Tabla de Instancias
+[INFO] 06:57:01:636 Coordinador/(5078:5089): Envio a la Instancia su cantidad de entradas
+[INFO] 06:57:01:638 Coordinador/(5078:5089): Envio a la Instancia el tamaño de las entradas
+[DEBUG] 06:57:01:645 Coordinador/(5078:5089): La cantidad de instancias actual es 1
+[INFO] 06:57:12:406 Coordinador/(5078:5078): Listo para escuchar a cualquier Cliente...
+[INFO] 06:57:12:446 Coordinador/(5078:5099): Cliente conectado
+[INFO] 06:57:12:452 Coordinador/(5078:5099): El cliente es ESI
+[INFO] 06:57:12:465 Coordinador/(5078:5099): Se ha conectado un ESI con ID: 8
+[INFO] 06:57:17:29 Coordinador/(5078:5078): Listo para escuchar a cualquier Cliente...
+[INFO] 06:57:17:53 Coordinador/(5078:5107): Cliente conectado
+[INFO] 06:57:17:54 Coordinador/(5078:5107): El cliente es ESI
+[INFO] 06:57:17:55 Coordinador/(5078:5107): Se ha conectado un ESI con ID: 9
+[INFO] 06:57:21:215 Coordinador/(5078:5078): Listo para escuchar a cualquier Cliente...
+[INFO] 06:57:21:256 Coordinador/(5078:5110): Cliente conectado
+[INFO] 06:57:21:258 Coordinador/(5078:5110): El cliente es ESI
+[INFO] 06:57:21:264 Coordinador/(5078:5110): Se ha conectado un ESI con ID: 10
+[INFO] 06:57:23:565 Coordinador/(5078:5078): Listo para escuchar a cualquier Cliente...
+[INFO] 06:57:23:603 Coordinador/(5078:5113): Cliente conectado
+[INFO] 06:57:23:604 Coordinador/(5078:5113): El cliente es ESI
+[INFO] 06:57:23:605 Coordinador/(5078:5113): Se ha conectado un ESI con ID: 11
+[INFO] 06:57:27:412 Coordinador/(5078:5099): El ESI 8 me envia un paquete
+[DEBUG] 06:57:27:412 Coordinador/(5078:5099): 1-consola:ps4
+[INFO] 06:57:27:412 Coordinador/(5078:5099): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:57:27:413 Coordinador/(5078:5099): Desempaqueto la instruccion
+[INFO] 06:57:27:413 Coordinador/(5078:5099): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[ERROR] 06:57:27:414 Coordinador/(5078:5099): OPERACION 1
+[ERROR] 06:57:27:418 Coordinador/(5078:5099): TAM RECURSO PEDIDO. 11
+[ERROR] 06:57:27:422 Coordinador/(5078:5099): RECURSO PEDIDO: consola:ps4
+[INFO] 06:57:27:425 Coordinador/(5078:5099): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:57:27:425 Coordinador/(5078:5099): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:27:492 Coordinador/(5078:5099): El ESI 8 me envia un paquete
+[DEBUG] 06:57:27:492 Coordinador/(5078:5099): 2-consola:ps4-Fifa
+[INFO] 06:57:27:492 Coordinador/(5078:5099): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:57:27:492 Coordinador/(5078:5099): Desempaqueto la instruccion
+[INFO] 06:57:27:492 Coordinador/(5078:5099): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[ERROR] 06:57:27:493 Coordinador/(5078:5099): OPERACION 2
+[ERROR] 06:57:27:493 Coordinador/(5078:5099): TAM RECURSO PEDIDO. 11
+[ERROR] 06:57:27:493 Coordinador/(5078:5099): RECURSO PEDIDO: consola:ps4
+[INFO] 06:57:27:533 Coordinador/(5078:5099): El Planificador me autoriza a que el ESI 8 pueda utilizar el recurso
+[INFO] 06:57:27:534 Coordinador/(5078:5099): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:57:27:534 Coordinador/(5078:5099): La clave consola:ps4 no esta en ninguna Instancia
+[INFO] 06:57:27:534 Coordinador/(5078:5099): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:57:27:534 Coordinador/(5078:5099): Aguarde mientras se busca una Instancia
+[INFO] 06:57:27:535 Coordinador/(5078:5099): La Instancia sera la 1
+[INFO] 06:57:27:535 Coordinador/(5078:5099): La clave consola:ps4 fue asignada a la Instancia 1
+[INFO] 06:57:27:538 Coordinador/(5078:5099): Le envio a Instancia 1 el paquete
+[INFO] 06:57:27:627 Coordinador/(5078:5099): La Instancia 1 me informa que le quedan 7 entradas libres
+[INFO] 06:57:27:628 Coordinador/(5078:5099): Logueo la operacion en el Log de Operaciones
+[INFO] 06:57:27:629 Coordinador/(5078:5099): Le aviso al ESI 8 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:27:675 Coordinador/(5078:5099): El ESI 8 me envia un paquete
+[DEBUG] 06:57:27:676 Coordinador/(5078:5099): 2-consola:xbox360-Halo
+[INFO] 06:57:27:676 Coordinador/(5078:5099): Le informo al ESI 8 que el paquete llego correctamente
+[INFO] 06:57:27:676 Coordinador/(5078:5099): Desempaqueto la instruccion
+[INFO] 06:57:27:676 Coordinador/(5078:5099): Le consulto al Planificador si ESI 8 puede hacer uso del recurso
+[ERROR] 06:57:27:676 Coordinador/(5078:5099): OPERACION 2
+[ERROR] 06:57:27:677 Coordinador/(5078:5099): TAM RECURSO PEDIDO. 15
+[ERROR] 06:57:27:677 Coordinador/(5078:5099): RECURSO PEDIDO: consola:xbox360
+[ERROR] 06:57:27:719 Coordinador/(5078:5099): El Planificador me informa que el ESI 8 se aborta
+[INFO] 06:57:27:763 Coordinador/(5078:5107): El ESI 9 me envia un paquete
+[DEBUG] 06:57:27:767 Coordinador/(5078:5107): 1-consola:ps4
+[INFO] 06:57:27:768 Coordinador/(5078:5107): Le informo al ESI 9 que el paquete llego correctamente
+[INFO] 06:57:27:768 Coordinador/(5078:5107): Desempaqueto la instruccion
+[INFO] 06:57:27:769 Coordinador/(5078:5107): Le consulto al Planificador si ESI 9 puede hacer uso del recurso
+[ERROR] 06:57:27:769 Coordinador/(5078:5107): OPERACION 1
+[ERROR] 06:57:27:770 Coordinador/(5078:5107): TAM RECURSO PEDIDO. 11
+[ERROR] 06:57:27:770 Coordinador/(5078:5107): RECURSO PEDIDO: consola:ps4
+[ERROR] 06:57:27:774 Coordinador/(5078:5107): El Planificador me informa que el ESI 9 se aborta
+[INFO] 06:57:27:808 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:27:808 Coordinador/(5078:5110): 1-sandwich:bondiola:simple
+[INFO] 06:57:27:809 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:27:809 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:27:810 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:27:811 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:27:814 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 24
+[ERROR] 06:57:27:819 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:bondiola:simple
+[INFO] 06:57:27:823 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:27:823 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:27:875 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:27:876 Coordinador/(5078:5110): 1-sandwich:bondiola:jyq
+[INFO] 06:57:27:876 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:27:877 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:27:877 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:27:878 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:27:878 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 21
+[ERROR] 06:57:27:878 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:bondiola:jyq
+[INFO] 06:57:27:878 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:27:878 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:27:972 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:27:972 Coordinador/(5078:5110): 1-sandwich:bondiola:completo
+[INFO] 06:57:27:972 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:27:973 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:27:973 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:27:973 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:27:974 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 26
+[ERROR] 06:57:27:974 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:bondiola:completo
+[INFO] 06:57:27:974 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:27:974 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:69 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:69 Coordinador/(5078:5110): 1-sandwich:lomo:simple
+[INFO] 06:57:28:70 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:70 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:70 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:70 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:71 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 20
+[ERROR] 06:57:28:72 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:lomo:simple
+[INFO] 06:57:28:72 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:72 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:151 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:153 Coordinador/(5078:5110): 1-sandwich:lomo:jyq
+[INFO] 06:57:28:154 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:154 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:155 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:155 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:155 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 17
+[ERROR] 06:57:28:156 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:lomo:jyq
+[INFO] 06:57:28:156 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:156 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:231 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:232 Coordinador/(5078:5110): 1-sandwich:lomo:completo
+[INFO] 06:57:28:232 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:232 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:232 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:232 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:232 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 22
+[ERROR] 06:57:28:232 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:lomo:completo
+[INFO] 06:57:28:232 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:232 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:319 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:319 Coordinador/(5078:5110): 1-sandwich:vacio:simple
+[INFO] 06:57:28:320 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:320 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:320 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:320 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:320 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 21
+[ERROR] 06:57:28:320 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:vacio:simple
+[INFO] 06:57:28:320 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:320 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:404 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:404 Coordinador/(5078:5110): 1-sandwich:vacio:jyq
+[INFO] 06:57:28:405 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:405 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:405 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:405 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:405 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 18
+[ERROR] 06:57:28:405 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:vacio:jyq
+[INFO] 06:57:28:405 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:405 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:495 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:497 Coordinador/(5078:5110): 1-sandwich:vacio:completo
+[INFO] 06:57:28:498 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:499 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:500 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:500 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:500 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 23
+[ERROR] 06:57:28:500 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:vacio:completo
+[INFO] 06:57:28:501 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:501 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:576 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:576 Coordinador/(5078:5110): 1-sandwich:choripan
+[INFO] 06:57:28:576 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:579 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:582 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:582 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:583 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 17
+[ERROR] 06:57:28:583 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:choripan
+[INFO] 06:57:28:584 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:584 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:660 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:662 Coordinador/(5078:5110): 1-sandwich:morcipan
+[INFO] 06:57:28:666 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:668 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:668 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:668 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:669 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 17
+[ERROR] 06:57:28:670 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:morcipan
+[INFO] 06:57:28:670 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:670 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:772 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:777 Coordinador/(5078:5110): 1-parrilla:chinchulines
+[INFO] 06:57:28:788 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:790 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:790 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:790 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:791 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 21
+[ERROR] 06:57:28:791 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:chinchulines
+[INFO] 06:57:28:792 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:792 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:876 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:876 Coordinador/(5078:5110): 1-parrilla:rinion
+[INFO] 06:57:28:877 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:878 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:879 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:884 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:885 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 15
+[ERROR] 06:57:28:886 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:rinion
+[INFO] 06:57:28:886 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:887 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:28:971 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:28:971 Coordinador/(5078:5110): 1-parrilla:tiraasado
+[INFO] 06:57:28:972 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:28:972 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:28:972 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:28:972 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:28:972 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 18
+[ERROR] 06:57:28:972 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:tiraasado
+[INFO] 06:57:28:972 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:28:972 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:60 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:60 Coordinador/(5078:5110): 1-parrilla:vacio
+[INFO] 06:57:29:60 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:62 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:63 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:64 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:64 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 14
+[ERROR] 06:57:29:65 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:vacio
+[INFO] 06:57:29:66 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:66 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:160 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:161 Coordinador/(5078:5110): 1-parrilla:entrania
+[INFO] 06:57:29:161 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:162 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:162 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:163 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:163 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 17
+[ERROR] 06:57:29:164 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:entrania
+[INFO] 06:57:29:164 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:165 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:248 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:250 Coordinador/(5078:5110): 1-parrilla:bifedelomo
+[INFO] 06:57:29:252 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:255 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:257 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:258 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:265 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 19
+[ERROR] 06:57:29:268 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:bifedelomo
+[INFO] 06:57:29:268 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:268 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:343 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:344 Coordinador/(5078:5110): 1-parrilla:matambre:simple
+[INFO] 06:57:29:345 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:347 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:349 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:349 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:350 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 24
+[ERROR] 06:57:29:350 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:matambre:simple
+[INFO] 06:57:29:351 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:351 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:424 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:424 Coordinador/(5078:5110): 1-parrilla:matambre:alapizza
+[INFO] 06:57:29:425 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:425 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:425 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:425 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:425 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 26
+[ERROR] 06:57:29:425 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:matambre:alapizza
+[INFO] 06:57:29:425 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:425 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:504 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:504 Coordinador/(5078:5110): 1-parrilla:ojodebife
+[INFO] 06:57:29:504 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:504 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:504 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:505 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:505 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 18
+[ERROR] 06:57:29:505 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:ojodebife
+[INFO] 06:57:29:505 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:505 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:588 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:588 Coordinador/(5078:5110): 1-parrilla:molleja
+[INFO] 06:57:29:588 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:589 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:589 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:589 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:589 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 16
+[ERROR] 06:57:29:589 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:molleja
+[INFO] 06:57:29:589 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:589 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:671 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:672 Coordinador/(5078:5110): 1-parrilla:pareja
+[INFO] 06:57:29:672 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:672 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:672 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:673 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:673 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 15
+[ERROR] 06:57:29:673 Coordinador/(5078:5110): RECURSO PEDIDO: parrilla:pareja
+[INFO] 06:57:29:673 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:673 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:760 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:760 Coordinador/(5078:5110): 1-cocina:papasfritas
+[INFO] 06:57:29:761 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:763 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:764 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:764 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:765 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 18
+[ERROR] 06:57:29:765 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:papasfritas
+[INFO] 06:57:29:765 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:766 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:847 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:848 Coordinador/(5078:5110): 1-cocina:batatasfritas
+[INFO] 06:57:29:849 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:849 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:850 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:850 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:851 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 20
+[ERROR] 06:57:29:851 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:batatasfritas
+[INFO] 06:57:29:853 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:853 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:29:952 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:29:953 Coordinador/(5078:5110): 1-cocina:tallarines
+[INFO] 06:57:29:956 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:29:956 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:29:958 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:29:958 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:29:968 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 17
+[ERROR] 06:57:29:968 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:tallarines
+[INFO] 06:57:29:968 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:29:970 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:56 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:56 Coordinador/(5078:5110): 1-cocina:ravioles
+[INFO] 06:57:30:57 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:57 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:57 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:57 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:30:57 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 15
+[ERROR] 06:57:30:57 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:ravioles
+[INFO] 06:57:30:57 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:57 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:155 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:156 Coordinador/(5078:5110): 1-cocina:nioquis
+[INFO] 06:57:30:156 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:157 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:157 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:158 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:30:158 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 14
+[ERROR] 06:57:30:158 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:nioquis
+[INFO] 06:57:30:159 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:160 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:248 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:248 Coordinador/(5078:5110): 1-cocina:suprema
+[INFO] 06:57:30:248 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:248 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:248 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:249 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:30:249 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 14
+[ERROR] 06:57:30:249 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:suprema
+[INFO] 06:57:30:249 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:249 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:352 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:353 Coordinador/(5078:5110): 1-cocina:milanesa:carne
+[INFO] 06:57:30:355 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:357 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:361 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:362 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:30:363 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 21
+[ERROR] 06:57:30:364 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:milanesa:carne
+[INFO] 06:57:30:364 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:365 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:460 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:460 Coordinador/(5078:5110): 1-cocina:milanesa:pollo
+[INFO] 06:57:30:461 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:462 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:463 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:464 Coordinador/(5078:5110): OPERACION 1
+[ERROR] 06:57:30:465 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 21
+[ERROR] 06:57:30:466 Coordinador/(5078:5110): RECURSO PEDIDO: cocina:milanesa:pollo
+[INFO] 06:57:30:472 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:475 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:559 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:559 Coordinador/(5078:5110): 2-sandwich:bondiola:simple-panbondiola
+[INFO] 06:57:30:560 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:560 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:560 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:560 Coordinador/(5078:5110): OPERACION 2
+[ERROR] 06:57:30:560 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 24
+[ERROR] 06:57:30:560 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:bondiola:simple
+[INFO] 06:57:30:560 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:560 Coordinador/(5078:5110): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:57:30:560 Coordinador/(5078:5110): La clave sandwich:bondiola:simple no esta en ninguna Instancia
+[INFO] 06:57:30:560 Coordinador/(5078:5110): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:57:30:562 Coordinador/(5078:5110): Aguarde mientras se busca una Instancia
+[INFO] 06:57:30:562 Coordinador/(5078:5110): La Instancia sera la 1
+[INFO] 06:57:30:563 Coordinador/(5078:5110): La clave sandwich:bondiola:simple fue asignada a la Instancia 1
+[INFO] 06:57:30:563 Coordinador/(5078:5110): Le envio a Instancia 1 el paquete
+[INFO] 06:57:30:643 Coordinador/(5078:5110): La Instancia 1 me informa que le quedan 5 entradas libres
+[INFO] 06:57:30:644 Coordinador/(5078:5110): Logueo la operacion en el Log de Operaciones
+[INFO] 06:57:30:644 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:692 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:692 Coordinador/(5078:5110): 2-sandwich:bondiola:jyq-panjamonquesobondiola
+[INFO] 06:57:30:692 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:692 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:692 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:692 Coordinador/(5078:5110): OPERACION 2
+[ERROR] 06:57:30:692 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 21
+[ERROR] 06:57:30:692 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:bondiola:jyq
+[INFO] 06:57:30:693 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:693 Coordinador/(5078:5110): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:57:30:693 Coordinador/(5078:5110): La clave sandwich:bondiola:jyq no esta en ninguna Instancia
+[INFO] 06:57:30:693 Coordinador/(5078:5110): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:57:30:693 Coordinador/(5078:5110): Aguarde mientras se busca una Instancia
+[INFO] 06:57:30:694 Coordinador/(5078:5110): La Instancia sera la 1
+[INFO] 06:57:30:694 Coordinador/(5078:5110): La clave sandwich:bondiola:jyq fue asignada a la Instancia 1
+[INFO] 06:57:30:694 Coordinador/(5078:5110): Le envio a Instancia 1 el paquete
+[INFO] 06:57:30:772 Coordinador/(5078:5110): La Instancia 1 me informa que le quedan 2 entradas libres
+[INFO] 06:57:30:774 Coordinador/(5078:5110): Logueo la operacion en el Log de Operaciones
+[INFO] 06:57:30:776 Coordinador/(5078:5110): Le aviso al ESI 10 que la instruccion se ejecuto satisfactoriamente
+[INFO] 06:57:30:843 Coordinador/(5078:5110): El ESI 10 me envia un paquete
+[DEBUG] 06:57:30:844 Coordinador/(5078:5110): 2-sandwich:bondiola:completo-panjamonquesolechugatomatebondiola
+[INFO] 06:57:30:844 Coordinador/(5078:5110): Le informo al ESI 10 que el paquete llego correctamente
+[INFO] 06:57:30:844 Coordinador/(5078:5110): Desempaqueto la instruccion
+[INFO] 06:57:30:844 Coordinador/(5078:5110): Le consulto al Planificador si ESI 10 puede hacer uso del recurso
+[ERROR] 06:57:30:844 Coordinador/(5078:5110): OPERACION 2
+[ERROR] 06:57:30:844 Coordinador/(5078:5110): TAM RECURSO PEDIDO. 26
+[ERROR] 06:57:30:844 Coordinador/(5078:5110): RECURSO PEDIDO: sandwich:bondiola:completo
+[INFO] 06:57:30:844 Coordinador/(5078:5110): El Planificador me autoriza a que el ESI 10 pueda utilizar el recurso
+[INFO] 06:57:30:845 Coordinador/(5078:5110): El Coordinador esta chequeando si la clave ya existe...
+[INFO] 06:57:30:845 Coordinador/(5078:5110): La clave sandwich:bondiola:completo no esta en ninguna Instancia
+[INFO] 06:57:30:845 Coordinador/(5078:5110): Escojo una Instancia segun el algoritmo EL
+[INFO] 06:57:30:845 Coordinador/(5078:5110): Aguarde mientras se busca una Instancia
+[INFO] 06:57:30:852 Coordinador/(5078:5110): La Instancia sera la 1
+[INFO] 06:57:30:853 Coordinador/(5078:5110): La clave sandwich:bondiola:completo fue asignada a la Instancia 1
+[INFO] 06:57:30:854 Coordinador/(5078:5110): Le envio a Instancia 1 el paquete
+[ERROR] 06:57:30:897 Coordinador/(5078:5110): La Instancia me avisa que no pudo procesar la instruccion
+[ERROR] 06:57:30:897 Coordinador/(5078:5110): Se aborta el ESI 10
+[INFO] 06:57:31:32 Coordinador/(5078:5113): El ESI 11 me envia un paquete
+[DEBUG] 06:57:31:33 Coordinador/(5078:5113): 1-platoprincipal:ingrediente5
+[INFO] 06:57:31:34 Coordinador/(5078:5113): Le informo al ESI 11 que el paquete llego correctamente
+[INFO] 06:57:31:35 Coordinador/(5078:5113): Desempaqueto la instruccion
+[INFO] 06:57:31:37 Coordinador/(5078:5113): Le consulto al Planificador si ESI 11 puede hacer uso del recurso
+[ERROR] 06:57:31:37 Coordinador/(5078:5113): OPERACION 1
+[ERROR] 06:57:31:37 Coordinador/(5078:5113): TAM RECURSO PEDIDO. 27
+[ERROR] 06:57:31:38 Coordinador/(5078:5113): RECURSO PEDIDO: platoprincipal:ingrediente5
+[ERROR] 06:57:31:38 Coordinador/(5078:5113): El Planificador me informa que el ESI 11 se aborta
+[ERROR] 06:57:55:898 Coordinador/(5078:5085): Error de Comunicacion: conexion con el Planificador rota
+[ERROR] 06:59:09:288 Coordinador/(5078:5078): Se ha finalizado el Coordinador
+[INFO] 06:59:11:578 Coordinador/(5286:5286): Se crea la Tabla de Instancias
+[INFO] 06:59:11:580 Coordinador/(5286:5286): Servidor conectado
+[INFO] 06:59:11:581 Coordinador/(5286:5286): Listo para escuchar a cualquier Cliente...
+[ERROR] 07:00:23:246 Coordinador/(5286:5286): Se ha finalizado el Coordinador

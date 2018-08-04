@@ -459,6 +459,10 @@ void atenderESI(int socketESI) {
 			send(socketPlanificador, &tam_clave, sizeof(uint32_t), 0);
 			send(socketPlanificador, instruccion->clave, tam_clave, 0);
 
+			log_error(logger, "OPERACION %d", instruccion->operacion);
+			log_error(logger, "TAM RECURSO PEDIDO. %d", strlen(instruccion->clave));
+			log_error(logger, "RECURSO PEDIDO: %s", instruccion->clave);
+
 			if (operacion == opSET) {
 				string_append(&(instruccion->valor), "\0");
 				uint32_t tam_valor = strlen(instruccion->valor) + 1;

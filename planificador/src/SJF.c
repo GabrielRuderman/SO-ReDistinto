@@ -110,6 +110,9 @@ void planificacionSJF(bool desalojo) {
 				int respuesta3 = recv(socketCoordinador, recursoPedido,
 						tamanioRecurso, 0);
 
+				log_error(logPlanificador, "RECURSO PEDIDO: %s", recursoPedido);
+
+
 				if (respuesta1 <= 0 || respuesta2 <= 0 || respuesta3 <= 0) {
 					log_error(logPlanificador,
 							"Conexion con el coordinador rota. Me cierro");
@@ -117,6 +120,8 @@ void planificacionSJF(bool desalojo) {
 					salir = true;
 					break;
 				} else {
+
+					log_error(logPlanificador, "RECURSO PEDIDO: %s", recursoPedido);
 
 					nuevo->recursoPedido = string_new();
 					string_append(&(nuevo->recursoPedido), recursoPedido);

@@ -26,7 +26,7 @@ endif
 all: coordinador
 
 dependents:
-	-cd /home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug && $(MAKE) all
+	-cd /home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug && $(MAKE) clean all
 
 # Tool invocations
 coordinador: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2018-1c-El-Rejunte/biblioteca-El-Rejunte/Debug/libbiblioteca-El-Rejunte.so
